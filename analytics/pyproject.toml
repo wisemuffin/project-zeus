@@ -3,7 +3,9 @@ name = "analytics"
 requires-python = ">=3.10,<3.15"
 version = "0.1.0"
 dependencies = [
+    "dagster-duckdb-pandas>=0.28.14",
     "dagster==1.12.14",
+    "requests>=2.32.5",
 ]
 
 [dependency-groups]

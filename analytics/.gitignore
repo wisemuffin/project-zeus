@@ -201,3 +201,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# DuckDB
+*.duckdb
+*.duckdb.wal
+
+# Dagster
+.tmp_dagster_home_*/
