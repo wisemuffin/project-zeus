@@ -12,8 +12,18 @@ from trendspyg import download_google_trends_rss
 def google_trends(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """Trending Google searches in Australia.
 
-    Uses trendspyg RSS feed to fetch current trending searches. Returns ~10-20
-    trending topics with traffic volume, news headlines, and article URLs.
+    Source: Google Trends via trendspyg RSS feed, public, real-time (~0.2s)
+    Marketing use: **What message** — trending topics reveal timely content
+        opportunities. When a trend aligns with a university's programs (e.g.
+        AI trending → Computer Science), it signals a moment for reactive
+        campaign creative.
+    Format: trend titles, traffic volume, news headlines, article URLs,
+        publication timestamps
+    Limitations:
+    - Current trends only (~10-20 results); no historical time-series
+    - No keyword lookup (cannot query specific terms)
+    - General trends, not filtered to education topics
+    - See docs/data-sources/search-data-options.md for alternatives
     """
     df = download_google_trends_rss(geo="AU", output_format="dataframe")
 

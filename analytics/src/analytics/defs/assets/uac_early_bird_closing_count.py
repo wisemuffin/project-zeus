@@ -19,13 +19,20 @@ _HEADER_ROW = 4  # 0-indexed row where year headers appear
     group_name="uac_data",
     tags={"source": "uac", "domain": "preferences"},
 )
-def uac_preferences(context: dg.AssetExecutionContext) -> pd.DataFrame:
-    """UAC Early Bird domestic undergraduate application statistics.
+def uac_early_bird_closing_count(
+    context: dg.AssetExecutionContext,
+) -> pd.DataFrame:
+    """UAC Early Bird closing count — applicant volumes by market segment over time.
 
-    Downloads the UAC Early Bird applicant data Excel file. Parses the
-    "Early Bird closing count" sheet which has applicant counts by category
-    (NSW Year 12, ACT Year 12, Interstate & IB Year 12, Non-Year 12) across
-    admission years.
+    Source: UAC, Excel, public, annual (~September/October)
+    Marketing use: **Who** — audience sizing by segment. Year 12 vs Non-Year 12
+        split sizes the school-leaver vs mature-age markets. Year-over-year trends
+        reveal whether each segment is growing or shrinking.
+    Format: applicant_type, then year columns (2016-17 through 2025-26)
+    Limitations:
+    - Point-in-time Early Bird snapshot, not final application numbers
+    - NSW/ACT only (other states: VTAC, QTAC, SATAC, TISC)
+    - Static URL requires annual updating
     """
     response = requests.get(UAC_EXCEL_URL, timeout=60)
     response.raise_for_status()

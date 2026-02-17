@@ -18,8 +18,16 @@ ABS_API_URL = (
 def abs_population_by_lga(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """Estimated Resident Population (ERP) for 15-19 year olds by LGA.
 
-    Fetches from ABS SDMX REST API. Age group A15 (15-19 years) covers the
-    approximate Year 11/12 secondary student cohort. Persons only (SEX_ABS=3).
+    Source: ABS SDMX REST API, CSV, public, annual (~12-month lag)
+    Marketing use: **Where** — population counts by Local Government Area size
+        the prospective student market geographically. High-population LGAs
+        indicate where to concentrate geo-targeted digital campaigns.
+    Format: DATAFLOW, MEASURE, SEX_ABS, AGE, LGA_2024, REGION_TYPE, FREQUENCY,
+        TIME_PERIOD, OBS_VALUE, UNIT_MEASURE, OBS_STATUS, OBS_COMMENT
+    Limitations:
+    - Age granularity is 5-year groups only (15-19); cannot isolate Year 12
+    - ~12-month publication lag
+    - Uses 2024 LGA boundaries (historical data concorded by ABS)
     """
     response = requests.get(
         ABS_API_URL,
@@ -48,6 +56,7 @@ def abs_population_by_lga(context: dg.AssetExecutionContext) -> pd.DataFrame:
         "latest_year": dg.MetadataValue.text(str(latest_year)),
         "lga_count": dg.MetadataValue.int(lga_count),
         "total_population_15_19": dg.MetadataValue.int(total_population),
+        "source_url": dg.MetadataValue.url(ABS_API_URL),
     })
 
     return df

@@ -1,35 +1,12 @@
-# UAC Preferences Data (Early Bird Applicants)
+# UAC Early Bird Applicant Data
 
-## Overview
+University Admissions Centre (UAC) Early Bird domestic undergraduate application statistics. Five assets parse different sheets from the same Excel file:
 
-University Admissions Centre (UAC) Early Bird domestic undergraduate application statistics. Provides applicant counts by category (Year 12, non-Year 12), field of study, and gender for NSW/ACT institutions.
+- **`uac_early_bird_closing_count`** — applicant volumes by segment over time
+- **`uac_applicants_by_age`** — age distribution (Year 12 vs Non-Year 12)
+- **`uac_applicants_by_gender`** — gender split by applicant segment
+- **`uac_fos_by_app_type`** — field-of-study preference by applicant type
+- **`uac_fos_by_gender`** — field-of-study preference by gender
 
-## Data Source
-
-| Field | Value |
-|---|---|
-| Provider | University Admissions Centre (UAC) |
-| Format | Excel (.xlsx) |
-| URL | `https://www.uac.edu.au/assets/documents/statistics/2024-25/UAC_Early_Bird_applicants_30Sep25_ua26-ed2.xlsx` |
-| Auth | None (public download) |
-| Update frequency | Annually (early bird data published ~September/October) |
-
-## Data Contents
-
-- Applicant counts by category (Year 12, non-Year 12, international)
-- Breakdown by field of study
-- Gender distribution
-- Year-over-year comparison data
-
-## Limitations
-
-- **Single snapshot**: Early Bird data is a point-in-time snapshot, not final application numbers
-- **NSW/ACT only**: UAC covers NSW and ACT institutions; other states use different admissions centres (VTAC, QTAC, SATAC, TISC)
-- **File URL changes**: The URL includes the year and edition number, which changes annually and needs manual updating
-
-## Asset
-
-- **Key**: `uac_preferences`
-- **Group**: `uac_data`
-- **Tags**: `source:uac`, `domain:preferences`
-- **File**: `analytics/src/analytics/defs/assets/uac_preferences.py`
+For full documentation see the asset docstrings in:
+`analytics/src/analytics/defs/assets/uac_*.py`
