@@ -8,6 +8,8 @@ dependencies = [
     "requests>=2.32.5",
     "openpyxl>=3.1.5",
     "trendspyg>=0.4.2",
+    "dagster-dbt>=0.28.14",
+    "dbt-duckdb>=1.10.1",
 ]
 
 [dependency-groups]

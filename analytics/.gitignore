@@ -208,3 +208,8 @@ __marimo__/
 
 # Dagster
 .tmp_dagster_home_*/
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/

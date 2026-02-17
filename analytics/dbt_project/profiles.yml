@@ -1,0 +1,8 @@
+zeus_market_research:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_DATABASE', '../analytics.duckdb') }}"
+      schema: marts
+      threads: 1

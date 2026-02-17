@@ -1,0 +1,57 @@
+version: 2
+
+sources:
+  - name: dagster
+    description: Raw data assets managed by Dagster Python assets
+    schema: public
+    tables:
+      - name: uac_applicants_by_age
+        description: Age distribution of UAC Early Bird applicants (Year 12 vs Non-Year 12)
+        meta:
+          dagster:
+            asset_key: ["uac_applicants_by_age"]
+      - name: uac_applicants_by_gender
+        description: Gender split of UAC Early Bird applicants
+        meta:
+          dagster:
+            asset_key: ["uac_applicants_by_gender"]
+      - name: uac_early_bird_closing_count
+        description: Historical UAC Early Bird applicant volumes by year
+        meta:
+          dagster:
+            asset_key: ["uac_early_bird_closing_count"]
+      - name: uac_fos_by_gender
+        description: UAC field of study preferences by gender
+        meta:
+          dagster:
+            asset_key: ["uac_fos_by_gender"]
+      - name: uac_fos_by_app_type
+        description: UAC field of study preferences by applicant type
+        meta:
+          dagster:
+            asset_key: ["uac_fos_by_app_type"]
+      - name: job_market
+        description: IVI job vacancies by ANZSCO skill level and state
+        meta:
+          dagster:
+            asset_key: ["job_market"]
+      - name: job_market_occupations
+        description: IVI job vacancies by ANZSCO2 occupation group and state
+        meta:
+          dagster:
+            asset_key: ["job_market_occupations"]
+      - name: occupation_fos_mapping
+        description: Manual mapping of ANZSCO2 occupations to UAC fields of study
+        meta:
+          dagster:
+            asset_key: ["occupation_fos_mapping"]
+      - name: abs_population_by_lga
+        description: ABS estimated resident population (15-19 year olds) by LGA
+        meta:
+          dagster:
+            asset_key: ["abs_population_by_lga"]
+      - name: google_trends
+        description: Current trending Google searches in Australia
+        meta:
+          dagster:
+            asset_key: ["google_trends"]

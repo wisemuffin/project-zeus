@@ -22,3 +22,7 @@ Thumbs.db
 
 # Dagster
 .tmp_dagster_home*/
+
+# DuckDB
+*.duckdb
+*.duckdb.wal
