@@ -163,7 +163,36 @@ The K-12 platforms (School Bytes, Compass, Sentral, Hero) overlap heavily in cor
 
 ---
 
-## 3. Do Universities Use These K-12 Tools?
+## 3. Class Timetabling & Subject Management
+
+A key question for K-12 platforms is whether they manage **what classes/subjects a student is taking** -- i.e., subject selection, class allocation, and period-by-period timetabling. This matters most in secondary schools (Years 7-12) where students choose elective subjects and have different teachers per period.
+
+| Capability | School Bytes | Compass | Sentral | Hero |
+|---|:---:|:---:|:---:|:---:|
+| **Full timetabling (period-by-period)** | No | **Yes** (Schedule Builder) | **Yes** (Timetables module) | No |
+| **Class/subject allocation** | Partial (Class Builder) | **Yes** | **Yes** (subject classing) | No |
+| **Student subject selection** | No | Via [Griddle](https://www.griddle.education/) integration | **Yes** | No |
+| **Timetable visible to students/parents** | No | **Yes** (PDF download + portal) | **Yes** (student/parent portals) | No |
+| **Room allocation** | No | **Yes** (Room Swap module) | **Yes** | No |
+| **Integration with attendance** | Yes (roll-based) | **Yes** (class-level) | **Yes** (class-level) | Yes (group-level) |
+
+### Platform details
+
+**Compass** -- the strongest timetabling offering. The [Schedule Builder](https://www.compass.education/features/) is a dedicated module that creates period-by-period timetables for schools of all sizes. Students and parents can download timetable PDFs or view them in the portal. Room Swap manages room allocation centrally. For subject selection (students choosing electives), Compass integrates with [Griddle](https://www.griddle.education/), a third-party tool that uses AI to generate optimal class combinations from student preferences.
+
+**Sentral** -- full timetabling via a dedicated [Timetables module](https://pdfmanuals.blob.core.windows.net/guides/Sentral%20Learning%20Resources/Approved%20Sentral%20Learning%20Guides/Timetables/SentralOne/Overview%20-%20Timetables%20%20.pdf). Administrators allocate students to classes with specific teachers, rooms, days and times ("subject classing"). Timetable data publishes to student and parent portals, and integrates with Attendance, Academic Reports, and the PXP module.
+
+**School Bytes** -- has a [Class Builder](https://www.schoolbytes.education/features/class-builder/) module that defines classes and assigns students to them. Academic Reports can be configured by subject, outcomes, and roll class. However, there is no full period-by-period timetabling or student-facing schedule. It tracks *who is in what class* but not *when each class meets*.
+
+**Hero** -- does not offer timetabling or subject selection. Hero is designed for **primary schools** where students are typically in one class with one teacher all day. It manages groups and cohorts for analytics and reporting, but class allocation in the secondary-school sense is not part of its feature set.
+
+### Why this matters
+
+Schools that need end-to-end timetabling (particularly secondary schools) are effectively choosing between **Compass** and **Sentral**. School Bytes can complement either as a finance/admin layer but cannot replace them for scheduling. Hero serves a different market (primary) where timetabling is not a requirement.
+
+---
+
+## 4. Do Universities Use These K-12 Tools?
 
 **No.** Universities do not use School Bytes, Compass, or Sentral. These platforms are purpose-built for K-12 school administration and are scoped to that context (roll marking by class, parent permission notes, behaviour tracking, etc.).
 
@@ -179,7 +208,7 @@ Millennium FAST is the only tool in the original list that serves higher educati
 
 ---
 
-## 4. Systems Australian Universities Actually Use
+## 5. Systems Australian Universities Actually Use
 
 ### Primary Student Management Systems (SMS)
 
@@ -217,7 +246,7 @@ The Australian university SMS market is dominated by **TechnologyOne** (homegrow
 
 ---
 
-## 5. Summary
+## 6. Summary
 
 | Question | Answer |
 |---|---|
