@@ -211,3 +211,45 @@ models:
         description: Compound annual growth rate across the full data window
       - name: trend_direction
         description: Current direction based on latest YoY growth (Growing, Declining, or Flat)
+
+  - name: state_fos_demand
+    description: >
+      State × field of study demand matrix. Shows which fields are strongest in
+      which states relative to the national average. Enables geo-targeted ad
+      creative per field (e.g. "Health demand is highest in QLD") and identifies
+      state-level specialisation patterns.
+    columns:
+      - name: state
+        description: Australian state/territory code
+        tests:
+          - not_null
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - not_null
+      - name: vacancies
+        description: Latest-month job vacancies for this field in this state
+      - name: fos_share_in_state
+        description: >
+          This field's share of total mapped vacancies within this state.
+          Compare to national_vacancy_share to identify state specialisations.
+      - name: national_vacancy_share
+        description: This field's share of total mapped vacancies nationally (from opportunity_gap)
+      - name: state_vs_national_skew
+        description: >
+          fos_share_in_state minus national_vacancy_share. Positive values indicate
+          the state over-indexes on this field relative to the national average.
+      - name: vacancy_growth_12m
+        description: 12-month vacancy growth for this field in this state
+      - name: youth_population_15_19
+        description: State-level youth population aged 15-19
+      - name: vacancies_per_1k_youth
+        description: Vacancies for this field per 1,000 youth in this state
+      - name: national_opportunity_gap
+        description: National-level opportunity gap for this field
+      - name: national_opportunity_rank
+        description: National-level opportunity rank for this field
+      - name: state_specialisation_rank
+        description: >
+          Rank within each state by state_vs_national_skew descending.
+          Rank 1 = the field this state most over-indexes on.

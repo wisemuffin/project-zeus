@@ -13,6 +13,13 @@ Mart models that transform raw Dagster assets into marketing-actionable insights
 - [x] **Audience Profile by FOS** (`audience_profile_by_fos`) — Gender, mature learner affinity, and geographic origin per field. Answers **who** to target and **where** they are.
 - [x] **Trending Interests** (`trending_interests`) — Google Trends classified by FOS with opportunity gap context. Identifies timely messaging hooks.
 - [x] **Historical Demand Trends** (`historical_demand_trends`) — 10-year UAC applicant volumes by segment with YoY growth and CAGR. Identifies growing vs declining segments for budget allocation.
+- [x] **Graduate Outcomes by FOS** (`graduate_outcomes_by_fos`) — QILT graduate employment rates, median salaries (with gender split), and salary growth joined with opportunity gap and UAC preference data. Composite marketing signals classify each field as "Strong", "Demand", "Outcomes", or "Challenging".
+
+- [x] **State × FOS Demand** (`state_fos_demand`) — State-level demand by field of study with specialisation skew vs national average. ACT over-indexes on IT, TAS/SA/NT on Health, WA on Engineering.
+
+### Planned
+- [ ] **University Course Listings** — Ingest CourseSeeker or similar to connect opportunity gaps to specific programs a university could promote. Requires new data source.
+- [ ] **Digital Ad Cost Benchmarks** — Google Ads CPC by education keyword to turn opportunity gaps into ROI-adjusted recommendations. Requires new data source.
 
 ---
 
@@ -45,11 +52,11 @@ QILT publishes four survey datasets as Excel report tables:
 - ESS: `https://www.qilt.edu.au/docs/default-source/default-document-library/ess_2024_national_report_tables.zip`
 
 **Implementation plan:**
-- [ ] Download and explore GOS report tables to understand sheet structure
-- [ ] Build Dagster asset for GOS data (employment rates & salaries by field of study)
+- [x] Download and explore GOS report tables to understand sheet structure
+- [x] Build Dagster asset for GOS data (employment rates & salaries by field of study) — `qilt_graduate_outcomes`
 - [ ] Build Dagster asset for SES data (student satisfaction by field of study)
-- [ ] Create dbt staging models to standardise QILT field-of-study names to UAC categories
-- [ ] Build mart model: **graduate_outcomes_by_fos** — joins GOS employment/salary data with opportunity gap analysis
+- [x] Create dbt staging model to standardise QILT field-of-study names to UAC categories — `stg_qilt_graduate_outcomes`
+- [x] Build mart model: **graduate_outcomes_by_fos** — joins GOS employment/salary data with opportunity gap, gender preferences, and marketing signals
 - [ ] Build mart model: **institution_scorecard** — per-university satisfaction + outcomes for competitive benchmarking
 
 ### Priority 2: QTAC (Queensland Tertiary Admissions Centre)

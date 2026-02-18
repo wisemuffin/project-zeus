@@ -55,3 +55,8 @@ sources:
         meta:
           dagster:
             asset_key: ["google_trends"]
+      - name: qilt_graduate_outcomes
+        description: QILT Graduate Outcomes Survey — employment rates and salaries by study area
+        meta:
+          dagster:
+            asset_key: ["qilt_graduate_outcomes"]
