@@ -82,30 +82,141 @@ to client branding, and row-level security at the database layer.
 Australian universities and higher education providers that run digital marketing
 campaigns for student recruitment. The addressable market includes:
 
-- **43 Australian universities** (the primary target)
-- **~90 non-university higher education providers** (secondary)
-- **Tertiary Admissions Centres** (potential channel partners)
+- **43 Australian universities** (primary target — 38 public, 5 private)
+- **7 university colleges** (TEQSA-registered, emerging institutions)
+- **156 non-university higher education providers** (secondary target)
+- **University marketing agencies and Tertiary Admissions Centres** (channel partners)
 
-### Market Sizing Indicators
+Total TEQSA-registered higher education providers: **~206** (as at June 2024).
 
-- Australian university marketing budgets are not publicly disclosed at scale, but
-  individual institutions are known to spend **$1M–$10M+ annually** on student
-  recruitment marketing depending on size and ambition.
-- The total Australian higher education market was valued at **~$45B AUD** in 2024 (DESE),
-  making even fractional marketing intelligence spend a meaningful category.
-- EAB — the closest US analogue — generates an estimated **~$175M–$214M USD** annually
-  across its full product suite, demonstrating the revenue potential of the broader
-  category (though EAB operates at significantly larger scale across 2,500+ US/Canadian
-  institutions).
+### The Australian Higher Education Sector
 
-### Why Now
+The sector generated **$45.2 billion in revenue in 2024**, up 13% from $40.0B in 2023.
+Total enrolled students reached **1,676,077** — comprising 1,086,789 domestic students
+and 481,851 onshore international students (a record high).
 
-- **Post-COVID enrolment recovery** is uneven across fields, creating urgency for
-  data-driven reallocation of marketing budgets.
-- **Government data availability** has improved significantly — QILT, IVI, and UAC
-  datasets are now freely accessible, but no product synthesises them.
-- **Rising competition** for domestic students as international enrolment patterns shift,
-  pushing universities to optimise domestic acquisition.
+| Metric | Value | Year |
+| --- | --- | --- |
+| Total sector revenue | $45.2 billion | 2024 |
+| Total enrolled students | 1,676,077 | 2024 |
+| Domestic students | 1,086,789 (+1.0% YoY) | 2024 |
+| International students (onshore) | 481,851 (+17.7% YoY) | 2024 |
+| International student fee revenue | $12.3 billion (27% of total) | 2024 |
+| Government funding share | ~47% ($21.2B) | 2024 |
+| Education export value (all sectors) | $51.5 billion | 2024 |
+
+Sources: Department of Education — [Finance 2024](https://www.education.gov.au/download/19832/finance-2024-financial-reports-higher-education-providers/43005/2024-university-finance-summary-information/pdf), [2024 Student Statistics](https://www.education.gov.au/higher-education-statistics/student-data/selected-higher-education-statistics-2024-student-data/key-findings-2024-higher-education-student-statistics), [TEQSA Annual Report 2023–24](https://www.teqsa.gov.au/sites/default/files/2024-10/teqsa-annual-report-2023-24.pdf)
+
+### Marketing Spend
+
+Australian public universities spent **$363 million on advertising, marketing, and
+promotion in 2023** (Australia Institute). This represents roughly **0.9% of total
+sector revenue** — well below global benchmarks where university marketing spend averages
+a median of **5.3% of revenue** (with a mean of 11.9%).
+
+This likely understates true marketing-related expenditure. Agent commissions for
+international students (typically 20–25% of first-year tuition), digital marketing
+embedded in other budgets, and consultancy fees are not captured in the headline figure.
+Australian universities spent a further **~$410 million on consultancy services** in 2023.
+
+Marketing efficiency varies enormously across the sector. In 2023, revenue return per
+dollar of marketing spend ranged from **$24 (Charles Darwin University) to well above
+the national average of $117** (HECG).
+
+For comparison, in the US:
+- Universities dedicate a median of **5.3% of revenue** to marketing (mean: 11.9%)
+- Average cost per new student (professional/online programs): **$2,849** (UPCEA 2024)
+- The global enrolment management software market is valued at **~$1.4 billion** (2024),
+  projected to reach **$2.8–3.0 billion by 2030–33** at a ~9% CAGR
+
+Sources: [Australia Institute — Elective Spending at Australian Universities](https://australiainstitute.org.au/report/elective-spending-at-australian-universities/), [HECG — Marketing Dollar Analysis](https://he-cg.com/which-universities-are-attracting-the-most-students-for-their-marketing-dollar/), [UPCEA — 2024 Marketing Survey](https://upcea.edu/key-findings-from-2024-upcea-marketing-survey/), [Verified Market Reports — Enrollment Management Software](https://www.verifiedmarketreports.com/product/enrollment-management-software-market/)
+
+### Why Now — Converging Pressures
+
+Five structural forces are converging to make data-driven marketing intelligence more
+urgent for Australian universities than at any point in the sector's history.
+
+#### 1. International student revenue is being capped
+
+The Australian Government imposed hard caps on new international student commencements:
+**270,000 in 2025** (of which 145,000 at public universities) and **295,000 in 2026**.
+These caps are estimated to **reduce university revenue by $600 million annually**. New
+international commencements dropped 15% to 190,799 by October 2025, and the share of
+Chinese students — formerly 36% of international enrolments — has fallen to 23%.
+
+Universities can no longer rely on growing international fees to cross-subsidise
+operations. The pivot to domestic recruitment is not optional.
+
+Sources: [SBS News — Student Caps](https://www.sbs.com.au/news/article/the-government-has-revealed-international-student-caps-from-2025-whats-been-announced/lu4rn9059), [ANU Analysis](https://cass.anu.edu.au/news/government-will-cap-new-international-students-270000-2025-number-may-not-be-reached)
+
+#### 2. Domestic participation is structurally depressed
+
+Domestic enrolments in 2024 (1,086,789) only just returned to 2019 levels after years of
+post-COVID decline. Domestic commencing undergraduates hit their lowest point in a decade
+in 2023, down 8.9% from the 2017 peak.
+
+School-leaver demand remains **~3% below the mid-2010s peak** despite a growing Year 12
+cohort. Key drivers:
+
+- **Strong labour market** — low unemployment reduces the opportunity cost of not studying
+- **VET/TAFE growth** — 508,000+ enrolments under the Fee-Free TAFE scheme since Jan 2023
+- **Trade wages matching graduate salaries** — newly qualified electricians command a
+  median of $75,000, comparable to entry-level graduate wages
+- **"Degree doubt"** — growing scepticism about university ROI as graduate full-time
+  employment rates slipped from 79% (2023) to 74% (2024)
+- **HECS-HELP anxiety** — the 2023 indexation spike of 7.1% caused significant public
+  backlash (partially addressed by a 20% reduction in outstanding HELP debt in Nov 2024)
+
+Universities cannot wait for students to arrive — they must actively convince prospective
+students that a degree is worth the investment.
+
+Sources: [Andrew Norton — School-leaver interest](https://andrewnorton.id.au/2025/07/14/despite-an-increase-in-applications-for-the-2024-academic-year-school-leaver-interest-in-higher-education-remains-below-mid-2010s-levels/), [Dept of Education — 2024 Key Findings](https://www.education.gov.au/higher-education-statistics/student-data/selected-higher-education-statistics-2024-student-data/key-findings-2024-higher-education-student-statistics)
+
+#### 3. The Universities Accord creates a use-it-or-lose-it funding dynamic
+
+The Universities Accord (February 2024) — the most significant sector review in 15
+years — committed **$2.5 billion** to a new Managed Growth Funding system commencing
+January 2026, with a target of **80% of working-age Australians holding a tertiary
+qualification by 2050**. This includes **82,000 additional funded university places by
+2035**.
+
+The critical dynamic: universities will receive Domestic Student Profiles allocating
+funded places. Institutions that **under-enrol against their profile will see funding
+maintained only in nominal terms** — a real-terms cut. This creates a direct financial
+incentive to invest in recruitment to fill allocated places.
+
+Meanwhile, real funding per Commonwealth-supported student has **fallen ~6% since 2017**
+despite student growth, compressing margins further.
+
+Sources: [Dept of Education — Managed Growth Funding](https://www.education.gov.au/australian-universities-accord/accord-202425-budget-and-myefo-measures/managed-growth-funding), [Universities Accord Final Report Summary](https://www.education.gov.au/download/17995/australian-universities-accord-final-report-summary-report/36761/australian-universities-accord-final-report-summary-report/pdf)
+
+#### 4. Regional and mid-tier institutions face existential pressure
+
+The competitive dynamics are most acute for non-Group-of-Eight institutions:
+
+- **Federation University** announced 200 staff cuts (20% of workforce) due to enrolment
+  and funding pressures
+- **University of Canberra** forecast a $36 million deficit in 2024
+- 11 universities proposed at least **2,091 job losses** in late 2024
+- In Queensland, only **2 of 7 universities** recorded a profit in 2023
+
+These institutions — Project Zeus's primary target — are the most likely to seek
+cost-effective, data-driven alternatives to expensive consulting engagements or
+full-service marketing platforms.
+
+Sources: [Nature — Falling Enrolments](https://www.nature.com/articles/d41586-024-03638-1), [Federation University — City Flight](https://www.federation.edu.au/about/news/news/city-flight-is-blocking-australias-education-goals--regional-universities-need-urgent-investment-now/)
+
+#### 5. Digital marketing maturity is low — creating whitespace
+
+A Siteimprove survey found that while 90% of Australian higher ed digital marketers
+believe they are investing in digital, **zero respondents said their digital elements are
+fully integrated** across the institution or used to drive marketing decisions. The sector
+is spending on marketing without the targeting intelligence to direct it effectively.
+
+This is exactly the gap Project Zeus fills — not more marketing spend, but smarter
+allocation of existing spend through data-backed targeting.
+
+Sources: [MARKETECH APAC — Digital Marketing Lagging Behind](https://marketech-apac.com/digital-marketing-in-australias-higher-education-lagging-behind-report/), [Universities Australia — Critical Challenges](https://universitiesaustralia.edu.au/wp-content/uploads/2024/11/UA091-Critical-challenges-in-Australias-university-sector_v2.pdf)
 
 ---
 
