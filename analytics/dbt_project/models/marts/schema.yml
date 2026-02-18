@@ -62,3 +62,39 @@ models:
           indicate female-skewing fields, negative values indicate male-skewing.
       - name: skew_direction
         description: Which gender has higher preference share (Female, Male, or Balanced)
+
+  - name: state_demand_index
+    description: >
+      State-level demand index comparing graduate-relevant job vacancies (ANZSCO
+      skill levels 1-2) against youth population (15-19 year olds) by state.
+      Identifies geographic hotspots where job demand outpaces the youth talent pool —
+      signals where to concentrate university marketing spend.
+    columns:
+      - name: state
+        description: Australian state/territory code (NSW, VIC, QLD, SA, WA, TAS, NT, ACT)
+        tests:
+          - unique
+          - not_null
+      - name: graduate_vacancies
+        description: Latest-month job vacancies at ANZSCO skill levels 1-2 (bachelor degree or diploma level)
+      - name: total_vacancies
+        description: Latest-month total job vacancies across all skill levels
+      - name: youth_population_15_19
+        description: ABS estimated resident population aged 15-19 (latest available year)
+      - name: graduate_vacancies_per_1k_youth
+        description: >
+          Graduate-level vacancies per 1,000 youth (15-19). Higher values indicate
+          states where graduate job demand is strongest relative to the youth pipeline.
+      - name: total_vacancies_per_1k_youth
+        description: Total vacancies per 1,000 youth (15-19)
+      - name: graduate_share_of_vacancies
+        description: Proportion of vacancies that are graduate-level (skill 1-2) in this state
+      - name: graduate_vacancy_growth_12m
+        description: 12-month growth rate of graduate-level vacancies
+      - name: total_vacancy_growth_12m
+        description: 12-month growth rate of total vacancies
+      - name: demand_rank
+        description: Rank by graduate_vacancies_per_1k_youth descending (1 = highest demand density)
+        tests:
+          - unique
+          - not_null
