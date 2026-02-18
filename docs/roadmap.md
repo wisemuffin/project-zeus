@@ -10,8 +10,9 @@ Mart models that transform raw Dagster assets into marketing-actionable insights
 - [x] **Opportunity Gap by Gender** (`opportunity_gap_by_gender`) — Which high-gap fields skew male or female? Enables gender-targeted ad creative.
 - [x] **State Demand Index** (`state_demand_index`) — Graduate vacancies per 1,000 youth by state. Identifies geographic hotspots for marketing spend.
 
+- [x] **Audience Profile by FOS** (`audience_profile_by_fos`) — Gender, mature learner affinity, and geographic origin per field. Answers **who** to target and **where** they are.
+
 ### Planned
-- [ ] **Audience profile by FOS** — Combine `uac_applicants_by_age` and `uac_applicants_by_gender` to build demographic personas per field of study. Answers **who** to target.
 - [ ] **Trending interests** — Surface `google_trends` data alongside opportunity gap fields to identify timely messaging hooks. Answers **what message** resonates now.
 - [ ] **Historical demand trends** — Use `uac_early_bird_closing_count` to track year-over-year shifts in applicant volumes. Identifies growing vs declining fields for budget allocation.
 

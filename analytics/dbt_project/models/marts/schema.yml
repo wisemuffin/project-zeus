@@ -98,3 +98,46 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: audience_profile_by_fos
+    description: >
+      Audience targeting profile for each UAC field of study. Combines gender
+      preference splits, mature learner affinity (Non-Year 12 over-indexing),
+      and geographic origin signals (interstate draw) with opportunity gap context.
+      Answers "who should we target and where are they?" for each field.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (null for unmapped fields)
+      - name: opportunity_rank
+        description: Rank by opportunity gap (null for unmapped fields)
+      - name: vacancy_share
+        description: This field's share of total mapped vacancies
+      - name: female_preference_share
+        description: Share of female applicants preferring this field
+      - name: male_preference_share
+        description: Share of male applicants preferring this field
+      - name: gender_skew
+        description: Which gender over-indexes on this field (Female, Male, or Balanced)
+      - name: non_yr12_preference_share
+        description: Share of Non-Year 12 (mature age) applicants preferring this field
+      - name: total_preference_share
+        description: Share of all applicants preferring this field
+      - name: mature_learner_index
+        description: >
+          Non-Year 12 share divided by Total share. Values above 1.0 indicate
+          the field attracts disproportionately more mature-age applicants.
+      - name: nsw_preference_share
+        description: Share of NSW Year 12 applicants preferring this field
+      - name: act_preference_share
+        description: Share of ACT Year 12 applicants preferring this field
+      - name: interstate_preference_share
+        description: Share of Interstate & IB Year 12 applicants preferring this field
+      - name: interstate_draw_ratio
+        description: >
+          Interstate share divided by NSW share. Values above 1.0 indicate the
+          field draws disproportionately from interstate — a signal for national campaigns.
