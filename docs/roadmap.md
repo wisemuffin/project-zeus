@@ -102,10 +102,19 @@ These platforms from the student search analysis are **not viable** as data sour
 - **Theming & branding** — production-ready visualization components with customizable light/dark themes
 - **Security & compliance** — SOC 2 Type II, multi-region data residency support
 
-### Next Steps
+### Completed
 
-- [ ] Evaluate Evidence.dev as the embedded analytics platform
-- [ ] Define initial set of reports/dashboards to embed
+- [x] **Evaluate Evidence.dev** — Scaffolded local Evidence project in `reports/`, connected to DuckDB warehouse, built MVP dashboard with opportunity gap, gender, and state demand visualisations.
+
+### Report Pages
+
+- [x] **Opportunity Gap Dashboard** (`pages/index.md`) — BigValue cards, vacancy vs preference bar charts, gender skew, state demand density. Covers opportunity_gap, opportunity_gap_by_gender, and state_demand_index marts.
+- [ ] **Audience Profiles** (`pages/audience-profiles.md`) — Who to target per field: gender split, mature learner index, geographic origin (NSW/ACT/interstate draw). Sources from audience_profile_by_fos mart.
+- [ ] **Trending Interests** (`pages/trending-interests.md`) — Google Trends matched to fields of study with opportunity gap context and marketing signals. Sources from trending_interests mart.
+- [ ] **Historical Demand** (`pages/historical-demand.md`) — 10-year applicant volume trends by segment with YoY growth, CAGR, and recovery ratios. Sources from historical_demand_trends mart.
+
+### Future
+
 - [ ] Set up database-level row-level security policies
 - [ ] Prototype iframe embedding in the application
 - [ ] Implement theming to match product branding
