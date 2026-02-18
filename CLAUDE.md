@@ -7,11 +7,22 @@ campaigns for student acquisition. Every asset and analysis should serve one of:
 - **Where** to target (geographic, state-level audience signals)
 - **What message** to use (field-of-study demand, career outcome data, trending interests)
 
-## Asset Conventions
+## Asset & Model Documentation
+Every Dagster asset and dbt model must document both **what it contains** and **the use case** for the data:
+
+### Dagster Assets
 - Asset docstrings are the primary documentation (visible in Dagster UI)
-- Docstrings should explain: what the data is, how it supports marketing targeting,
-  key columns, and limitations
+- Docstrings must include:
+  - **What**: what the data contains (source, granularity, key columns)
+  - **Use case**: how it supports marketing targeting (which of Who/Where/What message it serves)
+  - **Limitations**: known caveats or data quality notes
 - Always add `context.add_output_metadata()` with row_count and source_url at minimum
+
+### dbt Models
+- Every model must have a `description` in its schema YAML that covers:
+  - **What**: what the model contains and its grain
+  - **Use case**: how it supports marketing targeting decisions
+- Column descriptions should clarify meaning, not just repeat the column name
 
 ## Insights Documentation
 - When analysis models produce actionable findings, document them in `docs/insights/`
