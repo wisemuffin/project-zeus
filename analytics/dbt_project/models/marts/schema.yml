@@ -32,3 +32,33 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: opportunity_gap_by_gender
+    description: >
+      Extends the opportunity gap analysis with gender preference breakdowns.
+      Shows which high-gap fields skew male or female, enabling gender-targeted
+      ad creative and audience segmentation for university marketing campaigns.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+      - name: vacancy_share
+        description: This field's share of total mapped vacancies (0-1 decimal)
+      - name: vacancy_growth_12m
+        description: 12-month growth rate of vacancies for this field's mapped occupations
+      - name: female_preference_share
+        description: Share of female UAC Early Bird first preferences for this field (0-1 decimal)
+      - name: male_preference_share
+        description: Share of male UAC Early Bird first preferences for this field (0-1 decimal)
+      - name: gender_skew
+        description: >
+          female_preference_share minus male_preference_share. Positive values
+          indicate female-skewing fields, negative values indicate male-skewing.
+      - name: skew_direction
+        description: Which gender has higher preference share (Female, Male, or Balanced)
