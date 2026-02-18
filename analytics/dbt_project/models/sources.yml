@@ -70,3 +70,11 @@ sources:
         meta:
           dagster:
             asset_key: ["qilt_institution_scores"]
+      - name: cricos_courses
+        description: >
+          CRICOS higher-education course listings — denormalized from institutions,
+          courses, locations, and course-locations CSVs. Covers ~9,000+ courses
+          across all providers registered for international students.
+        meta:
+          dagster:
+            asset_key: ["cricos_courses"]

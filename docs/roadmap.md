@@ -17,9 +17,18 @@ Mart models that transform raw Dagster assets into marketing-actionable insights
 
 - [x] **State × FOS Demand** (`state_fos_demand`) — State-level demand by field of study with specialisation skew vs national average. ACT over-indexes on IT, TAS/SA/NT on Health, WA on Engineering.
 
+- [x] **University Course Listings** (`university_course_listings`) — CRICOS course data from data.gov.au joined with opportunity gap and graduate outcomes. Connects fields of study to named programs at specific institutions and campuses for program-level marketing recommendations.
+
 ### Planned
-- [ ] **University Course Listings** — Ingest CourseSeeker or similar to connect opportunity gaps to specific programs a university could promote. Requires new data source.
-- [ ] **Digital Ad Cost Benchmarks** — Google Ads CPC by education keyword to turn opportunity gaps into ROI-adjusted recommendations. Requires new data source.
+
+*(none currently)*
+
+### Parked
+- [ ] **Digital Ad Cost Benchmarks** — Google Ads CPC by education keyword to turn opportunity gaps into ROI-adjusted recommendations. No free open data source exists at keyword level. Viable paid options when ready:
+  - *Google Ads API* — free to query (needs billing account with $0 spend), OAuth + developer token setup
+  - *DataForSEO* — ~$50 one-time (credits don't expire), cleanest REST API, supports AU targeting
+  - *SpyFu edu program* — potentially free for research, email request required
+  - Category-level benchmarks available free (WordStream: Education CPC ~$6.23 USD / "degree" $18.38 AUD in 2017)
 
 ---
 
@@ -60,7 +69,39 @@ QILT publishes four survey datasets as Excel report tables:
 - [x] Build mart model: **graduate_outcomes_by_fos** — joins GOS employment/salary data with opportunity gap, gender preferences, and marketing signals
 - [x] Build mart model: **institution_scorecard** — per-university satisfaction + outcomes for competitive benchmarking (43 universities)
 
-### Priority 2: QTAC (Queensland Tertiary Admissions Centre)
+### Priority 2: CRICOS (Course Listings)
+
+**Source:** [data.gov.au/data/dataset/cricos](https://data.gov.au/data/dataset/cricos) | **Owner:** Australian Government (Department of Education)
+**Access:** Free CSV/XLSX download, Creative Commons Attribution 2.5 Australia
+**Coverage:** ~9,000 courses across all providers registered for international students
+**Frequency:** Monthly updates
+
+CRICOS provides four relational CSV files:
+
+| File | Contents |
+|------|----------|
+| **CRICOS Institutions** | Provider name, CRICOS code, type, state |
+| **CRICOS Courses** | Course name, level, field of study (ASCED broad + narrow), duration, fees |
+| **CRICOS Locations** | Campus locations per provider |
+| **CRICOS Course Locations** | Junction table linking courses to delivery locations |
+
+**Marketing use:** Connects opportunity gap fields to named programs at specific institutions — enables "promote your [X] degree" recommendations. Joined with QILT outcomes, supports per-program ROI messaging.
+
+**Limitations:**
+- International-student-registered courses only (most university courses are registered, but some domestic-only programs may be absent)
+- No ATAR/entry requirement data
+- No delivery mode (online vs on-campus) — would need CourseSeeker for that
+- ASCED field-of-study classification requires mapping to UAC categories (same approach as QILT staging model)
+
+**Note:** CourseSeeker (courseseeker.edu.au) was investigated but has no public API or bulk download — it is an Angular SPA with a private backend. CRICOS is the best open alternative.
+
+**Implementation plan:**
+- [x] Download and explore CRICOS CSV structure from data.gov.au
+- [x] Build Dagster asset for CRICOS data (institutions + courses + locations) — `cricos_courses`
+- [x] Create dbt staging model to map ASCED fields to UAC categories — `stg_cricos_courses`
+- [x] Build mart model: **university_course_listings** — courses joined with opportunity gap and graduate outcomes for program-level recommendations
+
+### Priority 3 (deferred): QTAC (Queensland Tertiary Admissions Centre)
 
 **Source:** [qtac.edu.au](https://www.qtac.edu.au/) | **Owner:** QLD consortium
 **Access:** TBD — need to investigate published statistics
@@ -71,11 +112,11 @@ Would extend UAC-style preference analysis to Queensland, covering Australia's t
 - [ ] Investigate QTAC published statistics and data availability
 - [ ] Assess whether data format is comparable to UAC for unified staging models
 
-### Priority 3: Other Accessible Platforms
+### Priority 4: Other Accessible Platforms
 
 | Platform | Data | Status |
 |----------|------|--------|
-| **CourseSeeker** ([courseseeker.edu.au](https://www.courseseeker.edu.au/)) | National course listings across all institutions | Not yet investigated |
+| **CourseSeeker** ([courseseeker.edu.au](https://www.courseseeker.edu.au/)) | National course listings across all institutions | Investigated — no API or bulk download; Angular SPA with private backend. CRICOS used instead. |
 | **VTAC / SATAC / TISC** | State-level admissions stats for VIC, SA, WA | Not yet investigated — each TAC publishes differently |
 | **Good Universities Guide** ([gooduniversitiesguide.com.au](https://www.gooduniversitiesguide.com.au/)) | University ratings & rankings | Not yet investigated |
 

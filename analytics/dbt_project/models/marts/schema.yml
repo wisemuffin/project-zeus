@@ -253,3 +253,66 @@ models:
         description: >
           Rank within each state by state_vs_national_skew descending.
           Rank 1 = the field this state most over-indexes on.
+
+  - name: university_course_listings
+    description: >
+      Program-level marketing recommendations joining CRICOS course listings with
+      opportunity gap and graduate outcomes data. Grain is institution × course ×
+      location. Enables "University X offers 3 Engineering programs in NSW — a
+      field with a +12% opportunity gap and 85% FT employment" style messaging.
+    columns:
+      - name: institution_name
+        description: Full institution name from CRICOS register
+        tests:
+          - not_null
+      - name: institution_type
+        description: Institution type (e.g. Government, Private)
+      - name: cricos_provider_code
+        description: Unique CRICOS provider code (e.g. 00002J for Macquarie University)
+      - name: course_name
+        description: Full course name as registered in CRICOS
+        tests:
+          - not_null
+      - name: course_level
+        description: >
+          Qualification level (Bachelor Degree, Masters Degree, Doctoral Degree,
+          Graduate Diploma, Graduate Certificate, Associate Degree, etc.)
+      - name: narrow_field
+        description: >
+          ASCED narrow field of education (e.g. "0301 - Manufacturing Engineering
+          and Technology"). More specific than the broad field used for UAC mapping.
+      - name: duration_weeks
+        description: Course duration in weeks as registered in CRICOS
+      - name: estimated_total_cost
+        description: Estimated total course cost in AUD (tuition + non-tuition fees)
+      - name: location_state
+        description: Australian state/territory where the course is delivered
+      - name: location_city
+        description: City/suburb where the course is delivered
+      - name: uac_field_of_study
+        description: >
+          UAC field of study category mapped from ASCED broad field code.
+          Used as the join key to opportunity gap and graduate outcomes data.
+      - name: opportunity_gap
+        description: >
+          Vacancy share minus preference share for this field. Positive values
+          indicate fields where job demand exceeds student interest.
+      - name: opportunity_rank
+        description: Rank by opportunity gap descending (1 = largest gap)
+      - name: vacancy_growth_12m
+        description: 12-month growth rate of vacancies for this field
+      - name: ft_employment_rate
+        description: >
+          QILT full-time employment rate for graduates in this field (%).
+          Average across QILT study areas mapped to this UAC field.
+      - name: median_salary
+        description: QILT median graduate salary for this field (AUD)
+      - name: marketing_signal
+        description: >
+          Composite marketing recommendation: "Strong — high demand, strong outcomes",
+          "Demand — high demand, moderate outcomes", "Outcomes — saturated but
+          graduates do well", or "Challenging — low demand, weaker outcomes".
+      - name: course_count_in_field
+        description: >
+          Number of distinct courses this institution offers in this UAC field.
+          Higher counts indicate institutional depth/commitment to the field.
