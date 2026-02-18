@@ -106,7 +106,8 @@ def _parse_ses_institutions(xlsx_bytes: bytes) -> pd.DataFrame:
 
 @dg.asset(
     group_name="institution_scores",
-    tags={"source": "qilt", "domain": "institution_benchmarking"},
+    tags={"source": "qilt", "domain": "institution_benchmarking", "update_frequency": "annual"},
+    automation_condition=dg.AutomationCondition.on_cron("0 9 1 10 *"),
 )
 def qilt_institution_scores(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """QILT institution scorecard — satisfaction, employment, and salary per university.

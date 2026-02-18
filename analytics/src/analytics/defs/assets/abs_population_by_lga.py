@@ -13,7 +13,8 @@ ABS_API_URL = (
 
 @dg.asset(
     group_name="abs_data",
-    tags={"source": "abs", "domain": "demographics"},
+    tags={"source": "abs", "domain": "demographics", "update_frequency": "annual"},
+    automation_condition=dg.AutomationCondition.on_cron("0 9 1 11 *"),
 )
 def abs_population_by_lga(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """Estimated Resident Population (ERP) for 15-19 year olds by LGA.

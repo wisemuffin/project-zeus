@@ -44,7 +44,8 @@ def _download_csv(url: str, context: dg.AssetExecutionContext) -> pd.DataFrame:
 
 @dg.asset(
     group_name="course_listings",
-    tags={"source": "cricos", "domain": "course_listings"},
+    tags={"source": "cricos", "domain": "course_listings", "update_frequency": "weekly"},
+    automation_condition=dg.AutomationCondition.on_cron("0 9 * * 1"),
 )
 def cricos_courses(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """CRICOS course listings — higher-education courses across Australian institutions.

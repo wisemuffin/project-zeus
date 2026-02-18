@@ -56,7 +56,8 @@ def _parse_ses_by_area(xlsx_bytes: bytes) -> pd.DataFrame:
 
 @dg.asset(
     group_name="student_experience",
-    tags={"source": "qilt", "domain": "student_experience"},
+    tags={"source": "qilt", "domain": "student_experience", "update_frequency": "annual"},
+    automation_condition=dg.AutomationCondition.on_cron("0 9 1 10 *"),
 )
 def qilt_student_experience(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """QILT Student Experience Survey (SES) — satisfaction by study area.

@@ -14,7 +14,8 @@ _SHEET_NAME = "Applicants by age"
 
 @dg.asset(
     group_name="uac_data",
-    tags={"source": "uac", "domain": "demographics"},
+    tags={"source": "uac", "domain": "demographics", "update_frequency": "annual"},
+    automation_condition=dg.AutomationCondition.on_cron("0 9 1 11 *"),
 )
 def uac_applicants_by_age(
     context: dg.AssetExecutionContext,

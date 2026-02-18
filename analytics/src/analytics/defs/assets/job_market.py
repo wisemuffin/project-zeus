@@ -57,7 +57,8 @@ def _find_latest_ivi_url() -> tuple[str, date]:
 
 @dg.asset(
     group_name="job_market",
-    tags={"source": "job_market", "domain": "employment"},
+    tags={"source": "job_market", "domain": "employment", "update_frequency": "monthly"},
+    automation_condition=dg.AutomationCondition.on_cron("0 9 15 * *"),
 )
 def job_market(context: dg.AssetExecutionContext) -> pd.DataFrame:
     """Internet Vacancy Index (IVI) — job vacancies by ANZSCO skill level and state.
