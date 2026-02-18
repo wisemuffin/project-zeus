@@ -23,6 +23,9 @@ Thumbs.db
 # Dagster
 .tmp_dagster_home*/
 
+# dbt
+.user.yml
+
 # DuckDB
 *.duckdb
 *.duckdb.wal
