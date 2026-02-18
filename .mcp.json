@@ -5,7 +5,8 @@
       "args": ["dbt-mcp"],
       "env": {
         "DBT_PROJECT_DIR": "/home/dave/project-zeus-market-research/analytics/dbt_project",
-        "DBT_PROFILES_DIR": "/home/dave/project-zeus-market-research/analytics/dbt_project"
+        "DBT_PROFILES_DIR": "/home/dave/project-zeus-market-research/analytics/dbt_project",
+        "DBT_PATH": "/home/dave/project-zeus-market-research/analytics/.venv/bin/dbt"
       }
     }
   }

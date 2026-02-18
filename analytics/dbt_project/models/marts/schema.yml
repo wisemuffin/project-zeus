@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: opportunity_gap
+    description: >
+      Opportunity gap analysis comparing job vacancy demand (from IVI data) against
+      student preference share (from UAC Early Bird data) by field of study.
+      A positive gap means more job demand than student interest — the strongest
+      messaging opportunities for university marketing campaigns.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category (e.g. Health, Engineering & Related Technologies)
+        tests:
+          - unique
+          - not_null
+      - name: total_vacancies
+        description: Total internet job vacancies across all mapped ANZSCO2 occupations for this field
+      - name: vacancy_share
+        description: This field's share of total mapped vacancies (0-1 decimal)
+      - name: preference_share
+        description: Share of UAC Early Bird first preferences for this field (0-1 decimal)
+      - name: opportunity_gap
+        description: >
+          vacancy_share minus preference_share. Positive values indicate fields where
+          job demand exceeds student interest — prime targets for marketing messaging.
+      - name: vacancy_growth_12m
+        description: >
+          12-month growth rate of vacancies for this field's mapped occupations.
+          Computed as (current - prior) / prior. Null when prior-year data is unavailable.
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+        tests:
+          - unique
+          - not_null
