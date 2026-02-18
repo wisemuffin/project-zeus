@@ -60,3 +60,13 @@ sources:
         meta:
           dagster:
             asset_key: ["qilt_graduate_outcomes"]
+      - name: qilt_student_experience
+        description: QILT Student Experience Survey — satisfaction indicators by study area
+        meta:
+          dagster:
+            asset_key: ["qilt_student_experience"]
+      - name: qilt_institution_scores
+        description: QILT institution scorecard — satisfaction, employment, and salary per university
+        meta:
+          dagster:
+            asset_key: ["qilt_institution_scores"]

@@ -54,10 +54,11 @@ QILT publishes four survey datasets as Excel report tables:
 **Implementation plan:**
 - [x] Download and explore GOS report tables to understand sheet structure
 - [x] Build Dagster asset for GOS data (employment rates & salaries by field of study) — `qilt_graduate_outcomes`
-- [ ] Build Dagster asset for SES data (student satisfaction by field of study)
-- [x] Create dbt staging model to standardise QILT field-of-study names to UAC categories — `stg_qilt_graduate_outcomes`
+- [x] Build Dagster asset for SES data (student satisfaction by field of study) — `qilt_student_experience`
+- [x] Build Dagster asset for institution scores (SES + GOS combined) — `qilt_institution_scores`
+- [x] Create dbt staging models to standardise QILT field-of-study names to UAC categories — `stg_qilt_graduate_outcomes`, `stg_qilt_student_experience`
 - [x] Build mart model: **graduate_outcomes_by_fos** — joins GOS employment/salary data with opportunity gap, gender preferences, and marketing signals
-- [ ] Build mart model: **institution_scorecard** — per-university satisfaction + outcomes for competitive benchmarking
+- [x] Build mart model: **institution_scorecard** — per-university satisfaction + outcomes for competitive benchmarking (43 universities)
 
 ### Priority 2: QTAC (Queensland Tertiary Admissions Centre)
 
@@ -116,9 +117,11 @@ These platforms from the student search analysis are **not viable** as data sour
 ### Report Pages
 
 - [x] **Opportunity Gap Dashboard** (`pages/index.md`) — BigValue cards, vacancy vs preference bar charts, gender skew, state demand density. Covers opportunity_gap, opportunity_gap_by_gender, and state_demand_index marts.
-- [ ] **Audience Profiles** (`pages/audience-profiles.md`) — Who to target per field: gender split, mature learner index, geographic origin (NSW/ACT/interstate draw). Sources from audience_profile_by_fos mart.
-- [ ] **Trending Interests** (`pages/trending-interests.md`) — Google Trends matched to fields of study with opportunity gap context and marketing signals. Sources from trending_interests mart.
-- [ ] **Historical Demand** (`pages/historical-demand.md`) — 10-year applicant volume trends by segment with YoY growth, CAGR, and recovery ratios. Sources from historical_demand_trends mart.
+- [x] **Audience Profiles** (`pages/audience-profiles.md`) — Who to target per field: gender split, mature learner index, geographic origin (NSW/ACT/interstate draw). Sources from audience_profile_by_fos mart.
+- [x] **Trending Interests** (`pages/trending-interests.md`) — Google Trends matched to fields of study with opportunity gap context and marketing signals. Sources from trending_interests mart.
+- [x] **Historical Demand** (`pages/historical-demand.md`) — 10-year applicant volume trends by segment with YoY growth, CAGR, and recovery ratios. Sources from historical_demand_trends mart.
+- [x] **Graduate Outcomes** (`pages/graduate-outcomes.md`) — Salary by gender, FT employment rates (YoY), marketing signal matrix, salary gender gap. Sources from graduate_outcomes_by_fos mart + QILT GOS data.
+- [x] **Institution Scorecard** (`pages/institution-scorecard.md`) — Per-university satisfaction vs employment scatter, satisfaction indicators, full scorecard with sector comparison. Sources from institution_scorecard mart + QILT SES/GOS data.
 
 ### Future
 
