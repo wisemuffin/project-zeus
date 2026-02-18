@@ -46,4 +46,17 @@ npm run dev        # start the dev server
 
 Open **http://localhost:3000** (or the next available port if 3000 is in use) to view the dashboard.
 
-After updating dbt models, re-run `npm run sources` to refresh the Evidence data cache.
+### Refreshing the Evidence Source Cache
+
+Evidence caches query results as parquet files in `.evidence/template/static/data/`. It does **not** automatically detect changes in the upstream DuckDB database. You must re-run the source extraction whenever:
+
+- You materialise assets or rebuild dbt models in the analytics pipeline
+- You add a new source SQL file under `reports/sources/zeus/`
+- You see "Table does not exist" errors in Evidence for tables you know exist in DuckDB
+
+```bash
+cd reports
+npm run sources    # re-extracts all source queries from DuckDB
+```
+
+If the dev server is running, restart it after refreshing sources.
