@@ -180,3 +180,34 @@ models:
           Actionable recommendation based on match and opportunity gap:
           "High opportunity" for positive-gap fields, "Low opportunity" for
           negative-gap fields, "Unclassified" for unmatched trends.
+
+  - name: historical_demand_trends
+    description: >
+      Year-over-year UAC Early Bird applicant trends by segment (NSW Year 12,
+      ACT Year 12, Interstate & IB, Non-Year 12, Total). Tracks volume growth,
+      peak recovery, and compound annual growth rate across a 10-year window.
+      Identifies which applicant segments are growing or declining for budget allocation.
+    columns:
+      - name: applicant_type
+        description: Applicant segment (e.g. NSW Year 12, Non-Year 12, Total)
+        tests:
+          - unique
+          - not_null
+      - name: latest_intake
+        description: Most recent intake year range (e.g. 2025–26)
+      - name: latest_count
+        description: Applicant count in the most recent intake
+      - name: latest_yoy_growth
+        description: Year-over-year growth rate for the most recent intake
+      - name: peak_count
+        description: Highest applicant count recorded across all years
+      - name: peak_intake
+        description: Intake year range when peak count occurred
+      - name: recovery_ratio
+        description: >
+          Latest count divided by peak count. Values below 1.0 indicate the
+          segment has not recovered to its historical peak.
+      - name: cagr
+        description: Compound annual growth rate across the full data window
+      - name: trend_direction
+        description: Current direction based on latest YoY growth (Growing, Declining, or Flat)
