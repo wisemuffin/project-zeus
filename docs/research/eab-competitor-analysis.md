@@ -71,24 +71,79 @@ and integration points could inform how we package our outputs.
 
 ### 3. Appily (formerly Cappex) - Student-Facing Lead Generation
 
-**Scale: Multiple acquired brands (Cappex, College Greenlight, YouVisit, Concourse) | Pay-per-lead model — high-margin revenue stream**
+**Scale: 3M+ students, 4,000+ college profiles | Multiple acquired brands | Pay-per-lead model — high-margin revenue stream**
 
-Appily is EAB's student-facing platform that aggregates several acquired brands:
+Appily launched in September 2023 as EAB's consolidated student-facing platform,
+merging several acquisitions into a single destination:
 
 | Brand | Function |
 |---|---|
 | **Cappex** | College search and matching tools |
 | **College Greenlight** | Services for underrepresented and first-generation students |
 | **YouVisit** | Immersive virtual campus tours |
-| **Concourse** | Reverse admissions platform |
+| **Concourse** | Reverse admissions platform (now "Appily Match") |
 
-Appily generates **high-intent leads** — students actively searching for programmes —
-and sells these inquiries to partner institutions. There is a specific **Cappex for
-Adult Learners** product targeting graduate and adult degree-completion programmes.
+#### How It Works (Student Side)
+
+Appily is **free for students** and positions itself as an all-in-one college planning
+tool. Key features:
+
+- **College search** across 4,000+ institutions with filters (major, cost, location,
+  GPA/SAT/ACT)
+- **Scholarship database** — ~250,000 scholarships totalling ~$50M in value
+- **Virtual campus tours** via YouVisit technology
+- **Admission chances calculator** based on academic profile
+- **Direct Admissions** — the most disruptive feature: participating institutions
+  proactively extend admission offers and financial aid to students who complete
+  profiles, reversing the traditional application flow ("schools apply to students")
+
+#### How It Works (University Side) — Revenue Model
+
+Appily monetises through several mechanisms, all paid by institutions:
+
+| Revenue Stream | Description |
+|---|---|
+| **Appily Candidates** | Lead gen using predictive modelling + digital network to connect institutions with qualified prospects likely to apply and enrol |
+| **Appily Match** | Direct admissions — students submit transcripts upfront, enabling institutions to verify qualifications before extending offers |
+| **Appily Advance** | Lead gen for graduate, healthcare, nursing, and adult-serving programmes |
+| **Promotional tools** | Customised visibility across Appily's organic traffic, paid traffic, and partner site network |
+
+#### Performance Metrics
+
+- Students acquired through Appily are **20x more likely to deposit** than traditional
+  search names
+- Appily Advance costs **~70% less per lead** than Meta, LinkedIn, or paid search
+- Appily Advance delivers a **36% higher lead form submission rate** than
+  institution-specific paid search
+- Appily Match requires **transcript submission upfront**, giving institutions verified
+  (not self-reported) academic data — a significant quality differentiator vs competitors
+
+#### Competitive Position Among Student-Search Platforms
+
+Appily competes in a crowded US student-search market. Key competitors include:
+
+| Competitor | Differentiator vs Appily |
+|---|---|
+| **[Niche](https://www.niche.com/)** | User-generated reviews & ratings; ~$10K/yr avg subscription; leads 15x more likely to apply, 24x to enrol |
+| **[BigFuture](https://bigfuture.collegeboard.org/)** (College Board) | Direct pipeline from SAT scores — massive captive audience |
+| **[Common App](https://www.commonapp.org/)** | Dominant application portal (1,000+ institutions, 3M+ users/year) — not search-focused but owns the application step |
+| **[Naviance](https://www.naviance.com/)** (PowerSchool) | Embedded in high school counselling workflows — institutional rather than student-driven |
+| **[College Raptor](https://www.collegeraptor.com/)** | Personalised financial aid estimates + acceptance odds |
+
+Appily's moat is the **combination of search + matching + direct admissions + virtual
+tours** in a single platform, backed by EAB's institutional relationships via Enroll360.
+No single competitor offers this full stack.
+
+> See [Student Search Platforms](/docs/insights/student-search-platforms.md) for a full
+> analysis of USA and Australian student-search platforms.
 
 **Key insight for Zeus:** Appily gives EAB a proprietary first-party data asset
-(student intent signals). This is a significant competitive moat that would be difficult
-to replicate. Zeus should focus on public/open data sources as a differentiator.
+(student intent signals) at massive scale (3M+ students). This is a significant
+competitive moat that would be difficult to replicate. The Direct Admissions model
+is particularly disruptive — it positions EAB as the marketplace connecting supply
+(institutions) and demand (students). Zeus should focus on public/open data sources as
+a differentiator, and recognise that Appily represents a **demand capture** channel
+that sits downstream of the **demand generation** work Zeus supports.
 
 ---
 
@@ -180,7 +235,11 @@ EAB maintains a large research and advisory practice:
 - [EAB Homepage](https://eab.com/)
 - [Enroll360 Solution](https://eab.com/solutions/enroll360/)
 - [Navigate360 CRM](https://eab.com/solutions/navigate360/)
-- [Appily (Cappex)](https://eab.com/cappex/)
+- [Appily](https://www.appily.com/) | [EAB Appily Solution](https://eab.com/solutions/appily/)
+- [Appily Advance](https://eab.com/solutions/appily-advance/)
+- [Appily Candidates](https://eab.com/solutions/appily-candidates/)
+- [Appily Match](https://eab.com/solutions/enroll360/match/)
+- [Niche Partners](https://www.niche.com/about/partners/college-increase-student-enrollment/)
 - [Adult Learner Recruitment](https://eab.com/solutions/adult-learner-recruitment/)
 - [Edify Data Platform](https://eab.com/solutions/edify/)
 - [Strategic Advisory Services](https://eab.com/solutions/strategic-advisory-services/)
