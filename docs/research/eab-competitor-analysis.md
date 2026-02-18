@@ -25,47 +25,111 @@ no public filings available). Product-level revenue is not disclosed.
 
 ### 1. Enroll360 - Enrollment Marketing & Recruitment
 
-**Scale: 1,100+ partner schools | Likely largest revenue contributor (marketing + lead gen fees)**
+**Scale: 1,200+ partner schools | 1.5B+ student interactions/year | Likely largest revenue contributor**
 
 **Directly competes with Project Zeus's targeting use case.**
 
 Enroll360 is EAB's full-funnel enrolment marketing solution that combines marketing
-campaigns with proprietary recruitment platforms.
+campaigns with proprietary recruitment platforms. It is built on **1.5+ billion student
+interactions** annually.
 
-| Component | Description |
-|---|---|
-| **Audience Strategy** | Data-driven audience identification using proprietary and third-party data to find right-fit students |
-| **Marketing Campaigns** | Responsive digital campaigns (paid media, SEO, retargeting, email) to build affinity over time |
-| **Cultivate Campaigns** | Inquiry-generation campaigns — students who inquire through Cultivate are reportedly **6.3x more likely to enrol** vs traditional methods |
-| **Funnel Analytics** | Performance tracking across the full recruitment funnel |
+#### Performance Claims
 
-Enroll360 is trusted by **1,100+ schools** for recruitment marketing.
+- **16%** average enrolment increase among first-year partners
+- **17%** average increase in net tuition revenue (NTR) among first-year partners
+- **6.3x** higher enrolment likelihood for Cultivate campaign students vs traditional methods
+
+#### Four Core Modules
+
+| Module | Stage | Description |
+|---|---|---|
+| **Cultivate** | Awareness → Inquiry | Affinity-building campaigns using data-driven audience strategies to identify and nurture right-fit students |
+| **Apply** | Inquiry → Application | Demand-generating application marketing with omni-channel strategies and real-time data insights |
+| **Aid** | Admission → Yield | Data-driven financial aid policy creation and optimisation to support enrolment growth |
+| **Yield** | Admit → Deposit | Actionable yield analytics combining surveying with national data for conversion acceleration |
+
+#### Enroll360 Insight Engine (AI)
+
+- Hyperpersonalised content delivery at scale
+- Optimised campaign targeting and budget allocation
+- Predictive analytics across the full enrolment funnel
+- **Conversation Agent** — AI assistant embedded in outbound emails, landing pages, and
+  SMS to engage prospects 24/7
+
+#### Service Model
+
+Each partner gets a dedicated **Strategic Leader** coordinating support across **13
+specialist teams** — positioning EAB as an outsourced enrolment marketing department
+rather than a point tool.
+
+#### Recruitment Platforms (via Appily)
+
+Enroll360 partners also get access to Appily's lead generation tools:
+- Student Leads (Appily Candidates)
+- Virtual Tours
+- Direct Admission (Appily Match)
+- International Student Recruitment (Global Match)
 
 **Key insight for Zeus:** Enroll360 bundles data-driven audience targeting with campaign
-execution. Project Zeus focuses on the upstream research/targeting layer — we need to
-be clearer and more granular than EAB's audience strategy to differentiate.
+execution and has a deeply integrated service model (13 specialist teams per partner).
+Project Zeus focuses on the upstream research/targeting layer — we need to be clearer
+and more granular than EAB's audience strategy to differentiate. The "Aid" module is
+notable: financial aid optimisation is a lever Zeus doesn't currently address.
 
 ---
 
 ### 2. Navigate360 - CRM & Student Success Platform
 
-**Scale: 850+ institutions, 10M+ students | Core SaaS platform — likely second-largest revenue line**
+**Scale: 850+ institutions, 10M+ students | 95%+ annual renewal rate | Core SaaS platform — likely second-largest revenue line**
 
 Navigate360 is the leading higher-education CRM, used by **850+ institutions**. It
 covers the full student lifecycle from recruitment through to alumni engagement.
 
+#### Performance Claims
+
+- **2-12%** typical retention rate improvement
+- **3-15%** typical graduation rate improvement
+- **5:1** typical ROI
+- **95%+** annual renewal rate
+
+#### Five Core Modules
+
 | Module | Description |
 |---|---|
-| **Enrollment CRM** | Prospect management, application tracking, AI-driven engagement prioritisation |
-| **Student Success** | Early-alert systems, advisor tools, intervention workflows |
-| **Career Services** | Career pathway matching, employer engagement |
-| **Alumni & Advancement** | Donor cultivation, alumni engagement tracking |
+| **Enrollment CRM** | Prospect management, communications, automated workflows, custom application builder, Common App integration |
+| **Student Success** | Complete student profiles, coordinated care networks, cases & referrals, automated alerts, two-way SMS, faculty progress reports |
+| **Student Engagement Hub** | Student-facing portal with AI knowledge agent, two-way messaging, career matching, sentiment analysis, financial planning, hand-raise feature |
+| **Career Services** | Integrates Forage virtual job simulations (Citi, PwC, Goldman Sachs etc.) — students using simulations see 2x interview/offer rates |
+| **Advancement CRM** | Alumni engagement, AI-assisted fundraising campaign creation, outcome tracking |
 
-Partners report **3-15% graduation rate increases** and a typical **5:1 ROI**.
+#### AI Capabilities
+
+**Staff-facing AI assistant:**
+- Campaign drafting and management
+- Data discovery and insights
+- Meeting preparation summaries
+- Recruitment outreach optimisation
+
+**Student-facing AI navigator:**
+- Appointment scheduling with appropriate staff
+- Course recommendations aligned with degree progress
+- 24/7 response to common questions
+
+**Smart Network:** Proactive engagement monitoring triggering interventions before
+challenges escalate.
+
+#### Technical Architecture
+
+- Cloud-based (AWS), web + mobile apps
+- System-agnostic with pre-built integrations: Blackboard, Canvas, Brightspace,
+  Ellucian, Jenzabar, Moodle, Oracle PeopleSoft, Workday Student, Common App
+- Enterprise licensing — no separate user licences, covers all staff and students
 
 **Key insight for Zeus:** Navigate360's enrollment CRM is the system that would
-*consume* the kind of targeting intelligence Zeus produces. Understanding its data model
-and integration points could inform how we package our outputs.
+*consume* the kind of targeting intelligence Zeus produces. Its pre-built integrations
+list (Ellucian, PeopleSoft, Workday Student) reveals which SIS platforms dominate the
+US market. The enterprise licensing model (no per-seat fees) is worth noting — it
+removes adoption friction within institutions.
 
 ---
 
@@ -149,56 +213,118 @@ that sits downstream of the **demand generation** work Zeus supports.
 
 ### 4. Adult Learner Recruitment
 
-**Scale: 480+ graduate marketing & enrollment partners | 12+ years in segment — feeds into Enroll360 revenue**
+**Scale: 200+ partner institutions | 6:1 average ROI | 18% average graduate enrolment growth**
 
-A dedicated solution for graduate, online, and adult learner enrolment growth.
+A dedicated full-funnel solution for graduate, online, and adult learner enrolment —
+positioned as an alternative to traditional OPMs (Online Program Managers) or digital
+agencies.
 
-- Uses consumer analytics, paid media, SEO, retargeting, and proprietary data sources
-  to identify prospective adult learners
-- Gamified web experiences to match students to personalised career pathways
-- Backed by **12+ years** of experience in the adult learner segment
+#### Performance Claims
+
+- **6:1** average ROI for graduate programs across multi-year partnerships
+- **18%** average graduate enrolment growth
+- Conversation Agent handles **75%** of student questions outside business hours
+
+#### The 4 C's Framework
+
+| Stage | Description |
+|---|---|
+| **Curate** | Expands student pools via proprietary database of **200M+ consumers**, Appily Advance, and AI chat agent. Refines known lead sources (organic traffic, paid search, test-taker lists) |
+| **Cultivate** | Responsive, multi-channel campaigns with hyper-personalised messaging adapted to individual student goals and engagement patterns |
+| **Convert** | 24/7 campaign performance data via Partner Portal. Intent surveys, financial aid modelling, and yield optimisation post-admission |
+| **Strategize** | Fee-for-service strategic guidance on program design, pricing, market positioning, corporate partnerships, and org structure |
+
+#### Service Model
+
+Each partner works with a dedicated **Strategic Leader** who becomes an extension of
+the institution's leadership team — similar to the Enroll360 model but specialised for
+the adult/graduate segment.
 
 **Key insight for Zeus:** The adult/postgrad segment is a distinct market with different
-targeting needs. Zeus's job market (IVI) and career outcome data assets are directly
-relevant here.
+targeting needs. EAB's "200M+ consumer database" for prospect identification is a major
+proprietary asset. Zeus's job market (IVI) and career outcome data assets are directly
+relevant to the "Curate" stage — particularly for identifying career-switcher audiences.
+The "Strategize" tier (program design, pricing, market positioning) is a consulting
+revenue stream Zeus could also explore.
 
 ---
 
 ### 5. Edify - Data & Analytics Platform
 
-**Scale: Undisclosed partner count | Newer product — likely smaller but growing revenue line (SaaS model)**
+**Scale: 250+ partner institutions | 3x faster deployment than traditional DW | 50% faster report building**
 
 Edify is an AI-powered, cloud-native data management platform (hosted on AWS).
 
+#### Core Capabilities
+
 | Feature | Description |
 |---|---|
-| **Data Lake/Warehouse** | Vendor-agnostic ingestion via pre-built higher-ed connectors or custom extractions |
-| **Self-Service Analytics** | No/low-code data exploration, analysis, and operational reporting |
-| **Accelerators** | Pre-built analytic workspaces for strategic priorities (e.g., course planning) |
-| **AI Features** | Query Assist (natural language to SQL), Data Search Assist, Query Explainer |
+| **Data Lake/Warehouse** | Cloud-native, vendor-agnostic ingestion via pre-built higher-ed connectors or custom extractions. Downstream data delivery, snapshotting, permissions management |
+| **Data Governance** | Higher-ed-specific data model with **200+ out-of-the-box data/metadata definitions**, data catalogue, and lineage tracking |
+| **Self-Service Analytics** | No/low-code data exploration and operational reporting |
+| **Accelerators** | **50+ pre-built reports and dashboards** across 10 functional areas. Customisable analytic workspaces for priorities like course planning |
 | **BI Integration** | Connects to preferred business intelligence tools for visualisation |
+| **Predictive Modelling** | Self-service predictive modelling capabilities |
 
-Implementation timeline: core platform in **~10 days**, source system integrations in
-**~2 weeks**.
+#### AI Features (Edify AI)
 
-**Key insight for Zeus:** Edify shows EAB investing in self-service analytics. If Zeus
-outputs could plug into platforms like Edify (or similar institutional data warehouses),
-it would increase adoption.
+Three embedded AI agents:
+
+| Agent | Function |
+|---|---|
+| **Query Assist** | Converts natural language prompts into executable SQL to retrieve data and create reports |
+| **Data Search Assist** | Locates data using plain-language queries across the data catalogue |
+| **SQL Explainer** | Translates SQL into human-readable explanations |
+
+#### Implementation & Services
+
+- Core platform deployed in **~10 days**
+- Source system integrations in **~2 weeks**
+- Customisable professional service hours for: integration services, data science &
+  analysis, process consulting, strategy & culture support
+
+**Key insight for Zeus:** Edify has **250+ partners** (more than initially estimated)
+and is a growing product. Its higher-ed-specific data model with 200+ pre-built
+definitions represents significant domain IP. If Zeus outputs could plug into platforms
+like Edify (or similar institutional data warehouses), it would increase adoption. The
+"Accelerators" concept (pre-built dashboards for specific use cases) is a packaging
+model Zeus could adopt for its own insights.
 
 ---
 
 ### 6. Strategic Advisory Services
 
-**Scale: 2,500+ member institutions | Subscription/membership model — legacy revenue base that underpins all other products**
+**Scale: 2,100+ education partners | 16+ years | 15,000+ annual expert consultations | 8,000+ peer-tested best practices**
 
-EAB maintains a large research and advisory practice:
+EAB maintains a large research and advisory practice that functions as an extension of
+campus leadership rather than traditional consulting.
 
-- **Research forums** covering enrolment, advancement, academic affairs, and
-  institutional strategy
-- **Subject matter experts** available for consulting on critical institutional issues
-- **Advancement Advisory Services** focused on fundraising, alumni engagement, and
-  donor cultivation
-- **Roundtables** — executive-level gatherings for advancement and enrolment leaders
+#### What's Included
+
+- **Expert consultations** — 15,000+ annually across the partner base
+- **Best practice library** — 8,000+ peer-tested resources
+- **Subject matter experts** across multiple disciplines
+- **Facilitated retreats** — board and cabinet sessions
+- **On-campus briefings** and working sessions
+- **Benchmarking, audits, and diagnostics**
+- **Implementation collaboratives** and toolkits
+
+#### Topic Areas
+
+Strategy & planning, administration & finance, enrolment management, people & culture,
+student experience, professional & adult education, DEI, IT strategy, advancement,
+academic planning, economic & social impact.
+
+#### Networking & Events
+
+- **IgnitED Annual Summit**
+- **Presidential Experience Lab**
+- **Executive Roundtables** (role-specific)
+- **Rising Leaders Fellowship**
+
+Each partner gets a dedicated **Strategic Leader** who learns the institution's culture
+and steers teams to the right resources — same service model pattern as Enroll360 and
+Adult Learner Recruitment.
 
 ---
 
@@ -209,12 +335,12 @@ EAB maintains a large research and advisory practice:
 
 | Product | Institutional Reach | Revenue Model | Estimated Relative Weight |
 |---|---|---|---|
-| **Enroll360** | 1,100+ schools | Marketing fees + lead gen | Largest — high-volume, recurring campaign spend |
-| **Navigate360** | 850+ institutions | SaaS subscriptions | Second-largest — enterprise CRM pricing |
-| **Strategic Advisory** | 2,500+ members | Membership/subscription | Significant — legacy base, cross-sells other products |
-| **Appily** | N/A (student-facing) | Pay-per-lead | Meaningful — high-margin lead generation |
-| **Adult Learner** | 480+ partners | Marketing fees + lead gen | Moderate — overlaps with Enroll360 |
-| **Edify** | Undisclosed | SaaS subscriptions | Smaller — newer product, growing |
+| **Enroll360** | 1,200+ schools | Marketing fees + lead gen | Largest — high-volume, recurring campaign spend |
+| **Navigate360** | 850+ institutions (95%+ renewal) | SaaS enterprise licence | Second-largest — enterprise CRM pricing |
+| **Strategic Advisory** | 2,100+ partners | Membership/subscription | Significant — legacy base, cross-sells other products |
+| **Appily** | 3M+ students (65% of college-bound seniors) | Pay-per-lead | Meaningful — high-margin lead generation |
+| **Adult Learner** | 200+ partners | Marketing fees + consulting | Moderate — 6:1 ROI claim |
+| **Edify** | 250+ partners | SaaS subscriptions + services | Growing — 3x faster deployment than traditional DW |
 
 **Total estimated company revenue: ~$175M–$214M** (sources vary, unverified)
 
