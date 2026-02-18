@@ -47,10 +47,16 @@ pip install -e ".[dev]"
 Start the Dagster UI web server:
 
 ```bash
-dg dev
+DAGSTER_HOME=$(pwd)/.dagster_home uv run dg dev
 ```
 
 Open http://localhost:3000 in your browser to see the project.
+
+This uses a persistent `DAGSTER_HOME` so that run history, asset materializations, and schedule state survive restarts. You can also export the variable in your shell profile to avoid repeating it:
+
+```bash
+export DAGSTER_HOME=/home/dave/project-zeus-market-research/analytics/.dagster_home
+```
 
 ## Learn more
 
