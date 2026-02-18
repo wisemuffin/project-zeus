@@ -1,0 +1,113 @@
+version: 2
+
+exposures:
+  - name: marketing_opportunities_dashboard
+    label: Marketing Opportunities Dashboard
+    type: dashboard
+    maturity: medium
+    description: >
+      Main Evidence report showing opportunity gap analysis (vacancy demand vs student
+      preference share), gender targeting signals, and state-level demand indices.
+      Serves all three targeting dimensions — Who, Where, and What message.
+    depends_on:
+      - ref('opportunity_gap')
+      - ref('opportunity_gap_by_gender')
+      - ref('state_demand_index')
+    owner:
+      name: Project Zeus Team
+
+  - name: audience_profiles_report
+    label: Audience Profiles by Field of Study
+    type: dashboard
+    maturity: medium
+    description: >
+      Who to target for each field of study — gender split, mature learner affinity,
+      and geographic origin based on UAC applicant data. Shapes ad targeting
+      parameters and creative messaging per field.
+    depends_on:
+      - ref('audience_profile_by_fos')
+    owner:
+      name: Project Zeus Team
+
+  - name: trending_interests_report
+    label: Trending Interests
+    type: dashboard
+    maturity: medium
+    description: >
+      Australian Google Trends matched to fields of study, enriched with opportunity
+      gap context. Identifies timely content hooks and aligns paid media with what
+      prospective students are searching for right now. Refreshes every 6 hours.
+    depends_on:
+      - ref('trending_interests')
+    owner:
+      name: Project Zeus Team
+
+  - name: graduate_outcomes_report
+    label: Graduate Outcomes by Field of Study
+    type: dashboard
+    maturity: medium
+    description: >
+      Career outcome proof points for ad creative — employment rates, salaries, and
+      gender pay gaps from the QILT Graduate Outcomes Survey, joined with opportunity
+      gap and preference data. Supports "What message" targeting with salary and
+      employment data.
+    depends_on:
+      - ref('graduate_outcomes_by_fos')
+    owner:
+      name: Project Zeus Team
+
+  - name: institution_scorecard_report
+    label: Institution Scorecard
+    type: dashboard
+    maturity: medium
+    description: >
+      Per-university benchmarks combining student satisfaction (QILT Student Experience
+      Survey) with graduate employment outcomes (QILT Graduate Outcomes Survey).
+      Identifies a university's strengths and weaknesses relative to the sector
+      and its competitors.
+    depends_on:
+      - ref('institution_scorecard')
+    owner:
+      name: Project Zeus Team
+
+  - name: historical_demand_report
+    label: Historical Demand Trends
+    type: dashboard
+    maturity: medium
+    description: >
+      10-year UAC Early Bird applicant volumes by segment. Tracks year-over-year
+      growth, compound annual growth rate (CAGR), and recovery from peak volumes.
+      Supports budget allocation toward growing segments and identifies declining
+      ones that need repositioning.
+    depends_on:
+      - ref('historical_demand_trends')
+    owner:
+      name: Project Zeus Team
+
+  - name: state_fos_demand_report
+    label: State x Field of Study Demand
+    type: dashboard
+    maturity: medium
+    description: >
+      State-level job vacancy data crossed with fields of study. Reveals where to
+      spend by state for specific programs — which fields are strongest in which
+      states relative to the national average. Supports geo-targeted ad creative
+      per field.
+    depends_on:
+      - ref('state_fos_demand')
+    owner:
+      name: Project Zeus Team
+
+  - name: course_listings_report
+    label: University Course Listings
+    type: dashboard
+    maturity: medium
+    description: >
+      Program-level view of which institutions offer courses in high-demand fields,
+      enriched with opportunity gap and graduate outcome data. Supports partner
+      institution identification and program-specific messaging such as
+      "University X offers 3 Engineering programs — a field with strong demand."
+    depends_on:
+      - ref('university_course_listings')
+    owner:
+      name: Project Zeus Team
