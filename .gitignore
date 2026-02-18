@@ -29,3 +29,8 @@ Thumbs.db
 # DuckDB
 *.duckdb
 *.duckdb.wal
+
+# Evidence reports
+reports/.evidence/
+reports/node_modules/
+reports/build/
