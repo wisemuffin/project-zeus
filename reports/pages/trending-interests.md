@@ -122,3 +122,11 @@ order by published desc
     <Column id=top_article_source title="Source" />
     <Column id=published title="Published" />
 </DataTable>
+
+<Details title="Data Sources">
+
+- **Google Trends (Trending Searches)** — real-time trending search topics for Australia, collected via the trendspyg RSS feed. Refreshed on each pipeline run.
+- **Opportunity gap context** — derived from the Internet Vacancy Index (Jobs and Skills Australia) and UAC preference data via the opportunity_gap mart.
+- **Note:** field-of-study matching uses keyword patterns and may not capture all relevant trends. Unmatched trends appear in the "All Trends" table for manual review.
+
+</Details>

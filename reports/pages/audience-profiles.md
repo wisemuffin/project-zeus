@@ -2,7 +2,7 @@
 title: Audience Profiles by Field of Study
 ---
 
-Who to target for each field of study — gender split, mature learner affinity, and geographic origin. Use these profiles to shape ad targeting parameters and creative messaging per field.
+Who to target for each field of study — gender split, mature learner affinity, and geographic origin based on **University Admissions Centre (UAC)** applicant data. Use these profiles to shape ad targeting parameters and creative messaging per field.
 
 ```sql profile_summary
 select
@@ -143,3 +143,11 @@ select * from zeus.audience_profile_by_fos order by opportunity_rank
     <Column id=interstate_draw_ratio title="Interstate Draw" fmt=num2 />
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 />
 </DataTable>
+
+<Details title="Data Sources">
+
+- **UAC Early Bird Applicants by Applicant Type** — University Admissions Centre. Annual first-preference counts segmented by applicant type (Year 12, non-Year 12, etc.) and field of study. NSW/ACT applicants only.
+- **UAC Early Bird Applicants by Gender** — University Admissions Centre. Annual first-preference counts segmented by gender and field of study. NSW/ACT applicants only.
+- **Opportunity gap context** — derived from the Internet Vacancy Index (Jobs and Skills Australia) and UAC preference data via the opportunity_gap mart.
+
+</Details>

@@ -2,7 +2,7 @@
 title: Historical Demand Trends
 ---
 
-10-year UAC applicant volumes by segment. Tracks year-over-year growth, compound annual growth rate (CAGR), and recovery from peak volumes. Use this to allocate marketing budget toward growing segments and identify declining ones that need repositioning.
+10-year **University Admissions Centre (UAC)** applicant volumes by segment. Tracks year-over-year growth, compound annual growth rate (CAGR), and recovery from peak volumes. Use this to allocate marketing budget toward growing segments and identify declining ones that need repositioning.
 
 ```sql trends
 select * from zeus.historical_demand_trends order by latest_count desc
@@ -132,3 +132,10 @@ select * from zeus.historical_demand_trends order by latest_count desc
     <Column id=cagr title="CAGR" fmt=pct2 contentType=colorscale />
     <Column id=trend_direction title="Trend" />
 </DataTable>
+
+<Details title="Data Sources">
+
+- **UAC Early Bird Closing Count** — University Admissions Centre. Annual applicant counts by segment, covering intake years 2016-17 to 2025-26. NSW/ACT applicants only.
+- **Note:** early bird figures are point-in-time snapshots taken at the early bird closing date, not final application numbers. Actual enrolments may differ.
+
+</Details>

@@ -24,6 +24,11 @@ Every Dagster asset and dbt model must document both **what it contains** and **
   - **Use case**: how it supports marketing targeting decisions
 - Column descriptions should clarify meaning, not just repeat the column name
 
+## Evidence Reports
+- Every report page must include a collapsible **Data Sources** section at the bottom using the `<Details title="Data Sources">` component
+- The Data Sources section should list each source used on that page with: organisation name, description, geographic scope, and key limitations
+- The intro paragraph on each page should name the source organisations upfront (bolded)
+
 ## Insights Documentation
 - When analysis models produce actionable findings, document them in `docs/insights/`
 - Each insight doc should include: source models, key findings, marketing angles, and limitations

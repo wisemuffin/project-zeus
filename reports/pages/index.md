@@ -2,7 +2,7 @@
 title: University Marketing Opportunities
 ---
 
-Market research insights to help universities optimise digital marketing campaigns for student acquisition. Data sourced from Australian Government job vacancy statistics, UAC application preferences, and ABS youth population estimates.
+Market research insights to help universities optimise digital marketing campaigns for student acquisition. Data sourced from **Jobs and Skills Australia** (job vacancy statistics), the **University Admissions Centre** (UAC applicant preferences), and the **Australian Bureau of Statistics** (youth population estimates).
 
 **More reports:** [Audience Profiles](/audience-profiles) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand)
 
@@ -178,3 +178,12 @@ select * from zeus.state_demand_index order by demand_rank
     <Column id=graduate_vacancy_growth_12m title="Grad Vacancy Growth (12m)" fmt=pct1 contentType=colorscale />
     <Column id=total_vacancy_growth_12m title="Total Vacancy Growth (12m)" fmt=pct1 contentType=colorscale />
 </DataTable>
+
+<Details title="Data Sources">
+
+- **Internet Vacancy Index (IVI)** — Jobs and Skills Australia. Monthly online job vacancy counts by occupation and state. National and state-level coverage.
+- **UAC Early Bird Applicant Preferences** — University Admissions Centre. Annual first-preference counts by field of study, gender, applicant type, and geographic origin. NSW/ACT applicants only.
+- **Estimated Resident Population** — Australian Bureau of Statistics (ABS). Annual population estimates by age and state. All states and territories.
+- **Occupation-to-Field-of-Study mapping** — manually curated crosswalk linking ANZSCO occupation groups to broad fields of education. Coverage is approximate and may not capture all relevant occupations for each field.
+
+</Details>
