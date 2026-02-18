@@ -141,3 +141,42 @@ models:
         description: >
           Interstate share divided by NSW share. Values above 1.0 indicate the
           field draws disproportionately from interstate — a signal for national campaigns.
+
+  - name: trending_interests
+    description: >
+      Current Google trending searches in Australia enriched with best-effort
+      field of study classification and opportunity gap context. Refreshes each
+      time the google_trends asset is materialized. Helps marketers identify
+      timely messaging hooks that align with high-opportunity fields.
+    columns:
+      - name: trend
+        description: The trending search term
+        tests:
+          - not_null
+      - name: traffic
+        description: Approximate search traffic volume (e.g. "200+", "1000+", "2000+")
+      - name: published
+        description: When the trend was published to Google Trends RSS
+      - name: top_article_headline
+        description: Headline of the top news article associated with this trend
+      - name: top_article_source
+        description: News source of the top article
+      - name: top_article_url
+        description: URL of the top article
+      - name: explore_link
+        description: Google Trends explore link for this search term
+      - name: matched_field_of_study
+        description: >
+          Best-effort keyword match to a UAC field of study. Null when no match
+          is found — most trends won't match and should be reviewed manually.
+      - name: opportunity_gap
+        description: Opportunity gap for the matched field (null if unmatched)
+      - name: opportunity_rank
+        description: Opportunity rank for the matched field (null if unmatched)
+      - name: vacancy_growth_12m
+        description: Vacancy growth for the matched field (null if unmatched)
+      - name: marketing_signal
+        description: >
+          Actionable recommendation based on match and opportunity gap:
+          "High opportunity" for positive-gap fields, "Low opportunity" for
+          negative-gap fields, "Unclassified" for unmatched trends.
