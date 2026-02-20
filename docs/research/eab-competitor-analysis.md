@@ -1,6 +1,6 @@
 # EAB - Competitor Analysis
 
-> **Last updated:** 2026-02-18
+> **Last updated:** 2026-02-20
 > **Relevance to Project Zeus:** EAB is a direct competitor in the higher-ed enrollment
 > marketing and market research space. Their product suite represents the incumbent
 > benchmark for university digital marketing and student acquisition.
@@ -146,6 +146,89 @@ merging several acquisitions into a single destination:
 | **College Greenlight** | Services for underrepresented and first-generation students |
 | **YouVisit** | Immersive virtual campus tours |
 | **Concourse** | Reverse admissions platform (now "Appily Match") |
+
+#### Appily Match — Deep Dive (Direct Admissions / Reverse Admissions)
+
+Appily Match is EAB's **reverse admissions platform** — colleges proactively send
+admission and scholarship offers to students based on transcript-verified profiles. No
+applications required. This is probably the most disruptive product in EAB's portfolio.
+
+**Branding note:** "EAB Match", "Appily Match", and "Enroll360 Match" all refer to the
+same product. The branding varies by audience — "Appily Match" for students/counsellors,
+"Enroll360 Match" for institutional sales.
+
+##### How Match Works
+
+1. **Students create free, anonymised profiles** (~30 minutes). They share favourite
+   classes, hobbies, career aspirations, and grades. No test scores or essays required.
+2. **Transcripts are submitted and verified** — school counsellors certify academic
+   credentials. This is a key differentiator vs competitors who rely on self-reported data.
+3. **Profiles are delivered to partner institutions** based on institutional selection
+   criteria. Profiles remain anonymous until students express interest.
+4. **Colleges extend real admission + scholarship offers** — typically within 1–2 weeks.
+   Institutions can customise offer language, scholarship conditions, and major placements.
+5. **Students only see acceptances** — no rejections are communicated, creating a
+   positive-only experience.
+
+##### Scale Metrics
+
+- **$14B+** in scholarship offers extended
+- **450K+** admission offers made
+- **180+** partner colleges/universities
+- **6,000+** high schools, districts, and community-based organisations partner with the service
+- **72%** of US high school students have access to the platform
+- **71%** average admit rate for matched students (2024 entering class)
+
+##### Acquisition & Evolution Timeline
+
+| Year | Event |
+|------|-------|
+| **2020** | EAB acquires **Cappex** (college search & scholarship platform) |
+| **2021 (Feb)** | Hobsons breaks up: PowerSchool acquires Naviance + Intersect for $320M; EAB acquires Starfish for ~$90M and becomes the exclusive provider of Intersect |
+| **2021 (Oct)** | EAB and Concourse launch **Greenlight Match** (domestic) and **Global Match** (international) as a pilot in Chicago — ~2,000 admission offers + $135M in scholarships to 650+ students |
+| **2022 (Sep)** | EAB **acquires Concourse Global**, the technology platform underlying Match. Expands to Atlanta, Dallas, Houston, Minneapolis/St. Paul, NYC, and Philadelphia |
+| **2023** | Cappex rebrands as **Appily**, consolidating Cappex, YouVisit, College Greenlight, and Concourse. Greenlight Match/Global Match rebranded to **"Appily Match"** |
+| **2024** | Match integrates with **PowerSchool Naviance**, expanding access to 3M+ high school juniors and seniors across 6,000+ schools |
+| **2025 (Jul)** | Alabama launches statewide Direct Admission initiative powered by Appily Match (~40 public/private institutions). Result: $5.1B in scholarships |
+
+##### Naviance Integration (2024) — Key Development
+
+The integration with PowerSchool Naviance is the most significant recent development.
+Seniors can now create Appily Match profiles directly within Naviance, giving Match
+access to **6M+ students** via the dominant high school counselling platform. No other
+direct admission platform has this distribution advantage.
+
+##### Competitive Landscape — Direct Admissions
+
+The direct admissions space grew **85% between 2023–2024** (by number of schools on the
+two largest non-state platforms: Common App + EAB Match), with 400K+ students receiving
+direct-admit offers for the 2024 entering class. Over 25% of ~20 state programs were
+established within the past year.
+
+| Platform | Scale (2025–26) | Key Differentiator |
+|----------|-----------------|---------------------|
+| **Appily Match** | 180+ colleges, 450K+ offers, $14B+ scholarships | Transcript-verified profiles; Naviance integration; counsellor involvement |
+| **Common App Direct Admissions** | 200+ colleges | Largest application platform; targets first-gen and low/middle-income students; relies on self-reported GPA |
+| **Niche Direct Admissions** | 150+ colleges across 35 states | Integrated with Niche's review/ranking platform; pilot began 2022 |
+| **College Board (BigFuture)** | Leverages 2M+ SAT test-taker database | Access to standardised test data; massive student reach |
+| **State-level programs** | 20+ state programs (many new in past year) | State-backed; several powered by EAB Match technology |
+
+**Match's key advantages:** transcript verification (vs Common App's self-reported GPA),
+Naviance distribution (6M+ students), counsellor certification, and customisable offers
+within the broader Enroll360 service bundle.
+
+**Match's known weakness:** EAB's own content acknowledges that **direct-admitted
+students yield at lower rates** than conventional admits, requiring additional engagement
+investment — which conveniently feeds into Enroll360's Yield module.
+
+**Key insight for Zeus:** The direct admissions space is growing rapidly and represents a
+fundamental shift in how institutions source students. It's important to recognise this
+as a **demand capture** mechanism (students who are already college-bound being matched)
+rather than **demand generation** (creating new demand for higher education). Zeus
+operates in the demand generation / targeting intelligence layer, which sits upstream.
+The state-level adoption trend (Alabama, Idaho, etc.) suggests this will become
+infrastructure rather than a differentiator — meaning the real competitive battleground
+shifts back to upstream targeting and audience strategy, which is Zeus's domain.
 
 #### How It Works (Student Side)
 
@@ -365,6 +448,13 @@ Adult Learner Recruitment.
 - [Appily Advance](https://eab.com/solutions/appily-advance/)
 - [Appily Candidates](https://eab.com/solutions/appily-candidates/)
 - [Appily Match](https://eab.com/solutions/enroll360/match/)
+- [EAB acquires Concourse Global](https://eab.com/about/newsroom/press/eab-acquires-concourse-global/)
+- [Appily + Naviance Integration](https://eab.com/resources/blog/enrollment-blog/enroll360-match-partnership-naviance-transform-college-admissions/)
+- [EAB: Five Things to Know About Direct Admission](https://eab.com/resources/blog/data-analytics-blog/five-things-to-know-about-the-new-direct-admission-landscape/)
+- [Alabama Direct Admission Initiative (2025)](https://alabamapossible.org/2025/08/01/alabama-possible-in-collaboration-with-eabs-appily-match-launches-alabama-goes-to-college-direct-admission-initiative-to-remove-barriers-to-postsecondary-access/)
+- [Common App Direct Admissions 2025–26](https://www.commonapp.org/blog/common-app-launches-2025-2026-direct-admissions-program-more-200-colleges-and-universities/)
+- [Niche Direct Admissions](https://www.niche.com/about/direct-admissions)
+- [Intersect by PowerSchool](https://eab.com/solutions/intersect/)
 - [Niche Partners](https://www.niche.com/about/partners/college-increase-student-enrollment/)
 - [Adult Learner Recruitment](https://eab.com/solutions/adult-learner-recruitment/)
 - [Edify Data Platform](https://eab.com/solutions/edify/)
