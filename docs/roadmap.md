@@ -101,24 +101,34 @@ CRICOS provides four relational CSV files:
 - [x] Create dbt staging model to map ASCED fields to UAC categories — `stg_cricos_courses`
 - [x] Build mart model: **university_course_listings** — courses joined with opportunity gap and graduate outcomes for program-level recommendations
 
-### Priority 3 (deferred): QTAC (Queensland Tertiary Admissions Centre)
+### Priority 3: VTAC (Victorian Tertiary Admissions Centre)
 
-**Source:** [qtac.edu.au](https://www.qtac.edu.au/) | **Owner:** QLD consortium
-**Access:** TBD — need to investigate published statistics
-**Coverage:** QLD / Northern NSW (1,800+ courses)
+**Source:** [vtac.edu.au/statistics](https://vtac.edu.au/statistics/) | **Owner:** VIC consortium
+**Access:** Free HTML tables — annual statistics by ASCED field of study
+**Coverage:** Victoria (~25% of Australian higher-ed applicants)
 
-Would extend UAC-style preference analysis to Queensland, covering Australia's two largest higher-ed markets.
+VTAC publishes Section D tables with field-of-study preference data using ASCED classification (same as UAC). Table D1 includes first preferences, offers, enrolments, and deferrals broken down by gender per field. Combined with UAC (NSW/ACT ~40%), this covers ~65% of the Australian applicant market.
 
-- [ ] Investigate QTAC published statistics and data availability
-- [ ] Assess whether data format is comparable to UAC for unified staging models
+**Implementation plan:**
+- [ ] Build Dagster asset to fetch and parse VTAC Section D HTML tables — `vtac_fos_preferences`
+- [ ] Create dbt staging model to normalise field names to canonical categories — `stg_vtac_fos_preferences`
+- [ ] Build national preferences union model — `stg_national_fos_preferences`
+- [ ] Create Evidence report page for cross-state preference comparison
 
 ### Priority 4: Other Accessible Platforms
 
 | Platform | Data | Status |
 |----------|------|--------|
 | **CourseSeeker** ([courseseeker.edu.au](https://www.courseseeker.edu.au/)) | National course listings across all institutions | Investigated — no API or bulk download; Angular SPA with private backend. CRICOS used instead. |
-| **VTAC / SATAC / TISC** | State-level admissions stats for VIC, SA, WA | Not yet investigated — each TAC publishes differently |
-| **Good Universities Guide** ([gooduniversitiesguide.com.au](https://www.gooduniversitiesguide.com.au/)) | University ratings & rankings | Not yet investigated |
+| **SATAC** ([satac.edu.au](https://www.satac.edu.au/)) | SA/NT admissions stats | Promising — "first preferences by broad field of study" listed as downloadable. Format unverified; worth follow-up. |
+
+### Investigated (No Action)
+
+| Platform | Finding |
+|----------|---------|
+| **QTAC** ([qtac.edu.au](https://www.qtac.edu.au/)) | No FOS preference data published. Only ATAR scaling reports (PDFs). Parked. |
+| **TISC** ([tisc.edu.au](https://www.tisc.edu.au/)) | No FOS data found. Has a formal data request process. |
+| **Good Universities Guide** ([gooduniversitiesguide.com.au](https://www.gooduniversitiesguide.com.au/)) | Repackages QILT data we already ingest directly. No additional value. |
 
 ### Not Accessible (Commercial / Paywalled)
 
@@ -163,6 +173,7 @@ These platforms from the student search analysis are **not viable** as data sour
 - [x] **Historical Demand** (`pages/historical-demand.md`) — 10-year applicant volume trends by segment with YoY growth, CAGR, and recovery ratios. Sources from historical_demand_trends mart.
 - [x] **Graduate Outcomes** (`pages/graduate-outcomes.md`) — Salary by gender, FT employment rates (YoY), marketing signal matrix, salary gender gap. Sources from graduate_outcomes_by_fos mart + QILT GOS data.
 - [x] **Institution Scorecard** (`pages/institution-scorecard.md`) — Per-university satisfaction vs employment scatter, satisfaction indicators, full scorecard with sector comparison. Sources from institution_scorecard mart + QILT SES/GOS data.
+- [x] **State Preference Comparison** (`pages/state-preferences.md`) — Cross-state comparison of field-of-study preferences between NSW/ACT (UAC) and Victoria (VTAC). Grouped bar charts, divergence table, gender split by state. Sources from stg_national_fos_preferences.
 
 ### Future
 

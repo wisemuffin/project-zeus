@@ -111,3 +111,17 @@ exposures:
       - ref('university_course_listings')
     owner:
       name: Project Zeus Team
+
+  - name: state_preferences_report
+    label: State Preference Comparison
+    type: dashboard
+    maturity: medium
+    description: >
+      Cross-state comparison of field-of-study preferences between NSW/ACT (UAC)
+      and Victoria (VTAC). Shows where applicant demand differs by state and
+      gender, enabling geo-targeted campaign creative. Covers ~65% of the
+      Australian applicant market.
+    depends_on:
+      - ref('stg_national_fos_preferences')
+    owner:
+      name: Project Zeus Team

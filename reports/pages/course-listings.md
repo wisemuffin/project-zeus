@@ -4,7 +4,7 @@ title: University Course Listings
 
 Program-level view of **which institutions offer courses in high-demand fields**, enriched with opportunity gap and graduate outcome data from the **CRICOS Register**, **Jobs and Skills Australia**, and **QILT Graduate Outcomes Survey**. Use this to identify partner institutions and craft program-specific messaging.
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Institution Scorecard](/institution-scorecard) | [Audience Profiles](/audience-profiles) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand)
+**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Institution Scorecard](/institution-scorecard) | [Audience Profiles](/audience-profiles) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences)
 
 ```sql total_courses
 select count(*) as total from zeus.university_course_listings

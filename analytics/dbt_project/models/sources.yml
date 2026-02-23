@@ -78,3 +78,11 @@ sources:
         meta:
           dagster:
             asset_key: ["cricos_courses"]
+      - name: vtac_fos_preferences
+        description: >
+          VTAC field-of-study first preferences by gender (Victorian applicants).
+          Parsed from VTAC annual statistics Section D (Table D1). ASCED broad
+          field classification with gender breakdown.
+        meta:
+          dagster:
+            asset_key: ["vtac_fos_preferences"]
