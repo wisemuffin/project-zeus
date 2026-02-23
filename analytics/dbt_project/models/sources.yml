@@ -86,3 +86,12 @@ sources:
         meta:
           dagster:
             asset_key: ["vtac_fos_preferences"]
+      - name: satac_fos_preferences
+        description: >
+          SATAC field-of-study first preferences by gender (SA/NT domestic
+          applicants). Parsed from SATAC annual statistics PDF. ASCED broad
+          field classification with gender breakdown. Year 12 + Non-Year 12
+          summed for domestic totals.
+        meta:
+          dagster:
+            asset_key: ["satac_fos_preferences"]

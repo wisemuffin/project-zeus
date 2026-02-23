@@ -18,3 +18,14 @@ select
     preference_share
 from {{ ref('stg_vtac_fos_preferences') }}
 where gender != 'Total'
+
+union all
+
+-- SATAC (SA/NT) — Female and Male only (exclude Total)
+select
+    state,
+    field_of_study,
+    gender,
+    preference_share
+from {{ ref('stg_satac_fos_preferences') }}
+where gender != 'Total'

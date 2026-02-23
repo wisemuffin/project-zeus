@@ -110,17 +110,17 @@ CRICOS provides four relational CSV files:
 VTAC publishes Section D tables with field-of-study preference data using ASCED classification (same as UAC). Table D1 includes first preferences, offers, enrolments, and deferrals broken down by gender per field. Combined with UAC (NSW/ACT ~40%), this covers ~65% of the Australian applicant market.
 
 **Implementation plan:**
-- [ ] Build Dagster asset to fetch and parse VTAC Section D HTML tables — `vtac_fos_preferences`
-- [ ] Create dbt staging model to normalise field names to canonical categories — `stg_vtac_fos_preferences`
-- [ ] Build national preferences union model — `stg_national_fos_preferences`
-- [ ] Create Evidence report page for cross-state preference comparison
+- [x] Build Dagster asset to fetch and parse VTAC Section D HTML tables — `vtac_fos_preferences`
+- [x] Create dbt staging model to normalise field names to canonical categories — `stg_vtac_fos_preferences`
+- [x] Build national preferences union model — `stg_national_fos_preferences`
+- [x] Create Evidence report page for cross-state preference comparison
 
 ### Priority 4: Other Accessible Platforms
 
 | Platform | Data | Status |
 |----------|------|--------|
 | **CourseSeeker** ([courseseeker.edu.au](https://www.courseseeker.edu.au/)) | National course listings across all institutions | Investigated — no API or bulk download; Angular SPA with private backend. CRICOS used instead. |
-| **SATAC** ([satac.edu.au](https://www.satac.edu.au/)) | SA/NT admissions stats | Promising — "first preferences by broad field of study" listed as downloadable. Format unverified; worth follow-up. |
+| **SATAC** ([satac.edu.au](https://www.satac.edu.au/)) | SA/NT admissions stats | **Implemented** — `satac_fos_preferences` Dagster asset + `stg_satac_fos_preferences` staging model. Added to national union. Brings coverage to ~72%. |
 
 ### Investigated (No Action)
 
@@ -173,7 +173,7 @@ These platforms from the student search analysis are **not viable** as data sour
 - [x] **Historical Demand** (`pages/historical-demand.md`) — 10-year applicant volume trends by segment with YoY growth, CAGR, and recovery ratios. Sources from historical_demand_trends mart.
 - [x] **Graduate Outcomes** (`pages/graduate-outcomes.md`) — Salary by gender, FT employment rates (YoY), marketing signal matrix, salary gender gap. Sources from graduate_outcomes_by_fos mart + QILT GOS data.
 - [x] **Institution Scorecard** (`pages/institution-scorecard.md`) — Per-university satisfaction vs employment scatter, satisfaction indicators, full scorecard with sector comparison. Sources from institution_scorecard mart + QILT SES/GOS data.
-- [x] **State Preference Comparison** (`pages/state-preferences.md`) — Cross-state comparison of field-of-study preferences between NSW/ACT (UAC) and Victoria (VTAC). Grouped bar charts, divergence table, gender split by state. Sources from stg_national_fos_preferences.
+- [x] **State Preference Comparison** (`pages/state-preferences.md`) — Cross-state comparison of field-of-study preferences across NSW/ACT (UAC), Victoria (VTAC), and SA/NT (SATAC). Grouped bar charts, divergence table, gender split by state. Sources from stg_national_fos_preferences.
 
 ### Future
 

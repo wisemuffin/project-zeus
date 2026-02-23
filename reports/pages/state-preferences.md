@@ -2,7 +2,7 @@
 title: State Preference Comparison
 ---
 
-How Victorian and NSW/ACT applicant preferences differ by field of study — based on **VTAC** (Victoria) and **UAC** (NSW/ACT) first-preference data. Use these cross-state signals to tailor geo-targeted campaigns: a field that's popular in one state but underrepresented in another may indicate unmet demand or a saturated market.
+How applicant preferences differ by field of study across three states — based on **UAC** (NSW/ACT), **VTAC** (Victoria), and **SATAC** (SA/NT) first-preference data, covering ~72% of Australian applicants. Use these cross-state signals to tailor geo-targeted campaigns: a field that's popular in one state but underrepresented in another may indicate unmet demand or a saturated market.
 
 **More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Institution Scorecard](/institution-scorecard) | [Audience Profiles](/audience-profiles) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [Course Listings](/course-listings)
 
@@ -27,24 +27,18 @@ order by field_of_study
 
 ```sql divergence
 select
-    nsw.field_of_study,
-    nsw.preference_share as nsw_act_share,
-    vic.preference_share as vic_share,
-    vic.preference_share - nsw.preference_share as difference,
-    abs(vic.preference_share - nsw.preference_share) as abs_difference
+    field_of_study,
+    max(case when state = 'NSW/ACT' then preference_share end) as nsw_act_share,
+    max(case when state = 'VIC' then preference_share end) as vic_share,
+    max(case when state = 'SA/NT' then preference_share end) as sa_nt_share,
+    max(preference_share) - min(preference_share) as max_spread
 from (
-    select field_of_study, sum(preference_share) as preference_share
+    select field_of_study, state, sum(preference_share) as preference_share
     from zeus.national_fos_preferences
-    where state = 'NSW/ACT'
-    group by field_of_study
-) nsw
-join (
-    select field_of_study, sum(preference_share) as preference_share
-    from zeus.national_fos_preferences
-    where state = 'VIC'
-    group by field_of_study
-) vic on nsw.field_of_study = vic.field_of_study
-order by abs_difference desc
+    group by field_of_study, state
+)
+group by field_of_study
+order by max_spread desc
 ```
 
 ```sql gender_by_state
@@ -59,14 +53,14 @@ order by field_of_study, state, gender
 
 ## Preference Share by State
 
-Combined female + male preference share for each field, comparing NSW/ACT (UAC) with Victoria (VTAC).
+Combined female + male preference share for each field, comparing NSW/ACT (UAC), Victoria (VTAC), and SA/NT (SATAC).
 
 <BarChart
     data={total_by_state}
     x=field_of_study
     y=preference_share
     series=state
-    title="Field of Study Preference Share: NSW/ACT vs Victoria"
+    title="Field of Study Preference Share by State"
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=grouped
@@ -75,7 +69,7 @@ Combined female + male preference share for each field, comparing NSW/ACT (UAC) 
 
 ## Largest Divergences
 
-Fields where Victorian preferences diverge most from NSW/ACT — positive difference means VIC has higher preference share, negative means NSW/ACT is higher. Large gaps may signal untapped demand or regional market saturation.
+Fields where preference share varies most across states. A large spread may signal untapped demand or regional market saturation.
 
 <DataTable
     data={divergence}
@@ -83,9 +77,10 @@ Fields where Victorian preferences diverge most from NSW/ACT — positive differ
     rowShading=true
 >
     <Column id=field_of_study title="Field of Study" />
-    <Column id=nsw_act_share title="NSW/ACT Share" fmt=pct1 />
-    <Column id=vic_share title="VIC Share" fmt=pct1 />
-    <Column id=difference title="Difference (VIC − NSW)" fmt=pct1 />
+    <Column id=nsw_act_share title="NSW/ACT" fmt=pct1 />
+    <Column id=vic_share title="VIC" fmt=pct1 />
+    <Column id=sa_nt_share title="SA/NT" fmt=pct1 />
+    <Column id=max_spread title="Max Spread" fmt=pct1 />
 </DataTable>
 
 ## Gender Split by State
@@ -132,8 +127,9 @@ order by field_of_study
 
 <Details title="Data Sources">
 
-- **VTAC (Victorian Tertiary Admissions Centre)** — Annual statistics Section D (Table D1), 2020-21 data. Field-of-study first preferences by gender for Victorian applicants. Victoria only.
 - **UAC (University Admissions Centre)** — Early Bird applicant data, 2024-25. Field-of-study first preferences by gender. NSW/ACT only.
-- Both sources use ASCED broad field classification (11 fields). Field names are normalised to canonical categories for comparability. "Mixed Field Programs" excluded (no UAC equivalent).
+- **VTAC (Victorian Tertiary Admissions Centre)** — Annual statistics Section D (Table D1), 2020-21 data. Field-of-study first preferences by gender for Victorian applicants. Victoria only.
+- **SATAC (South Australian Tertiary Admissions Centre)** — Undergraduate first preferences and total offers by broad field of study, 2025 PDF. Year 12 + Non-Year 12 summed for domestic totals. SA/NT only. "Food, Hospitality & Personal Services" absent in SA data.
+- All sources use ASCED broad field classification. Field names are normalised to canonical categories for comparability. "Mixed Field Programs/Programmes" excluded (no UAC equivalent).
 
 </Details>

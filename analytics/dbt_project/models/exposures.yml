@@ -117,10 +117,10 @@ exposures:
     type: dashboard
     maturity: medium
     description: >
-      Cross-state comparison of field-of-study preferences between NSW/ACT (UAC)
-      and Victoria (VTAC). Shows where applicant demand differs by state and
-      gender, enabling geo-targeted campaign creative. Covers ~65% of the
-      Australian applicant market.
+      Cross-state comparison of field-of-study preferences across NSW/ACT (UAC),
+      Victoria (VTAC), and SA/NT (SATAC). Shows where applicant demand differs
+      by state and gender, enabling geo-targeted campaign creative. Covers ~72%
+      of the Australian applicant market.
     depends_on:
       - ref('stg_national_fos_preferences')
     owner:
