@@ -121,7 +121,8 @@ def _parse_salary(xlsx_bytes: bytes) -> pd.DataFrame:
 
 @dg.asset(
     group_name="graduate_outcomes",
-    tags={"source": "qilt", "domain": "graduate_outcomes", "update_frequency": "annual"},
+    tags={"source": "qilt", "domain": "graduate_outcomes", "update_frequency": "annual", "ingestion": "file_download"},
+    kinds={"python", "excel"},
     automation_condition=dg.AutomationCondition.on_cron("0 9 1 10 *"),
 )
 def qilt_graduate_outcomes(context: dg.AssetExecutionContext) -> pd.DataFrame:

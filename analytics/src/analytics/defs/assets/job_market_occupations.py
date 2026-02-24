@@ -54,7 +54,8 @@ def _find_latest_ivi_anzsco2_url() -> tuple[str, date]:
 
 @dg.asset(
     group_name="job_market",
-    tags={"source": "job_market", "domain": "employment", "update_frequency": "monthly"},
+    tags={"source": "job_market", "domain": "employment", "update_frequency": "monthly", "ingestion": "file_download"},
+    kinds={"python", "excel"},
     automation_condition=dg.AutomationCondition.on_cron("0 9 15 * *"),
 )
 def job_market_occupations(

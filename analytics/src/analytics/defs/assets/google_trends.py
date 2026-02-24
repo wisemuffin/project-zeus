@@ -7,7 +7,8 @@ from trendspyg import download_google_trends_rss
 
 @dg.asset(
     group_name="google_trends",
-    tags={"source": "google", "domain": "search_interest", "update_frequency": "6h"},
+    tags={"source": "google", "domain": "search_interest", "update_frequency": "6h", "ingestion": "rss"},
+    kinds={"python", "rss"},
     automation_condition=dg.AutomationCondition.on_cron("0 */6 * * *"),
 )
 def google_trends(context: dg.AssetExecutionContext) -> pd.DataFrame:

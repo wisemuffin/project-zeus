@@ -19,7 +19,8 @@ HEADER_MARKER = "ASCED Field of interest"
 
 @dg.asset(
     group_name="satac_data",
-    tags={"source": "satac", "domain": "preferences", "update_frequency": "annual"},
+    tags={"source": "satac", "domain": "preferences", "update_frequency": "annual", "ingestion": "pdf_extraction"},
+    kinds={"python", "pdf"},
 )
 def satac_fos_preferences(
     context: dg.AssetExecutionContext,

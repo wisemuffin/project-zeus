@@ -17,7 +17,8 @@ _HEADER_ROW = 4  # 0-indexed row where year headers appear
 
 @dg.asset(
     group_name="uac_data",
-    tags={"source": "uac", "domain": "preferences", "update_frequency": "annual"},
+    tags={"source": "uac", "domain": "preferences", "update_frequency": "annual", "ingestion": "file_download"},
+    kinds={"python", "excel"},
     automation_condition=dg.AutomationCondition.on_cron("0 9 1 11 *"),
 )
 def uac_early_bird_closing_count(

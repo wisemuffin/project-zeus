@@ -10,7 +10,8 @@ VTAC_SECTION_D_URL = (
 
 @dg.asset(
     group_name="vtac_data",
-    tags={"source": "vtac", "domain": "preferences", "update_frequency": "annual"},
+    tags={"source": "vtac", "domain": "preferences", "update_frequency": "annual", "ingestion": "web_scraping"},
+    kinds={"python", "scraping"},
 )
 def vtac_fos_preferences(
     context: dg.AssetExecutionContext,

@@ -22,7 +22,8 @@ _MAPPING = [
 
 @dg.asset(
     group_name="reference_data",
-    tags={"source": "manual", "domain": "mapping", "update_frequency": "static"},
+    tags={"source": "manual", "domain": "mapping", "update_frequency": "static", "ingestion": "manual"},
+    kinds={"python"},
 )
 def occupation_fos_mapping(
     context: dg.AssetExecutionContext,

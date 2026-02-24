@@ -17,6 +17,15 @@ Every Dagster asset and dbt model must document both **what it contains** and **
   - **Use case**: how it supports marketing targeting (which of Who/Where/What message it serves)
   - **Limitations**: known caveats or data quality notes
 - Always add `context.add_output_metadata()` with row_count and source_url at minimum
+- Source assets must include `kinds=` for UI badges indicating ingestion method. Use two values: `"python"` plus one of:
+  - `"api"` — structured REST/SDMX API
+  - `"rss"` — RSS feed
+  - `"csv"` — CSV file download
+  - `"excel"` — Excel/ZIP file download
+  - `"scraping"` — HTML table parsing
+  - `"pdf"` — PDF table extraction
+  - `"python"` only — hardcoded/manual data
+- Source assets must also include an `"ingestion"` key in `tags={}` with one of: `api`, `rss`, `file_download`, `web_scraping`, `pdf_extraction`, `manual`
 
 ### dbt Models
 - Every model must have a `description` in its schema YAML that covers:

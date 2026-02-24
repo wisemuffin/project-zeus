@@ -23,7 +23,8 @@ _VALID_APPLICANT_TYPES = {
 
 @dg.asset(
     group_name="uac_data",
-    tags={"source": "uac", "domain": "demographics", "update_frequency": "annual"},
+    tags={"source": "uac", "domain": "demographics", "update_frequency": "annual", "ingestion": "file_download"},
+    kinds={"python", "excel"},
     automation_condition=dg.AutomationCondition.on_cron("0 9 1 11 *"),
 )
 def uac_applicants_by_gender(

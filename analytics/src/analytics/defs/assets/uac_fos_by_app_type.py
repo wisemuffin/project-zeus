@@ -14,7 +14,8 @@ _SHEET_NAME = "FOS of 1st pref by app type"
 
 @dg.asset(
     group_name="uac_data",
-    tags={"source": "uac", "domain": "preferences", "update_frequency": "annual"},
+    tags={"source": "uac", "domain": "preferences", "update_frequency": "annual", "ingestion": "file_download"},
+    kinds={"python", "excel"},
     automation_condition=dg.AutomationCondition.on_cron("0 9 1 11 *"),
 )
 def uac_fos_by_app_type(

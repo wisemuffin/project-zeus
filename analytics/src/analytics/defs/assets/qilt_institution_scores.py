@@ -106,7 +106,8 @@ def _parse_ses_institutions(xlsx_bytes: bytes) -> pd.DataFrame:
 
 @dg.asset(
     group_name="institution_scores",
-    tags={"source": "qilt", "domain": "institution_benchmarking", "update_frequency": "annual"},
+    tags={"source": "qilt", "domain": "institution_benchmarking", "update_frequency": "annual", "ingestion": "file_download"},
+    kinds={"python", "excel"},
     automation_condition=dg.AutomationCondition.on_cron("0 9 1 10 *"),
 )
 def qilt_institution_scores(context: dg.AssetExecutionContext) -> pd.DataFrame:
