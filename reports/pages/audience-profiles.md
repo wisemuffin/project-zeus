@@ -4,8 +4,6 @@ title: Audience Profiles by Field of Study
 
 Who to target for each field of study — gender split, mature learner affinity, and geographic origin based on **University Admissions Centre (UAC)** applicant data. Use these profiles to shape ad targeting parameters and creative messaging per field.
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql profile_summary
 select
     field_of_study,

@@ -4,8 +4,6 @@ title: Audience Density by LGA
 
 LGA-level youth population (ages 15-19) for hyper-local geo-targeting of digital campaigns. Identifies specific Local Government Areas with the highest youth concentration within each state. Data sourced from the **Australian Bureau of Statistics** (Estimated Resident Population by LGA).
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql total_lgas
 select count(*) as total from zeus.audience_density_by_lga
 ```

@@ -4,8 +4,6 @@ title: Graduate Outcomes by Field of Study
 
 Career outcome proof points for ad creative — employment rates, salaries, and gender pay gaps from the **QILT Graduate Outcomes Survey (GOS)**, joined with opportunity gap and preference data from **Jobs and Skills Australia** and the **University Admissions Centre**.
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql top_salary
 select field_of_study, median_salary
 from zeus.graduate_outcomes_by_fos

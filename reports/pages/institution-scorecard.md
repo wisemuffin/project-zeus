@@ -4,8 +4,6 @@ title: Institution Scorecard
 
 Per-university benchmarks combining **student satisfaction** (QILT Student Experience Survey) with **graduate employment outcomes** (QILT Graduate Outcomes Survey). Use this to identify a university's strengths and weaknesses relative to the sector and its competitors.
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql top_quality
 select institution, overall_quality
 from zeus.institution_scorecard

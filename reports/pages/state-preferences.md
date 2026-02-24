@@ -4,8 +4,6 @@ title: State Preference Comparison
 
 How applicant preferences differ by field of study across three states — based on **UAC** (NSW/ACT), **VTAC** (Victoria), and **SATAC** (SA/NT) first-preference data, covering ~72% of Australian applicants. Use these cross-state signals to tailor geo-targeted campaigns: a field that's popular in one state but underrepresented in another may indicate unmet demand or a saturated market.
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [Course Listings](/course-listings)
-
 ```sql preferences
 select
     field_of_study,

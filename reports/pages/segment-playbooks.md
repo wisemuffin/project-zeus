@@ -4,8 +4,6 @@ title: Segment Playbooks
 
 Per-applicant-type field affinity with employment outcomes context — shows which applicant segments over-index on which fields. Data sourced from the **University Admissions Centre** (applicant preferences by type), **QILT Graduate Outcomes Survey** (employment and salary), and **Jobs and Skills Australia** (vacancy demand).
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql segments
 select distinct applicant_type from zeus.segment_field_affinity order by applicant_type
 ```

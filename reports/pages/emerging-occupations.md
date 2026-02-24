@@ -4,8 +4,6 @@ title: Emerging Occupations
 
 ANZSCO2 occupation groups ranked by 12-month vacancy growth, mapped to UAC fields of study. Identifies fast-growing occupations where student preference hasn't caught up with employer demand. Data sourced from **Jobs and Skills Australia** (Internet Vacancy Index) and the **University Admissions Centre** (preference share).
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql fastest_growing
 select occupation_title, vacancy_growth_12m, uac_field_of_study
 from zeus.emerging_occupations

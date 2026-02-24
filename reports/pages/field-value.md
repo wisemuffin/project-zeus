@@ -4,8 +4,6 @@ title: Field Value Proposition
 
 Composite ranking of each field of study by opportunity gap, employment rate, and salary — a single "best bet" view for prioritising marketing spend. Data sourced from **Jobs and Skills Australia** (vacancy data), **QILT Graduate Outcomes Survey** (employment and salary), and the **University Admissions Centre** (preference share).
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Gender Pay Gap](/gender-pay-gap) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql top_field
 select field_of_study, value_score, value_tier
 from zeus.field_value_proposition

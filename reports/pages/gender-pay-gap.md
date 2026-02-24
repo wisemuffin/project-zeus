@@ -4,8 +4,6 @@ title: Gender Pay Gap × Opportunity
 
 Gender salary gap alongside female/male preference shares and opportunity gap — a diversity-marketing view. Data sourced from **QILT Graduate Outcomes Survey** (salary by gender), the **University Admissions Centre** (gender preferences), and **Jobs and Skills Australia** (vacancy demand).
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Student Satisfaction](/student-satisfaction) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql top_gap
 select field_of_study, salary_gender_gap
 from zeus.gender_opportunity_profile

@@ -4,8 +4,6 @@ title: Student Satisfaction × Opportunity
 
 QILT Student Experience Survey satisfaction scores aggregated to field-of-study level, joined with opportunity gap and graduate outcomes. Adds "student experience" proof points for marketing creative. Data sourced from the **QILT Student Experience Survey (SES)**, **QILT Graduate Outcomes Survey (GOS)**, **Jobs and Skills Australia**, and the **University Admissions Centre**.
 
-**More reports:** [Opportunity Gap Dashboard](/) | [Graduate Outcomes](/graduate-outcomes) | [Field Value Proposition](/field-value) | [Gender Pay Gap](/gender-pay-gap) | [Audience Profiles](/audience-profiles) | [Segment Playbooks](/segment-playbooks) | [Emerging Occupations](/emerging-occupations) | [Audience Density](/audience-density) | [Institution Scorecard](/institution-scorecard) | [Trending Interests](/trending-interests) | [Historical Demand](/historical-demand) | [State × Field Demand](/state-fos-demand) | [State Preferences](/state-preferences) | [Course Listings](/course-listings)
-
 ```sql top_satisfaction
 select field_of_study, overall_quality
 from zeus.satisfaction_opportunity
