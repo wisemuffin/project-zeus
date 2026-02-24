@@ -22,7 +22,7 @@ Thumbs.db
 
 # Dagster
 .tmp_dagster_home*/
-.dagster_dome/
+.dagster_home/
 
 # Playwright
 .playwright-mcp/
