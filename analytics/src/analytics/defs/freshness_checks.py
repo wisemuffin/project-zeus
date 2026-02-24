@@ -2,6 +2,7 @@ from datetime import timedelta
 
 import dagster as dg
 
+from analytics.defs.assets.abs_lga_reference import abs_lga_reference
 from analytics.defs.assets.abs_population_by_lga import abs_population_by_lga
 from analytics.defs.assets.cricos_courses import cricos_courses
 from analytics.defs.assets.google_trends import google_trends
@@ -58,6 +59,7 @@ annual_uac_freshness_checks = dg.build_last_update_freshness_checks(
         uac_fos_by_gender,
         uac_early_bird_closing_count,
         abs_population_by_lga,
+        abs_lga_reference,
     ],
     lower_bound_delta=timedelta(days=400),
     deadline_cron="0 9 1 11 *",

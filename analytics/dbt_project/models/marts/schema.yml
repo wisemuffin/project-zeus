@@ -516,17 +516,29 @@ models:
       LGA-level youth population (15-19) with state context for hyper-local
       geo-targeting of digital campaigns. Shows which Local Government Areas
       concentrate the most prospective students within each state, enabling
-      efficient local ad targeting. Answers "Where" targeting.
+      efficient local ad targeting. Includes youth density per km² to identify
+      geographically compact high-youth areas. Answers "Where" targeting.
     columns:
       - name: lga_code
         description: ABS Local Government Area code (2024 boundaries)
         tests:
           - unique
           - not_null
+      - name: lga_name
+        description: Official LGA name from ABS ASGS 2024 (e.g. "Blacktown", "Brisbane")
       - name: state
-        description: Australian state/territory code derived from LGA code first digit
+        description: Australian state/territory abbreviation (NSW, VIC, QLD, etc.)
+      - name: state_name
+        description: Full state/territory name (e.g. "New South Wales", "Victoria")
+      - name: area_albers_sqkm
+        description: LGA land area in square kilometres (Albers equal-area projection)
       - name: youth_population
         description: Estimated resident population aged 15-19 in this LGA
+      - name: youth_density_per_sqkm
+        description: >
+          Youth population (15-19) per square kilometre. Higher values indicate
+          geographically compact LGAs with dense youth populations — ideal for
+          efficient local ad targeting where reach per km² is maximised.
       - name: state_total
         description: Total youth population across all LGAs in this state
       - name: lga_share_of_state

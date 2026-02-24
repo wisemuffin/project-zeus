@@ -2,14 +2,14 @@
 title: Audience Density by LGA
 ---
 
-LGA-level youth population (ages 15-19) for hyper-local geo-targeting of digital campaigns. Identifies specific Local Government Areas with the highest youth concentration within each state. Data sourced from the **Australian Bureau of Statistics** (Estimated Resident Population by LGA).
+LGA-level youth population (ages 15-19) for hyper-local geo-targeting of digital campaigns. Identifies specific Local Government Areas with the highest youth concentration within each state. Data sourced from the **Australian Bureau of Statistics** (Estimated Resident Population and ASGS LGA boundaries).
 
 ```sql total_lgas
 select count(*) as total from zeus.audience_density_by_lga
 ```
 
 ```sql top_lga
-select lga_code, state, youth_population
+select lga_name, state, youth_population
 from zeus.audience_density_by_lga
 where youth_population = (select max(youth_population) from zeus.audience_density_by_lga)
 ```
@@ -25,7 +25,7 @@ select count(distinct state) as total from zeus.audience_density_by_lga
 />
 <BigValue
     data={top_lga}
-    value=lga_code
+    value=lga_name
     title="Top LGA (Highest Youth Pop)"
 />
 <BigValue
@@ -39,13 +39,13 @@ select count(distinct state) as total from zeus.audience_density_by_lga
 
 ```sql map_data
 select
-    cast(cast(d.lga_code as integer) as varchar) as lga_code_str,
-    n.lga_name,
-    d.state,
-    d.youth_population,
-    d.lga_share_of_state
-from zeus.audience_density_by_lga d
-left join zeus.lga_names n on cast(d.lga_code as integer) = cast(n.lga_code as integer)
+    cast(cast(lga_code as integer) as varchar) as lga_code_str,
+    lga_name,
+    state,
+    youth_population,
+    youth_density_per_sqkm,
+    lga_share_of_state
+from zeus.audience_density_by_lga
 ```
 
 <AreaMap
@@ -60,7 +60,7 @@ left join zeus.lga_names n on cast(d.lga_code as integer) = cast(n.lga_code as i
     startingZoom={4}
     legendType="scalar"
     title="Youth Population (15-19) by LGA"
-    tooltip={[{id: 'lga_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'youth_population', fmt: 'num0'}]}
+    tooltip={[{id: 'lga_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'youth_population', fmt: 'num0'}, {id: 'youth_density_per_sqkm', title: 'Youth/km²', fmt: 'num1'}]}
 />
 
 ## Top LGAs by State
@@ -69,17 +69,17 @@ The cumulative share column shows how quickly youth population concentrates — 
 
 ```sql density_table
 select
-    d.state,
-    d.density_rank_in_state,
-    cast(cast(d.lga_code as integer) as varchar) as lga_code,
-    n.lga_name,
-    d.youth_population,
-    d.state_total,
-    d.lga_share_of_state,
-    d.cumulative_share
-from zeus.audience_density_by_lga d
-left join zeus.lga_names n on cast(d.lga_code as integer) = cast(n.lga_code as integer)
-order by d.state, d.density_rank_in_state
+    state,
+    density_rank_in_state,
+    cast(cast(lga_code as integer) as varchar) as lga_code,
+    lga_name,
+    youth_population,
+    youth_density_per_sqkm,
+    state_total,
+    lga_share_of_state,
+    cumulative_share
+from zeus.audience_density_by_lga
+order by state, density_rank_in_state
 ```
 
 <DataTable
@@ -93,6 +93,7 @@ order by d.state, d.density_rank_in_state
     <Column id=lga_code title="LGA Code" />
     <Column id=lga_name title="LGA Name" />
     <Column id=youth_population title="Youth Pop (15-19)" fmt=num0 />
+    <Column id=youth_density_per_sqkm title="Youth/km²" fmt=num1 contentType=colorscale />
     <Column id=state_total title="State Total" fmt=num0 />
     <Column id=lga_share_of_state title="Share of State" fmt=pct1 contentType=colorscale />
     <Column id=cumulative_share title="Cumulative Share" fmt=pct1 />
@@ -101,7 +102,7 @@ order by d.state, d.density_rank_in_state
 <Details title="Data Sources">
 
 - **Estimated Resident Population by LGA** — Australian Bureau of Statistics (ABS). Annual population estimates for 15-19 year olds by Local Government Area (LGA). Most recent available year. All states and territories covered.
-- **State mapping** — derived from LGA code first digit (1=NSW, 2=VIC, 3=QLD, 4=SA, 5=WA, 6=TAS, 7=NT, 8=ACT). LGA codes that don't map to a known state are excluded.
+- **LGA Reference Data** — Australian Bureau of Statistics (ABS) ASGS 2024. LGA names, state mapping, and land area (Albers equal-area projection, km²) from the ABS MapServer API. Used for LGA name lookups and youth density per km² calculation.
 - **Cumulative share** — running sum of youth population within each state ordered by population descending. Shows what percentage of the state's youth are covered by the top N LGAs.
 
 </Details>

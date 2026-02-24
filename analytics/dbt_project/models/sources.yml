@@ -50,6 +50,11 @@ sources:
         meta:
           dagster:
             asset_key: ["abs_population_by_lga"]
+      - name: abs_lga_reference
+        description: ABS LGA reference data — names, state mapping, and land area (2024 boundaries)
+        meta:
+          dagster:
+            asset_key: ["abs_lga_reference"]
       - name: google_trends
         description: Current trending Google searches in Australia
         meta:

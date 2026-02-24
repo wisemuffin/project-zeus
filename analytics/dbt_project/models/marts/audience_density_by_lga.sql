@@ -10,7 +10,10 @@ with lga_population as (
 with_state_totals as (
     select
         lga_code,
+        lga_name,
         state,
+        state_name,
+        area_albers_sqkm,
         youth_population,
         sum(youth_population) over (partition by state) as state_total,
         row_number() over (
@@ -22,8 +25,12 @@ with_state_totals as (
 
 select
     lga_code,
+    lga_name,
     state,
+    state_name,
+    area_albers_sqkm,
     youth_population,
+    round(youth_population * 1.0 / area_albers_sqkm, 2) as youth_density_per_sqkm,
     state_total,
     round(youth_population * 1.0 / state_total, 4) as lga_share_of_state,
     density_rank_in_state,
