@@ -1,0 +1,51 @@
+version: "3"
+
+tasks:
+  analytics:sync:
+    desc: Install/sync Python dependencies
+    dir: analytics
+    cmd: uv sync
+
+  analytics:dev:
+    desc: Start Dagster dev server
+    dir: analytics
+    env:
+      DAGSTER_HOME: "{{.ROOT_DIR}}/.dagster_home"
+    cmd: uv run dg dev
+
+  analytics:dbt-build:
+    desc: Build dbt models directly
+    dir: analytics
+    cmd: uv run dbt build --project-dir dbt_project
+
+  reports:install:
+    desc: Install Node dependencies
+    dir: reports
+    cmd: npm install
+
+  reports:sources:
+    desc: Extract DuckDB data into Evidence cache
+    dir: reports
+    cmd: npm run sources
+
+  reports:dev:
+    desc: Start Evidence dev server
+    dir: reports
+    cmd: npm run dev
+
+  reports:build:
+    desc: Build static Evidence site
+    dir: reports
+    cmd: npm run build
+
+  dev:
+    desc: Start both Dagster and Evidence dev servers
+    deps:
+      - analytics:dev
+      - reports:dev
+
+  setup:
+    desc: One-shot project setup (Python + Node deps)
+    cmds:
+      - task: analytics:sync
+      - task: reports:install
