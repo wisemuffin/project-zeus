@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "dlt": {
+      "command": "uvx",
+      "args": ["dlt-mcp"]
+    },
     "dbt": {
       "command": "uvx",
       "args": ["dbt-mcp"],
