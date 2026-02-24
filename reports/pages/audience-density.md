@@ -39,12 +39,13 @@ select count(distinct state) as total from zeus.audience_density_by_lga
 
 ```sql map_data
 select
-    cast(cast(lga_code as integer) as varchar) as lga_code_str,
-    lga_code,
-    state,
-    youth_population,
-    lga_share_of_state
-from zeus.audience_density_by_lga
+    cast(cast(d.lga_code as integer) as varchar) as lga_code_str,
+    n.lga_name,
+    d.state,
+    d.youth_population,
+    d.lga_share_of_state
+from zeus.audience_density_by_lga d
+left join zeus.lga_names n on cast(d.lga_code as integer) = cast(n.lga_code as integer)
 ```
 
 <AreaMap
@@ -59,6 +60,7 @@ from zeus.audience_density_by_lga
     startingZoom={4}
     legendType="scalar"
     title="Youth Population (15-19) by LGA"
+    tooltip={[{id: 'lga_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'youth_population', fmt: 'num0'}]}
 />
 
 ## Top LGAs by State
@@ -66,7 +68,18 @@ from zeus.audience_density_by_lga
 The cumulative share column shows how quickly youth population concentrates — e.g. if the top 20 LGAs in NSW cover 50% of the state's youth, campaigns can focus geo-targeting on those areas for efficient spend.
 
 ```sql density_table
-select * from zeus.audience_density_by_lga order by state, density_rank_in_state
+select
+    d.state,
+    d.density_rank_in_state,
+    cast(cast(d.lga_code as integer) as varchar) as lga_code,
+    n.lga_name,
+    d.youth_population,
+    d.state_total,
+    d.lga_share_of_state,
+    d.cumulative_share
+from zeus.audience_density_by_lga d
+left join zeus.lga_names n on cast(d.lga_code as integer) = cast(n.lga_code as integer)
+order by d.state, d.density_rank_in_state
 ```
 
 <DataTable
@@ -78,6 +91,7 @@ select * from zeus.audience_density_by_lga order by state, density_rank_in_state
     <Column id=state title="State" />
     <Column id=density_rank_in_state title="Rank in State" />
     <Column id=lga_code title="LGA Code" />
+    <Column id=lga_name title="LGA Name" />
     <Column id=youth_population title="Youth Pop (15-19)" fmt=num0 />
     <Column id=state_total title="State Total" fmt=num0 />
     <Column id=lga_share_of_state title="Share of State" fmt=pct1 contentType=colorscale />
