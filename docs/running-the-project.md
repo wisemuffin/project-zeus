@@ -7,10 +7,10 @@
 
 ## Setup
 
-From the `analytics/` directory:
+From the `projects/analytics-au/` directory:
 
 ```bash
-cd analytics
+cd projects/analytics-au
 uv sync --group dev
 ```
 
@@ -21,7 +21,7 @@ This creates a `.venv` and installs all dependencies including dev tools (webser
 Start the Dagster dev server:
 
 ```bash
-cd analytics
+cd projects/analytics-au
 uv run dg dev
 ```
 

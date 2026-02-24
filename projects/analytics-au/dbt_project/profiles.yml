@@ -1,0 +1,8 @@
+zeus_market_research:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_DATABASE', '/home/dave/project-zeus-market-research/projects/analytics-au/analytics.duckdb') }}"
+      schema: marts
+      threads: 1

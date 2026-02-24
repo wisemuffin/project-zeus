@@ -17,7 +17,7 @@ _MART_MODELS = [
     "university_course_listings",
 ]
 
-_REPORTS_DIR = Path(__file__).resolve().parents[5] / "reports"
+_REPORTS_DIR = Path(__file__).resolve().parents[6] / "reports" / "au"
 
 
 @dg.asset(

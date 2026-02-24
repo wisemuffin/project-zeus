@@ -170,7 +170,7 @@ These platforms from the student search analysis are **not viable** as data sour
 
 ### Completed
 
-- [x] **Evaluate Evidence.dev** — Scaffolded local Evidence project in `reports/`, connected to DuckDB warehouse, built MVP dashboard with opportunity gap, gender, and state demand visualisations.
+- [x] **Evaluate Evidence.dev** — Scaffolded local Evidence project in `reports/au/`, connected to DuckDB warehouse, built MVP dashboard with opportunity gap, gender, and state demand visualisations.
 
 ### Report Pages
 

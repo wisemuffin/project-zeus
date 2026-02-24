@@ -7,6 +7,14 @@ campaigns for student acquisition. Every asset and analysis should serve one of:
 - **Where** to target (geographic, state-level audience signals)
 - **What message** to use (field-of-study demand, career outcome data, trending interests)
 
+## Multi-Country Workspace Structure
+The project is a `dg` workspace with separate code locations per country:
+- `projects/analytics-au/` — Australian data pipeline (Dagster + dbt + DuckDB)
+- `reports/au/` — Australian Evidence.dev dashboards
+- Future countries slot in as `projects/analytics-uk/`, `reports/uk/`, etc.
+
+Each country has its own DuckDB warehouse, dbt project, and Evidence reports.
+
 ## Asset & Model Documentation
 Every Dagster asset and dbt model must document both **what it contains** and **the use case** for the data:
 

@@ -2,20 +2,20 @@ from datetime import timedelta
 
 import dagster as dg
 
-from analytics.defs.assets.abs_lga_reference import abs_lga_reference
-from analytics.defs.assets.abs_population_by_lga import abs_population_by_lga
-from analytics.defs.assets.cricos_courses import cricos_courses
-from analytics.defs.assets.google_trends import google_trends
-from analytics.defs.assets.job_market import job_market
-from analytics.defs.assets.job_market_occupations import job_market_occupations
-from analytics.defs.assets.qilt_graduate_outcomes import qilt_graduate_outcomes
-from analytics.defs.assets.qilt_institution_scores import qilt_institution_scores
-from analytics.defs.assets.qilt_student_experience import qilt_student_experience
-from analytics.defs.assets.uac_applicants_by_age import uac_applicants_by_age
-from analytics.defs.assets.uac_applicants_by_gender import uac_applicants_by_gender
-from analytics.defs.assets.uac_early_bird_closing_count import uac_early_bird_closing_count
-from analytics.defs.assets.uac_fos_by_app_type import uac_fos_by_app_type
-from analytics.defs.assets.uac_fos_by_gender import uac_fos_by_gender
+from analytics_au.defs.assets.abs_lga_reference import abs_lga_reference
+from analytics_au.defs.assets.abs_population_by_lga import abs_population_by_lga
+from analytics_au.defs.assets.cricos_courses import cricos_courses
+from analytics_au.defs.assets.google_trends import google_trends
+from analytics_au.defs.assets.job_market import job_market
+from analytics_au.defs.assets.job_market_occupations import job_market_occupations
+from analytics_au.defs.assets.qilt_graduate_outcomes import qilt_graduate_outcomes
+from analytics_au.defs.assets.qilt_institution_scores import qilt_institution_scores
+from analytics_au.defs.assets.qilt_student_experience import qilt_student_experience
+from analytics_au.defs.assets.uac_applicants_by_age import uac_applicants_by_age
+from analytics_au.defs.assets.uac_applicants_by_gender import uac_applicants_by_gender
+from analytics_au.defs.assets.uac_early_bird_closing_count import uac_early_bird_closing_count
+from analytics_au.defs.assets.uac_fos_by_app_type import uac_fos_by_app_type
+from analytics_au.defs.assets.uac_fos_by_gender import uac_fos_by_gender
 
 # Google Trends: expect refresh every 6 hours, allow up to 12h staleness
 realtime_freshness_checks = dg.build_last_update_freshness_checks(

@@ -23,6 +23,7 @@ Thumbs.db
 # Dagster
 .tmp_dagster_home*/
 .dagster_home/
+.dg/
 
 # Playwright
 .playwright-mcp/
@@ -35,6 +36,6 @@ Thumbs.db
 *.duckdb.wal
 
 # Evidence reports
-reports/.evidence/
-reports/node_modules/
-reports/build/
+reports/*/.evidence/
+reports/*/node_modules/
+reports/*/build/

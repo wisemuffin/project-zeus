@@ -3,39 +3,39 @@ version: "3"
 tasks:
   analytics:sync:
     desc: Install/sync Python dependencies
-    dir: analytics
+    dir: projects/analytics-au
     cmd: uv sync
 
   analytics:dev:
     desc: Start Dagster dev server
-    dir: analytics
+    dir: projects/analytics-au
     env:
       DAGSTER_HOME: "{{.ROOT_DIR}}/.dagster_home"
     cmd: uv run dg dev
 
   analytics:dbt-build:
     desc: Build dbt models directly
-    dir: analytics
+    dir: projects/analytics-au
     cmd: uv run dbt build --project-dir dbt_project
 
   reports:install:
     desc: Install Node dependencies
-    dir: reports
+    dir: reports/au
     cmd: npm install
 
   reports:sources:
     desc: Extract DuckDB data into Evidence cache
-    dir: reports
+    dir: reports/au
     cmd: npm run sources
 
   reports:dev:
     desc: Start Evidence dev server
-    dir: reports
+    dir: reports/au
     cmd: npm run dev
 
   reports:build:
     desc: Build static Evidence site
-    dir: reports
+    dir: reports/au
     cmd: npm run build
 
   dev:
@@ -46,7 +46,7 @@ tasks:
 
   analytics:harlequin:
     desc: Launch Harlequin SQL IDE on the analytics DuckDB
-    dir: analytics
+    dir: projects/analytics-au
     cmd: uv run harlequin analytics.duckdb
 
   setup:
