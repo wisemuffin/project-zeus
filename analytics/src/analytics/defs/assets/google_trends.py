@@ -54,6 +54,7 @@ class GoogleTrendsTranslator(DagsterDltTranslator):
     ),
     name="google_trends",
     dagster_dlt_translator=GoogleTrendsTranslator(),
+    op_tags={"dagster/concurrency_key": "duckdb_dlt"},
 )
 def google_trends(context: AssetExecutionContext, dlt: DagsterDltResource):
     yield from dlt.run(context=context)

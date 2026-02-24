@@ -7,7 +7,7 @@ with source as (
     select
         LGA_2024,
         TIME_PERIOD,
-        OBS_VALUE as population
+        CAST(OBS_VALUE AS INTEGER) as population
     from {{ source('dagster', 'abs_population_by_lga') }}
 ),
 

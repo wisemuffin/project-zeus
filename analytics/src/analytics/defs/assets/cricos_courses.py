@@ -178,6 +178,7 @@ class CricosTranslator(DagsterDltTranslator):
     ),
     name="cricos_courses",
     dagster_dlt_translator=CricosTranslator(),
+    op_tags={"dagster/concurrency_key": "duckdb_dlt"},
 )
 def cricos_courses(context: AssetExecutionContext, dlt: DagsterDltResource):
     yield from dlt.run(context=context)

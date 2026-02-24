@@ -72,6 +72,7 @@ class AbsLgaTranslator(DagsterDltTranslator):
     ),
     name="abs_lga_reference",
     dagster_dlt_translator=AbsLgaTranslator(),
+    op_tags={"dagster/concurrency_key": "duckdb_dlt"},
 )
 def abs_lga_reference(context: AssetExecutionContext, dlt: DagsterDltResource):
     yield from dlt.run(context=context)

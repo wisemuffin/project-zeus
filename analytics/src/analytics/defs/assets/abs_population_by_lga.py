@@ -72,6 +72,7 @@ class AbsPopulationTranslator(DagsterDltTranslator):
     ),
     name="abs_population_by_lga",
     dagster_dlt_translator=AbsPopulationTranslator(),
+    op_tags={"dagster/concurrency_key": "duckdb_dlt"},
 )
 def abs_population_by_lga(context: AssetExecutionContext, dlt: DagsterDltResource):
     yield from dlt.run(context=context)
