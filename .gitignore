@@ -22,6 +22,10 @@ Thumbs.db
 
 # Dagster
 .tmp_dagster_home*/
+.dagster_dome/
+
+# Playwright
+.playwright-mcp/
 
 # dbt
 .user.yml
