@@ -42,6 +42,19 @@ Every Dagster asset and dbt model must document both **what it contains** and **
 - When analysis models produce actionable findings, document them in `docs/insights/`
 - Each insight doc should include: source models, key findings, marketing angles, and limitations
 
+## Data Ingestion with dlt
+- Use dlt (`dagster-dlt`) for new data source assets where the extraction is straightforward
+  (REST APIs, CSV/JSON file downloads, RSS feeds)
+- Do NOT use dlt when the core value is custom parsing logic (complex Excel section
+  detection, PDF extraction, HTML scraping with BeautifulSoup)
+- dlt assets use `@dlt_assets` decorator with a custom `DagsterDltTranslator`
+- dlt writes directly to DuckDB (`analytics.duckdb`, schema `public`) — these assets
+  bypass the `DuckDBPandasIOManager`
+- Non-dlt assets continue to return `pd.DataFrame` and use the IO manager as before
+- All dlt resources must use `write_disposition="replace"` (full refresh each run)
+- Resource `name=` must match the expected DuckDB table name and dbt source name
+- dlt assets add `"dlt"` to `kinds=` alongside the existing method badge (e.g. `{"python", "api", "dlt"}`)
+
 ## Python Dependencies
 - Use `uv` to manage Python environments and dependencies
 - Always use `uv add <package>` to install packages (not pip)
