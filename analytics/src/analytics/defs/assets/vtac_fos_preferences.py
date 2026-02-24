@@ -35,10 +35,15 @@ def vtac_fos_preferences(
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Table D1 is the first table on the page
-    table = soup.find("table")
+    # The page has multiple tables; the first is a title-only table.
+    # Find the data table by looking for one that contains "Female" in a cell.
+    table = None
+    for t in soup.find_all("table"):
+        if t.find(string=lambda s: s and "Female" in s):
+            table = t
+            break
     if table is None:
-        raise ValueError(f"No table found at {VTAC_SECTION_D_URL}")
+        raise ValueError(f"No data table found at {VTAC_SECTION_D_URL}")
 
     rows = table.find_all("tr")
 
@@ -64,34 +69,45 @@ def vtac_fos_preferences(
             else:
                 continue
 
-        # Detect field-of-study header rows vs gender data rows
+        # Detect field-of-study header rows vs gender data rows.
+        # Gender-only rows (Male/Total) have 8 cells: gender + 7 data columns.
+        # Field name rows have 9 cells: field + gender(Female) + 7 data columns.
         if first_cell in ("Female", "Male", "Total"):
             gender = first_cell
-            if current_field is None:
-                continue
-            # Parse numeric columns: First Preferences, % of FP, Total Offers, Enrolments
-            try:
-                first_prefs = _parse_int(texts[1])
-                pref_share = _parse_float(texts[2]) / 100  # Convert % to decimal
-                total_offers = _parse_int(texts[3])
-                enrolments = _parse_int(texts[4])
-            except (IndexError, ValueError):
-                context.log.warning(
-                    f"Skipping malformed row: field={current_field}, gender={gender}"
-                )
-                continue
-
-            parsed_rows.append({
-                "field_of_study": current_field,
-                "gender": gender,
-                "first_preferences": first_prefs,
-                "preference_share": pref_share,
-                "total_offers": total_offers,
-                "enrolments": enrolments,
-            })
-        else:
-            # This is a field-of-study name row
+            data_cells = texts[1:]
+        elif len(texts) >= 9 and texts[1] in ("Female", "Male", "Total"):
+            # Field name + gender data in the same row
             current_field = first_cell
+            gender = texts[1]
+            data_cells = texts[2:]
+        else:
+            # Field-of-study name only (no inline gender data)
+            current_field = first_cell
+            continue
+
+        if current_field is None:
+            continue
+
+        # Parse numeric columns: First Preferences, % of FP, Total Offers, Enrolments
+        try:
+            first_prefs = _parse_int(data_cells[0])
+            pref_share = _parse_float(data_cells[1]) / 100  # Convert % to decimal
+            total_offers = _parse_int(data_cells[2])
+            enrolments = _parse_int(data_cells[3])
+        except (IndexError, ValueError):
+            context.log.warning(
+                f"Skipping malformed row: field={current_field}, gender={gender}"
+            )
+            continue
+
+        parsed_rows.append({
+            "field_of_study": current_field,
+            "gender": gender,
+            "first_preferences": first_prefs,
+            "preference_share": pref_share,
+            "total_offers": total_offers,
+            "enrolments": enrolments,
+        })
 
     df = pd.DataFrame(parsed_rows)
 
