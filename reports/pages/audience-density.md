@@ -35,6 +35,32 @@ select count(distinct state) as total from zeus.audience_density_by_lga
     fmt=num0
 />
 
+## Youth Population by LGA
+
+```sql map_data
+select
+    cast(cast(lga_code as integer) as varchar) as lga_code_str,
+    lga_code,
+    state,
+    youth_population,
+    lga_share_of_state
+from zeus.audience_density_by_lga
+```
+
+<AreaMap
+    data={map_data}
+    geoJsonUrl="/au_lga_2024_gen.geojson"
+    geoId="lga_code_2024"
+    areaCol="lga_code_str"
+    value="youth_population"
+    height=500
+    startingLat={-28}
+    startingLong={134}
+    startingZoom={4}
+    legendType="scalar"
+    title="Youth Population (15-19) by LGA"
+/>
+
 ## Top LGAs by State
 
 The cumulative share column shows how quickly youth population concentrates — e.g. if the top 20 LGAs in NSW cover 50% of the state's youth, campaigns can focus geo-targeting on those areas for efficient spend.
