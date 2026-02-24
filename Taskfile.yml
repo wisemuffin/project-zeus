@@ -44,6 +44,11 @@ tasks:
       - analytics:dev
       - reports:dev
 
+  analytics:harlequin:
+    desc: Launch Harlequin SQL IDE on the analytics DuckDB
+    dir: analytics
+    cmd: uv run harlequin analytics.duckdb
+
   setup:
     desc: One-shot project setup (Python + Node deps)
     cmds:
