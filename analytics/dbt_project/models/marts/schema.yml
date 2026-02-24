@@ -316,3 +316,229 @@ models:
         description: >
           Number of distinct courses this institution offers in this UAC field.
           Higher counts indicate institutional depth/commitment to the field.
+
+  - name: field_value_proposition
+    description: >
+      Composite ranking of each field by opportunity gap, employment rate, and salary.
+      Classifies fields into actionable tiers (No-brainer, High potential, Proven outcomes,
+      Challenging) for prioritising marketing campaign spend. Answers "What message" by
+      identifying the strongest overall value propositions across all dimensions.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+      - name: ft_employment_rate
+        description: QILT full-time employment rate for graduates in this field (%)
+      - name: median_salary
+        description: QILT median graduate salary for this field (AUD)
+      - name: vacancy_growth_12m
+        description: 12-month growth rate of vacancies for this field's mapped occupations
+      - name: value_score
+        description: >
+          Average of three percentile ranks: opportunity gap, FT employment rate,
+          and median salary. Range 0-1 where higher is better across all dimensions.
+      - name: value_tier
+        description: >
+          Actionable tier classification: "No-brainer" (positive gap + 80%+ FT employment
+          + above-median salary), "High potential" (positive gap, weaker outcomes),
+          "Proven outcomes" (no gap but strong outcomes), "Challenging" (low demand, weak outcomes).
+      - name: value_rank
+        description: Rank by value_score descending (1 = best overall value proposition)
+        tests:
+          - unique
+          - not_null
+      - name: sector_ft_employment_rate
+        description: Sector average FT employment rate across all fields
+      - name: sector_median_salary
+        description: Sector average median salary across all fields
+
+  - name: gender_opportunity_profile
+    description: >
+      Gender salary gap alongside female/male preference shares and opportunity gap
+      in a diversity-marketing view. Classifies each field's diversity opportunity
+      to support equity-focused messaging and attract underrepresented groups.
+      Answers "What message" + "Who" targeting dimensions.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: median_salary_female
+        description: QILT median graduate salary for female graduates (AUD)
+      - name: median_salary_male
+        description: QILT median graduate salary for male graduates (AUD)
+      - name: salary_gender_gap
+        description: Male median salary minus female median salary (AUD). Positive = males earn more.
+      - name: gender_gap_pct
+        description: >
+          Salary gender gap as a proportion of overall median salary. Relative measure
+          of pay inequity (e.g. 0.10 = 10% gap).
+      - name: female_preference_share
+        description: Share of female UAC applicants preferring this field (0-1 decimal)
+      - name: male_preference_share
+        description: Share of male UAC applicants preferring this field (0-1 decimal)
+      - name: female_underrepresentation
+        description: >
+          0.5 minus female preference share. Positive values indicate women are
+          underrepresented in this field's applicant pool.
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending
+      - name: ft_employment_rate
+        description: QILT full-time employment rate (%)
+      - name: vacancy_growth_12m
+        description: 12-month vacancy growth rate
+      - name: diversity_opportunity
+        description: >
+          Classification: "High diversity opportunity" (positive gap + women underrepresented >10pp),
+          "Equity focus" (women underrepresented, low/no gap), "Gender balanced" (within 10pp),
+          "Male underrepresented" (men underrepresented).
+
+  - name: satisfaction_opportunity
+    description: >
+      QILT Student Experience Survey satisfaction scores aggregated to UAC field level,
+      joined with opportunity gap and graduate outcomes. Adds student experience proof
+      points (teaching quality, skills development, etc.) for "What message" targeting
+      in marketing creative.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: teaching_quality
+        description: Average % agreement on teaching quality across QILT study areas in this field
+      - name: skills_development
+        description: Average % agreement on skills development
+      - name: student_support
+        description: Average % agreement on student support
+      - name: learning_resources
+        description: Average % agreement on learning resources
+      - name: peer_engagement
+        description: Average % agreement on peer engagement
+      - name: overall_quality
+        description: Average % agreement on overall quality of educational experience
+      - name: quality_vs_sector
+        description: >
+          Overall quality minus sector average. Positive values indicate the field
+          scores above the sector mean — stronger satisfaction proof points.
+      - name: ft_employment_rate
+        description: QILT full-time employment rate (%)
+      - name: median_salary
+        description: QILT median graduate salary (AUD)
+      - name: opportunity_gap
+        description: Vacancy share minus preference share
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending
+      - name: vacancy_growth_12m
+        description: 12-month vacancy growth rate
+      - name: qilt_areas_count
+        description: Number of QILT study areas averaged into this UAC field
+
+  - name: segment_field_affinity
+    description: >
+      Per-applicant-type field affinity with outcomes context. Grain is
+      (applicant_type, field_of_study). Shows which UAC applicant segments
+      over-index on which fields, enabling segment-specific campaign messaging.
+      Answers "Who" + "What message" targeting.
+    columns:
+      - name: applicant_type
+        description: UAC applicant segment (NSW Year 12, ACT Year 12, Interstate & IB, Non-Year 12)
+        tests:
+          - not_null
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - not_null
+      - name: preference_share
+        description: This segment's preference share for this field (0-1 decimal)
+      - name: segment_affinity_index
+        description: >
+          Segment preference share divided by total preference share. Values above 1.0
+          indicate the segment over-indexes on this field relative to the total pool.
+      - name: opportunity_gap
+        description: Vacancy share minus preference share
+      - name: ft_employment_rate
+        description: QILT full-time employment rate (%)
+      - name: median_salary
+        description: QILT median graduate salary (AUD)
+      - name: vacancy_growth_12m
+        description: 12-month vacancy growth rate
+      - name: segment_rank
+        description: >
+          Rank within each segment by preference share descending.
+          Rank 1 = the field this segment prefers most.
+
+  - name: emerging_occupations
+    description: >
+      ANZSCO2 occupation groups ranked by 12-month vacancy growth, mapped to UAC
+      fields of study. Identifies fast-growing occupations where student preference
+      hasn't caught up with employer demand — messaging opportunities to highlight
+      career growth trends. Answers "What message" targeting.
+    columns:
+      - name: occupation_title
+        description: ANZSCO2 occupation group title (e.g. ICT Professionals, Health Professionals)
+        tests:
+          - unique
+          - not_null
+      - name: uac_field_of_study
+        description: UAC field of study mapped from ANZSCO2 via occupation_fos_mapping
+      - name: vacancies
+        description: Latest-month internet job vacancies for this occupation
+      - name: vacancies_12m_ago
+        description: Job vacancies 12 months prior (null if unavailable)
+      - name: vacancy_growth_12m
+        description: >
+          12-month vacancy growth rate. Computed as (current - prior) / prior.
+          Positive values indicate growing occupation demand.
+      - name: opportunity_gap
+        description: Vacancy share minus preference share for the mapped field
+      - name: opportunity_rank
+        description: Opportunity rank for the mapped field
+      - name: preference_share
+        description: UAC preference share for the mapped field
+      - name: growth_rank
+        description: Rank by vacancy_growth_12m descending (1 = fastest growing)
+        tests:
+          - unique
+          - not_null
+
+  - name: audience_density_by_lga
+    description: >
+      LGA-level youth population (15-19) with state context for hyper-local
+      geo-targeting of digital campaigns. Shows which Local Government Areas
+      concentrate the most prospective students within each state, enabling
+      efficient local ad targeting. Answers "Where" targeting.
+    columns:
+      - name: lga_code
+        description: ABS Local Government Area code (2024 boundaries)
+        tests:
+          - unique
+          - not_null
+      - name: state
+        description: Australian state/territory code derived from LGA code first digit
+      - name: youth_population
+        description: Estimated resident population aged 15-19 in this LGA
+      - name: state_total
+        description: Total youth population across all LGAs in this state
+      - name: lga_share_of_state
+        description: >
+          This LGA's youth population as a share of the state total (0-1 decimal).
+          Higher values indicate LGAs with greater youth concentration.
+      - name: density_rank_in_state
+        description: >
+          Rank within each state by youth population descending.
+          Rank 1 = the LGA with the most youth in that state.
+      - name: cumulative_share
+        description: >
+          Running sum of lga_share_of_state within each state, ordered by population
+          descending. Shows what percentage of the state's youth are covered by
+          the top N LGAs — useful for determining geo-targeting coverage thresholds.

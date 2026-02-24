@@ -19,6 +19,13 @@ Mart models that transform raw Dagster assets into marketing-actionable insights
 
 - [x] **University Course Listings** (`university_course_listings`) — CRICOS course data from data.gov.au joined with opportunity gap and graduate outcomes. Connects fields of study to named programs at specific institutions and campuses for program-level marketing recommendations.
 
+- [x] **Field Value Proposition** (`field_value_proposition`) — Composite ranking of each field by opportunity gap, employment rate, and salary. Classifies into actionable tiers (No-brainer, High potential, Proven outcomes, Challenging) for prioritising campaign spend.
+- [x] **Gender Opportunity Profile** (`gender_opportunity_profile`) — Gender salary gap alongside preference shares and opportunity gap in a diversity-marketing view. Supports equity-focused messaging.
+- [x] **Satisfaction × Opportunity** (`satisfaction_opportunity`) — QILT SES satisfaction aggregated to field level, joined with opportunity gap and graduate outcomes. Adds student experience proof points.
+- [x] **Segment Field Affinity** (`segment_field_affinity`) — Per-applicant-type field affinity showing which segments over-index on which fields. Enables segment-specific campaign messaging.
+- [x] **Emerging Occupations** (`emerging_occupations`) — ANZSCO2 occupations ranked by 12-month vacancy growth, mapped to UAC fields. Identifies fast-growing occupations for messaging.
+- [x] **Audience Density by LGA** (`audience_density_by_lga`) — LGA-level youth population for hyper-local geo-targeting of digital campaigns.
+
 ### Planned
 
 *(none currently)*
@@ -174,6 +181,12 @@ These platforms from the student search analysis are **not viable** as data sour
 - [x] **Graduate Outcomes** (`pages/graduate-outcomes.md`) — Salary by gender, FT employment rates (YoY), marketing signal matrix, salary gender gap. Sources from graduate_outcomes_by_fos mart + QILT GOS data.
 - [x] **Institution Scorecard** (`pages/institution-scorecard.md`) — Per-university satisfaction vs employment scatter, satisfaction indicators, full scorecard with sector comparison. Sources from institution_scorecard mart + QILT SES/GOS data.
 - [x] **State Preference Comparison** (`pages/state-preferences.md`) — Cross-state comparison of field-of-study preferences across NSW/ACT (UAC), Victoria (VTAC), and SA/NT (SATAC). Grouped bar charts, divergence table, gender split by state. Sources from stg_national_fos_preferences.
+- [x] **Field Value Proposition** (`pages/field-value.md`) — Composite value score ranking, tier distribution, and full ranking table. Sources from field_value_proposition mart.
+- [x] **Gender Pay Gap × Opportunity** (`pages/gender-pay-gap.md`) — Salary by gender, gender gap bar chart, diversity opportunity classification. Sources from gender_opportunity_profile mart.
+- [x] **Student Satisfaction × Opportunity** (`pages/student-satisfaction.md`) — Satisfaction vs employment scatter, indicator bar charts, full data table. Sources from satisfaction_opportunity mart.
+- [x] **Segment Playbooks** (`pages/segment-playbooks.md`) — Dropdown-filtered segment view with affinity indices and outcomes context. Sources from segment_field_affinity mart.
+- [x] **Emerging Occupations** (`pages/emerging-occupations.md`) — Vacancy growth ranking by occupation, mapped to fields. Sources from emerging_occupations mart.
+- [x] **Audience Density by LGA** (`pages/audience-density.md`) — LGA-level youth population searchable by state for geo-targeting. Sources from audience_density_by_lga mart.
 
 ### Future
 

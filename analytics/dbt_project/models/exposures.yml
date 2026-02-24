@@ -125,3 +125,83 @@ exposures:
       - ref('stg_national_fos_preferences')
     owner:
       name: Project Zeus Team
+
+  - name: field_value_proposition_report
+    label: Field Value Proposition
+    type: dashboard
+    maturity: medium
+    description: >
+      Composite ranking of fields by opportunity gap, employment rate, and salary.
+      Classifies fields into actionable tiers (No-brainer, High potential, Proven
+      outcomes, Challenging) for prioritising marketing spend. Serves "What message".
+    depends_on:
+      - ref('field_value_proposition')
+    owner:
+      name: Project Zeus Team
+
+  - name: gender_opportunity_profile_report
+    label: Gender Pay Gap × Opportunity
+    type: dashboard
+    maturity: medium
+    description: >
+      Gender salary gap alongside preference shares and opportunity gap in a
+      diversity-marketing view. Supports equity-focused messaging and identifies
+      fields where attracting women aligns with high employer demand.
+      Serves "What message" + "Who" targeting.
+    depends_on:
+      - ref('gender_opportunity_profile')
+    owner:
+      name: Project Zeus Team
+
+  - name: satisfaction_opportunity_report
+    label: Student Satisfaction × Opportunity
+    type: dashboard
+    maturity: medium
+    description: >
+      QILT Student Experience Survey satisfaction aggregated to field level, joined
+      with opportunity gap and graduate outcomes. Adds student experience proof
+      points (teaching quality, skills development) for marketing creative.
+      Serves "What message" targeting.
+    depends_on:
+      - ref('satisfaction_opportunity')
+    owner:
+      name: Project Zeus Team
+
+  - name: segment_playbooks_report
+    label: Segment Playbooks
+    type: dashboard
+    maturity: medium
+    description: >
+      Per-applicant-type field affinity with employment outcomes context. Shows
+      which UAC segments over-index on which fields, enabling segment-specific
+      campaign messaging and targeting. Serves "Who" + "What message" targeting.
+    depends_on:
+      - ref('segment_field_affinity')
+    owner:
+      name: Project Zeus Team
+
+  - name: emerging_occupations_report
+    label: Emerging Occupations
+    type: dashboard
+    maturity: medium
+    description: >
+      ANZSCO2 occupation groups ranked by 12-month vacancy growth, mapped to
+      UAC fields. Identifies fast-growing occupations where student preference
+      hasn't caught up with demand — messaging opportunities. Serves "What message".
+    depends_on:
+      - ref('emerging_occupations')
+    owner:
+      name: Project Zeus Team
+
+  - name: audience_density_report
+    label: Audience Density by LGA
+    type: dashboard
+    maturity: medium
+    description: >
+      LGA-level youth population for hyper-local geo-targeting. Shows which
+      Local Government Areas concentrate the most prospective students within
+      each state for efficient local ad targeting. Serves "Where" targeting.
+    depends_on:
+      - ref('audience_density_by_lga')
+    owner:
+      name: Project Zeus Team
