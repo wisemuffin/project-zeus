@@ -36,6 +36,11 @@ Thumbs.db
 *.duckdb.wal
 
 # Evidence reports
-reports/*/.evidence/
+reports/*/.evidence/*
+!reports/*/.evidence/template/
+reports/*/.evidence/template/*
+!reports/*/.evidence/template/static/
+reports/*/.evidence/template/static/*
+!reports/*/.evidence/template/static/data/
 reports/*/node_modules/
 reports/*/build/
