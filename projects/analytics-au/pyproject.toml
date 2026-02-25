@@ -14,6 +14,7 @@ dependencies = [
     "pdfplumber>=0.11.9",
     "dagster-dlt>=0.28.14",
     "dlt[duckdb]>=1.6.1",
+    "pytrends-modern>=0.2.4",
 ]
 
 [dependency-groups]

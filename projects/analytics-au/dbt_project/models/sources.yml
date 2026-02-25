@@ -83,6 +83,14 @@ sources:
         meta:
           dagster:
             asset_key: ["cricos_courses"]
+      - name: google_trends_interest
+        description: >
+          Google Trends search interest over time for 42 Australian university names.
+          Monthly granularity over a 5-year rolling window. Cross-batch normalized
+          so interest values (0-100) are comparable across all universities.
+        meta:
+          dagster:
+            asset_key: ["google_trends_interest"]
       - name: vtac_fos_preferences
         description: >
           VTAC field-of-study first preferences by gender (Victorian applicants).
