@@ -2,55 +2,105 @@ version: "3"
 
 tasks:
   analytics:sync:
-    desc: Install/sync Python dependencies
+    desc: Install/sync Python dependencies (AU)
     dir: projects/analytics-au
     cmd: uv sync
 
   analytics:dev:
-    desc: Start Dagster dev server
+    desc: Start Dagster dev server (AU)
     dir: projects/analytics-au
     env:
       DAGSTER_HOME: "{{.ROOT_DIR}}/.dagster_home"
     cmd: uv run dg dev
 
   analytics:dbt-build:
-    desc: Build dbt models directly
+    desc: Build dbt models directly (AU)
     dir: projects/analytics-au
     cmd: uv run dbt build --project-dir dbt_project
 
+  analytics-uk:sync:
+    desc: Install/sync Python dependencies (UK)
+    dir: projects/analytics-uk
+    cmd: uv sync
+
+  analytics-uk:dev:
+    desc: Start Dagster dev server (UK)
+    dir: projects/analytics-uk
+    env:
+      DAGSTER_HOME: "{{.ROOT_DIR}}/.dagster_home"
+    cmd: uv run dg dev
+
+  analytics-uk:dbt-build:
+    desc: Build dbt models directly (UK)
+    dir: projects/analytics-uk
+    cmd: uv run dbt build --project-dir dbt_project
+
   reports:install:
-    desc: Install Node dependencies
+    desc: Install Node dependencies (AU)
     dir: reports/au
     cmd: npm install
 
   reports:sources:
-    desc: Extract DuckDB data into Evidence cache
+    desc: Extract DuckDB data into Evidence cache (AU)
     dir: reports/au
     cmd: npm run sources
 
   reports:dev:
-    desc: Start Evidence dev server
+    desc: Start Evidence dev server (AU)
     dir: reports/au
     cmd: npm run dev
 
   reports:build:
-    desc: Build static Evidence site
+    desc: Build static Evidence site (AU)
     dir: reports/au
     cmd: npm run build
 
+  reports-uk:install:
+    desc: Install Node dependencies (UK)
+    dir: reports/uk
+    cmd: npm install
+
+  reports-uk:sources:
+    desc: Extract DuckDB data into Evidence cache (UK)
+    dir: reports/uk
+    cmd: npm run sources
+
+  reports-uk:dev:
+    desc: Start Evidence dev server (UK)
+    dir: reports/uk
+    cmd: npm run dev
+
+  reports-uk:build:
+    desc: Build static Evidence site (UK)
+    dir: reports/uk
+    cmd: npm run build
+
   dev:
-    desc: Start both Dagster and Evidence dev servers
+    desc: Start both Dagster and Evidence dev servers (AU)
     deps:
       - analytics:dev
       - reports:dev
 
+  dev-uk:
+    desc: Start both Dagster and Evidence dev servers (UK)
+    deps:
+      - analytics-uk:dev
+      - reports-uk:dev
+
   analytics:harlequin:
-    desc: Launch Harlequin SQL IDE on the analytics DuckDB
+    desc: Launch Harlequin SQL IDE on the analytics DuckDB (AU)
     dir: projects/analytics-au
     cmd: uv run harlequin analytics.duckdb
 
+  analytics-uk:harlequin:
+    desc: Launch Harlequin SQL IDE on the analytics DuckDB (UK)
+    dir: projects/analytics-uk
+    cmd: uv run harlequin analytics.duckdb
+
   setup:
-    desc: One-shot project setup (Python + Node deps)
+    desc: One-shot project setup (Python + Node deps, all countries)
     cmds:
       - task: analytics:sync
+      - task: analytics-uk:sync
       - task: reports:install
+      - task: reports-uk:install

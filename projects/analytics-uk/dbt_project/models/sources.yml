@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: dagster
+    description: Raw data assets managed by Dagster Python assets
+    schema: public
+    tables:
+      - name: soc_cah_mapping
+        description: Manual mapping of SOC 2020 major occupation groups to CAH Level 1 subject areas
+        meta:
+          dagster:
+            asset_key: ["soc_cah_mapping"]

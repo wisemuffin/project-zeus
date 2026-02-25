@@ -1,0 +1,4 @@
+name: zeus
+type: duckdb
+options:
+  filename: ../../../../projects/analytics-uk/analytics.duckdb

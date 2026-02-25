@@ -1,4 +1,5 @@
 [workspace]
 projects = [
     "projects/analytics-au",
+    "projects/analytics-uk",
 ]

@@ -1,0 +1,4 @@
+type: analytics_uk.components.dbt_project.AuditedDbtProjectComponent
+
+attributes:
+  project: '{{ context.project_root }}/dbt_project'
