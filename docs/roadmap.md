@@ -193,3 +193,31 @@ These platforms from the student search analysis are **not viable** as data sour
 - [ ] Set up database-level row-level security policies
 - [ ] Prototype iframe embedding in the application
 - [ ] Implement theming to match product branding
+
+---
+
+## Squiz-Actionable Recommendations
+
+**Goal:** Package Zeus's insights so they map directly to actions university marketing teams can execute in Squiz DXP — the CMS used by 15+ confirmed (and likely 22+) Australian universities. See [Squiz market research](research/squiz-university-cms.md) for full analysis.
+
+### Phase 1: Recommendation Language
+
+Frame Zeus report outputs using Squiz-native concepts so marketing teams can act immediately.
+
+- [ ] **Landing page briefs per field of study** — For each high-opportunity field, generate a structured brief: target segment (who), target geography (where), headline messaging angles (career outcomes, salary, employment rate), and proof points. Designed to be handed to a Squiz content author or agency partner.
+- [ ] **Personalization rule suggestions** — Translate Zeus's audience segments into Squiz personalization rules (e.g., "visitors from [LGA cluster] see [field] hero banner with [career outcome] messaging"). No technical integration — just documented rules a Squiz admin can configure.
+- [ ] **A/B test hypotheses** — For each insight (opportunity gap, trending interest, emerging occupation), generate a testable hypothesis a marketing team can run in Squiz's A/B testing tool. Format: "Test [variant A] vs [variant B] for [segment] — expected lift based on [Zeus data point]."
+
+### Phase 2: Course Finder Optimisation
+
+Help universities make better use of Squiz's interactive course finder — often the highest-traffic prospective student page.
+
+- [ ] **Course prominence recommendations** — Using field_value_proposition tiers and opportunity_gap data, recommend which courses to feature prominently in course finder results and category pages.
+- [ ] **Course page messaging templates** — For each CRICOS course matched to a high-opportunity field, generate suggested copy blocks: career outcome stats, employment rate, salary data, and trending interest hooks.
+
+### Phase 3: Channel Partner Enablement
+
+Squiz implementation partners (FrontStage, Deepend, Ladoo, etc.) are the ones who build and configure university websites. They are a potential distribution channel for Zeus.
+
+- [ ] **Research partner ecosystem** — Map which agencies serve which universities and identify potential channel partnerships or referral arrangements.
+- [ ] **Create agency-facing summary format** — Condense Zeus insights into a format useful for Squiz implementation partners scoping website projects (e.g., "top 5 fields to feature for [university] based on local demand and graduate outcomes").
