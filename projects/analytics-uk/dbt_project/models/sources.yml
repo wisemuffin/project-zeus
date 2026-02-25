@@ -10,3 +10,8 @@ sources:
         meta:
           dagster:
             asset_key: ["soc_cah_mapping"]
+      - name: google_trends_uk
+        description: Current trending Google searches in the United Kingdom
+        meta:
+          dagster:
+            asset_key: ["google_trends_uk"]

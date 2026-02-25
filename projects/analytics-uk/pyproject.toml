@@ -7,6 +7,9 @@ dependencies = [
     "dagster==1.12.14",
     "dagster-dbt>=0.28.14",
     "dbt-duckdb>=1.10.1",
+    "dagster-dlt>=0.28.14",
+    "dlt[duckdb]>=1.6.1",
+    "trendspyg>=0.4.2",
 ]
 
 [dependency-groups]

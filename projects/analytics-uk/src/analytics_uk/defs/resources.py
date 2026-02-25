@@ -1,4 +1,5 @@
 import dagster as dg
+from dagster_dlt import DagsterDltResource
 from dagster_duckdb_pandas import DuckDBPandasIOManager
 
 
@@ -9,5 +10,6 @@ def resources():
             "io_manager": DuckDBPandasIOManager(
                 database="analytics.duckdb",
             ),
+            "dlt": DagsterDltResource(),
         }
     )
