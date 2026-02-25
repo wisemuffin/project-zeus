@@ -193,6 +193,22 @@ exposures:
     owner:
       name: Project Zeus Team
 
+  - name: brand_awareness_report
+    label: Brand Awareness
+    type: dashboard
+    maturity: medium
+    description: >
+      University brand awareness analysis combining Google Trends search interest
+      (time series, geographic, and related queries) with QILT quality metrics.
+      Identifies marketing opportunities where quality exceeds brand recognition,
+      geographic brand gaps, and trending search associations. Serves "Who" + "Where".
+    depends_on:
+      - ref('university_brand_awareness')
+      - ref('university_state_interest')
+      - ref('stg_google_trends_related_queries')
+    owner:
+      name: Project Zeus Team
+
   - name: audience_density_report
     label: Audience Density by LGA
     type: dashboard

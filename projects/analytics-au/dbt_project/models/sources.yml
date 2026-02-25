@@ -99,6 +99,13 @@ sources:
         meta:
           dagster:
             asset_key: ["google_trends_interest_by_state"]
+      - name: google_trends_related_queries
+        description: >
+          Google Trends related queries (top and rising) for 42 Australian
+          university names. Rising values show growth % or "Breakout".
+        meta:
+          dagster:
+            asset_key: ["google_trends_related_queries"]
       - name: vtac_fos_preferences
         description: >
           VTAC field-of-study first preferences by gender (Victorian applicants).

@@ -58,6 +58,46 @@ top_state_picked as (
     where rn = 1
 ),
 
+-- Momentum: avg interest last 3 months vs prior 3 months
+momentum_cutoffs as (
+    select
+        max(date) as latest_date,
+        max(date) - interval '3 months' as mid_cutoff,
+        max(date) - interval '6 months' as early_cutoff
+    from time_series
+),
+
+momentum_window as (
+    select
+        ts.university,
+        avg(case when ts.date >= mc.mid_cutoff then ts.interest end) as avg_last_3m,
+        avg(case when ts.date >= mc.early_cutoff and ts.date < mc.mid_cutoff
+            then ts.interest end) as avg_prior_3m
+    from time_series ts
+    cross join momentum_cutoffs mc
+    where ts.date >= mc.early_cutoff
+    group by ts.university
+),
+
+-- Slope: regr_slope over last 12 months (interest points per day)
+slope_cutoff as (
+    select max(date) - interval '12 months' as cutoff_date
+    from time_series
+),
+
+slope_12m as (
+    select
+        ts.university,
+        regr_slope(
+            ts.interest,
+            epoch(ts.date) / 86400.0
+        ) as interest_slope_12m
+    from time_series ts
+    cross join slope_cutoff sc
+    where ts.date >= sc.cutoff_date
+    group by ts.university
+),
+
 scorecard as (
     select * from {{ ref('institution_scorecard') }}
 )
@@ -70,6 +110,22 @@ select
     ir.avg_interest_all,
     ir.peak_interest,
     ir.interest_rank,
+
+    -- Momentum scoring
+    round(sl.interest_slope_12m, 4) as interest_slope_12m,
+    round(
+        case when mw.avg_prior_3m > 0
+            then (mw.avg_last_3m / mw.avg_prior_3m) - 1
+        end,
+        3
+    ) as interest_momentum,
+    case
+        when mw.avg_prior_3m > 0
+            and (mw.avg_last_3m / mw.avg_prior_3m) - 1 > 0.05 then 'Accelerating'
+        when mw.avg_prior_3m > 0
+            and (mw.avg_last_3m / mw.avg_prior_3m) - 1 < -0.05 then 'Declining'
+        else 'Stable'
+    end as interest_trend,
 
     -- Search interest (geographic)
     ts.top_state,
@@ -100,4 +156,6 @@ select
 from scorecard sc
 left join interest_ranked ir on ir.university = sc.institution
 left join top_state_picked ts on ts.university = sc.institution
+left join momentum_window mw on mw.university = sc.institution
+left join slope_12m sl on sl.university = sc.institution
 order by ir.interest_rank asc nulls last

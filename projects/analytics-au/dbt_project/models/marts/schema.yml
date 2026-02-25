@@ -611,6 +611,44 @@ models:
       - name: _dagster_run_id
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
+  - name: university_state_interest
+    description: >
+      University × state search interest matrix with rankings and deviation
+      from mean. Grain is university × state (~336 rows). Shows which states
+      each university is strongest/weakest in, and which universities dominate
+      search interest within each state. Enables geo-targeted campaign allocation
+      and identifies geographic brand gaps. Answers "Where" targeting.
+    columns:
+      - name: university
+        description: QILT institution name (join key across all university-level models)
+        tests:
+          - not_null
+      - name: state
+        description: Australian state/territory 2-letter code (NSW, VIC, QLD, SA, WA, TAS, NT, ACT)
+        tests:
+          - not_null
+      - name: state_name
+        description: Full state/territory name matching GeoJSON state_name_2021 field for map joins
+      - name: interest
+        description: Google Trends relative search interest (0-100) for this university in this state
+      - name: state_rank_for_uni
+        description: >
+          Rank of this state for this university by interest descending.
+          Rank 1 = the state where this university is most searched.
+      - name: uni_rank_in_state
+        description: >
+          Rank of this university within this state by interest descending.
+          Rank 1 = the most searched university in this state.
+      - name: interest_vs_uni_avg
+        description: >
+          Deviation of this state's interest from the university's average across
+          all states. Positive = above average (brand stronghold), negative = below
+          average (brand gap).
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
   - name: university_brand_awareness
     description: >
       Per-university brand awareness analysis combining Google Trends search interest
@@ -633,6 +671,21 @@ models:
         description: Maximum monthly interest value observed across the full 5-year window
       - name: interest_rank
         description: Rank by avg_interest_12m descending (1 = most searched university)
+      - name: interest_slope_12m
+        description: >
+          Linear regression slope of monthly interest over the last 12 months
+          (interest points per day). Positive values indicate upward trend.
+          Useful for ranking universities by trend direction.
+      - name: interest_momentum
+        description: >
+          Ratio of average interest in the last 3 months vs the prior 3 months,
+          expressed as a decimal change (e.g. 0.10 = 10% increase). Intuitive
+          measure of recent brand momentum.
+      - name: interest_trend
+        description: >
+          Categorical trend label based on interest_momentum: "Accelerating"
+          (>+5%), "Stable" (within +/-5%), or "Declining" (<-5%). Quick filter
+          for identifying universities with changing brand momentum.
       - name: top_state
         description: >
           State/territory code (NSW, VIC, etc.) where this university has the highest

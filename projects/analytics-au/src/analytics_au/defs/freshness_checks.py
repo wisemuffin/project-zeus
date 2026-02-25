@@ -8,6 +8,7 @@ from analytics_au.defs.assets.cricos_courses import cricos_courses
 from analytics_au.defs.assets.google_trends import google_trends
 from analytics_au.defs.assets.google_trends_interest import google_trends_interest
 from analytics_au.defs.assets.google_trends_interest_by_state import google_trends_interest_by_state
+from analytics_au.defs.assets.google_trends_related_queries import google_trends_related_queries
 from analytics_au.defs.assets.job_market import job_market
 from analytics_au.defs.assets.job_market_occupations import job_market_occupations
 from analytics_au.defs.assets.qilt_graduate_outcomes import qilt_graduate_outcomes
@@ -38,6 +39,14 @@ monthly_trends_freshness_checks = dg.build_last_update_freshness_checks(
 # Google Trends interest by state: same monthly cadence
 monthly_trends_by_state_freshness_checks = dg.build_last_update_freshness_checks(
     assets=[google_trends_interest_by_state],
+    lower_bound_delta=timedelta(days=45),
+    deadline_cron="0 9 5 * *",
+    timezone="Australia/Sydney",
+)
+
+# Google Trends related queries: same monthly cadence
+monthly_trends_related_queries_freshness_checks = dg.build_last_update_freshness_checks(
+    assets=[google_trends_related_queries],
     lower_bound_delta=timedelta(days=45),
     deadline_cron="0 9 5 * *",
     timezone="Australia/Sydney",
