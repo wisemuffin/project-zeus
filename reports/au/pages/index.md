@@ -4,6 +4,15 @@ title: University Marketing Opportunities
 
 Market research insights to help universities optimise digital marketing campaigns for student acquisition. Data sourced from **Jobs and Skills Australia** (job vacancy statistics), the **University Admissions Centre** (UAC applicant preferences), and the **Australian Bureau of Statistics** (youth population estimates).
 
+## Explore
+
+- **[Audiences](/audiences)** — Who to target: profiles, brand awareness, segments, scorecards
+- **[Demand](/demand)** — Where and what to target: vacancy demand, state preferences, trends
+- **[Outcomes](/outcomes)** — What message to use: employment, salaries, satisfaction, field value
+- **[Insights](/insights)** — Narrative analyses with marketing angles and targeting recommendations
+- **[Research](/research)** — Competitor landscape, platform comparisons, market expansion
+- **[Methodology](/methodology)** — Data source transparency and ingestion reference
+
 ```sql top_opportunity
 select
     field_of_study,
@@ -44,7 +53,7 @@ where vacancy_growth_12m = (select max(vacancy_growth_12m) from zeus.opportunity
 
 ## Opportunity Gap by Field of Study
 
-Fields where job vacancy share exceeds student preference share represent under-targeted marketing opportunities. A positive gap means employer demand outstrips student interest — an opportunity for universities to attract students with strong employment messaging.
+Fields where job vacancy share exceeds student preference share represent under-targeted marketing opportunities. A positive gap means employer demand outstrips student interest — an opportunity for universities to attract students with strong employment messaging. See the [Opportunity Gap insight](/insights/opportunity-gap) for detailed marketing angles and gender targeting implications.
 
 ```sql opp_gap_chart
 select
@@ -135,7 +144,7 @@ select * from zeus.opportunity_gap_by_gender order by opportunity_rank
 
 ## State-Level Demand
 
-Graduate vacancy density per 1,000 youth population highlights which states have the strongest labour market pull for university graduates. This supports geographic targeting of digital campaigns.
+Graduate vacancy density per 1,000 youth population highlights which states have the strongest labour market pull for university graduates. This supports geographic targeting of digital campaigns. See the [State Demand Index insight](/insights/state-demand-index) for marketing angles by state.
 
 ```sql state_chart
 select

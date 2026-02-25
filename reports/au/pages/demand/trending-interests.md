@@ -2,7 +2,7 @@
 title: Trending Interests
 ---
 
-Australian Google Trends matched to fields of study, enriched with opportunity gap context. Use this to identify timely content hooks and align paid media with what prospective students are searching for right now.
+Australian Google Trends matched to fields of study, enriched with opportunity gap context. Use this to identify timely content hooks and align paid media with what prospective students are searching for right now. See the [Trending Interests insight](/insights/trending-interests) for actionable ad hooks and the workflow for deploying timely campaigns.
 
 ```sql classified_count
 select count(*) as total from zeus.trending_interests where matched_field_of_study is not null

@@ -2,7 +2,7 @@
 title: Historical Demand Trends
 ---
 
-10-year **University Admissions Centre (UAC)** applicant volumes by segment. Tracks year-over-year growth, compound annual growth rate (CAGR), and recovery from peak volumes. Use this to allocate marketing budget toward growing segments and identify declining ones that need repositioning.
+10-year **University Admissions Centre (UAC)** applicant volumes by segment. Tracks year-over-year growth, compound annual growth rate (CAGR), and recovery from peak volumes. Use this to allocate marketing budget toward growing segments and identify declining ones that need repositioning. See the [Historical Demand Trends insight](/insights/historical-demand-trends) for segment-level marketing angles and budget implications.
 
 ```sql trends
 select * from zeus.historical_demand_trends order by latest_count desc

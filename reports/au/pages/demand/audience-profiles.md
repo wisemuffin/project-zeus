@@ -2,7 +2,7 @@
 title: Audience Profiles by Field of Study
 ---
 
-Who to target for each field of study — gender split, mature learner affinity, and geographic origin based on **University Admissions Centre (UAC)** Early Bird applicant data.
+Who to target for each field of study — gender split, mature learner affinity, and geographic origin based on **University Admissions Centre (UAC)** Early Bird applicant data. See the [Audience Profile insight](/insights/audience-profile-by-fos) for detailed targeting strategies per field and audience segment recommendations.
 
 UAC is the central admissions portal for NSW/ACT universities. When prospective students apply, they rank their preferred fields of study — giving us a revealed-preference signal of what different audience segments actually want to study. By comparing preference shares across segments (gender, age group, geography), we can build audience profiles that shape ad targeting and creative messaging per field.
 
