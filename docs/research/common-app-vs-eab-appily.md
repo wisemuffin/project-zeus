@@ -134,6 +134,94 @@ Since 2022, UCAS has introduced **Clearing Plus** (now "Your Clearing Matches"),
 uses data to proactively suggest courses to unplaced students based on their profile —
 moving closer to the direct admissions model.
 
+## Full US Application Platform Landscape
+
+Common App and Appily are the two largest, but the US market has several competing
+platforms that students can use to apply. Unlike Australia or the UK, there is no single
+mandatory gateway — students often use multiple platforms simultaneously.
+
+### Application Platforms (Student-Initiated)
+
+| Platform | Type | Scale | Fee | Key Feature |
+|----------|------|-------|-----|-------------|
+| **[Common App](https://www.commonapp.org/)** | Standardised form | 1,100+ institutions, ~1.5M applicants/yr | $60 + per-school | Dominant platform; one form, many schools |
+| **[Coalition App](https://www.coalitionforcollegeaccess.org/)** (via Scoir) | Standardised form | 150+ institutions | Free (fee waivers built in) | Access-focused; "Locker" tool for early prep from 9th grade; now hosted on Scoir |
+| **[ApplyTexas](https://www.applytexas.org/)** | State system | All Texas public + many private | Varies | Required for Texas public universities |
+| **[UC Application](https://admission.universityofcalifornia.edu/)** | State system | 9 UC campuses | $80/campus | Required for University of California system |
+| **[Cal State Apply](https://www.calstate.edu/apply)** | State system | 23 CSU campuses | $70/campus | Required for California State University system |
+| **[applySUNY](https://www.suny.edu/attend/apply-to-suny/)** | State system | 58 of 64 SUNY campuses | $50/campus | Required for most State University of New York campuses |
+| **[Common Black College App](https://commonblackcollegeapp.com/)** | Specialised form | 50+ HBCUs | $20 flat (all schools) | Single application to multiple HBCUs |
+| **School-specific portals** | Direct | Many large public + private | Varies | Some schools (e.g. MIT, Georgetown) don't accept Common App |
+
+### Direct Admissions Platforms (Institution-Initiated)
+
+These platforms reverse the application model — institutions proactively offer admission
+to students who match their criteria. Students create a profile but don't submit
+traditional applications.
+
+| Platform | Scale | Verification | Key Differentiator |
+|----------|-------|--------------|-------------------|
+| **[Appily Match](https://www.appily.com/match)** (EAB) | 180+ colleges, $14B+ in scholarships | Transcript-verified by counsellor | Naviance integration (6M+ students); deepest school counsellor involvement |
+| **[Common App Direct Admissions](https://www.commonapp.org/directadmissions/)** | 200+ colleges in 34 states | Self-reported GPA | Targets first-gen/low-income specifically; leverages existing applicant pool |
+| **[Niche Direct Admissions](https://www.niche.com/about/direct-admissions/)** | 150+ colleges in 35 states | Self-reported GPA + optional test scores | Integrated with Niche's reviews/rankings platform; ~$16K average scholarship; 5th cycle |
+| **[College Board BigFuture](https://bigfuture.collegeboard.org/)** | Emerging | SAT/AP score data | Leverages 2M+ SAT test-taker database — massive captive audience |
+| **State-level programs** | 20+ states (growing fast) | Varies | Many powered by Appily Match technology (e.g. Alabama, Idaho) |
+
+### Discovery & Search Platforms (Not Application Platforms)
+
+These platforms help students research colleges but don't process applications directly.
+They generate leads for institutions and feed into the platforms above.
+
+| Platform | Scale | Revenue Model |
+|----------|-------|---------------|
+| **[Niche](https://www.niche.com/)** | 140M+ visits/yr | Reviews/rankings + direct admissions + lead gen |
+| **[College Board BigFuture](https://bigfuture.collegeboard.org/)** | 2M+ SAT takers/yr | Captive SAT audience; emerging direct admissions |
+| **[Naviance](https://www.naviance.com/)** (PowerSchool) | 6M+ students, 6,000+ high schools | Embedded in school counselling workflows; integrated with Appily Match |
+| **[College Raptor](https://www.collegeraptor.com/)** | Unknown | Financial aid estimates + acceptance odds |
+| **[Scoir](https://www.scoir.com/)** | 1 in 8 college-bound students | School counselling platform; now hosts Coalition App + Common App integration |
+
+### Key Takeaway
+
+The US market is **fragmented and competitive** — students often use 2–3 platforms
+simultaneously (e.g. Common App for private schools + a state portal for public schools +
+a direct admissions platform for safety schools). This is structurally different from
+Australia and the UK where a single gateway dominates each jurisdiction.
+
+## Which Platform is Better for US Students?
+
+This depends entirely on the student's situation:
+
+### Common App is better for:
+- **Ambitious applicants targeting selective schools** — Ivy League and top-50 schools
+  almost universally accept Common App
+- **Students applying broadly** — no limit on how many schools you can apply to
+  (though fees add up)
+- **International students** — accepted by institutions in 20+ countries
+- **Students who want control** — you choose where to apply and craft your narrative
+  through essays
+
+### Appily is better for:
+- **Students who want to reduce stress** — direct admissions means no essays, no
+  rejections, no waiting
+- **Cost-conscious students** — free platform, and offers come with scholarships
+  (avg ~$16K via Niche's similar program)
+- **Students unsure about their options** — the discovery + matching model surfaces
+  schools they might not have considered
+- **First-generation students** — the no-rejection, counsellor-supported model reduces
+  barriers to access
+
+### The practical reality
+
+Most students use **Common App as their primary platform** (it's effectively the
+default), and may use direct admissions platforms like Appily or Niche as a
+**supplement** — a low-effort way to collect safety school offers and scholarships
+alongside their main applications. The platforms are complementary rather than
+substitutes.
+
+For students applying to **state public universities**, the state-specific portals
+(ApplyTexas, UC Application, Cal State Apply, applySUNY) are mandatory regardless of
+what other platforms they use.
+
 ## Key Differences
 
 ### 1. Application Model
@@ -284,6 +372,19 @@ not publicly accessible.
 - [UCAS Reports by Sex, Area Background, and Ethnic Group (2024)](https://www.ucas.com/data-and-analysis/undergraduate-statistics-and-reports/ucas-undergraduate-end-of-cycle-data-0)
 - [UCAS Application Rates Data Explorer](https://www.ucas.com/corporate/data-and-analysis/ucas-undergraduate-releases/application-rates-data-explorer)
 - [House of Commons Library — Higher Education Student Numbers (Feb 2026)](https://commonslibrary.parliament.uk/research-briefings/cbp-7857/)
+
+### Other US Platforms
+- [Coalition for College](https://www.coalitionforcollegeaccess.org/) | [Apply Coalition with Scoir](https://www.scoir.com/students/apply-with-scoir)
+- [Scoir](https://www.scoir.com/) | [App-Receiving Colleges](https://www.scoir.com/apply-colleges)
+- [Niche Direct Admissions](https://www.niche.com/about/direct-admissions/) | [150+ colleges announcement (2025)](https://www.niche.com/about/more-than-150-colleges-nationwide-providing-real-time-acceptance-and-scholarship-offers-via-latest-launch-of-niche-direct-admissions/)
+- [Common Black College App](https://commonblackcollegeapp.com/)
+- [ApplyTexas](https://www.applytexas.org/)
+- [UC Application](https://admission.universityofcalifornia.edu/apply-now.html)
+- [Cal State Apply](https://www.calstate.edu/apply)
+- [applySUNY](https://www.suny.edu/attend/apply-to-suny/)
+- [BestColleges — College Application Systems](https://www.bestcolleges.com/blog/college-application-systems/)
+- [Appily — Which College Application Platform?](https://www.appily.com/guidance/articles/applying-to-college/common-app-coalition-or-universal)
+- [Inside Higher Ed — Who Benefits From Direct Admissions (Dec 2025)](https://www.insidehighered.com/news/admissions/traditional-age/2025/12/11/who-benefits-direct-admissions-5-charts)
 
 ### Australian TACs
 - [TISC Reports and Statistics](https://www.tisc.edu.au/static/statistics/statistics-index.tisc)
