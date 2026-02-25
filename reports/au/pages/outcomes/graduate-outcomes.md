@@ -102,7 +102,7 @@ select * from zeus.graduate_outcomes_by_fos order by opportunity_rank nulls last
 
 <DataTable
     data={signal_table}
-    rows=all
+
     rowShading=true
     search=true
 >

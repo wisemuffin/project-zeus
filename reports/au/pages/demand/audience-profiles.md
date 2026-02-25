@@ -161,7 +161,7 @@ select * from zeus.audience_profile_by_fos order by opportunity_rank
 
 <DataTable
     data={profile_table}
-    rows=all
+
     rowShading=true
     search=true
 >

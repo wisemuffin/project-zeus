@@ -69,7 +69,7 @@ order by segment_rank
 
 <DataTable
     data={filtered_data}
-    rows=all
+
     rowShading=true
     search=true
 >
@@ -91,7 +91,7 @@ select * from zeus.segment_field_affinity order by applicant_type, segment_rank
 
 <DataTable
     data={all_segments}
-    rows=all
+
     rowShading=true
     search=true
 >

@@ -100,7 +100,7 @@ select * from zeus.gender_opportunity_profile order by opportunity_rank nulls la
 
 <DataTable
     data={diversity_table}
-    rows=all
+
     rowShading=true
     search=true
 >

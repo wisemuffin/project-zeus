@@ -120,7 +120,7 @@ select * from zeus.historical_demand_trends order by latest_count desc
 
 <DataTable
     data={detail_table}
-    rows=all
+
     rowShading=true
     search=true
 >

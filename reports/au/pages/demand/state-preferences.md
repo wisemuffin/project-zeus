@@ -73,7 +73,7 @@ Fields where preference share varies most across states. A large spread may sign
 
 <DataTable
     data={divergence}
-    rows=all
+
     rowShading=true
 >
     <Column id=field_of_study title="Field of Study" />

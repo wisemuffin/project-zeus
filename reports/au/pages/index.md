@@ -85,7 +85,7 @@ select * from zeus.opportunity_gap order by opportunity_rank
 
 <DataTable
     data={opp_gap_table}
-    rows=all
+
     rowShading=true
     search=true
 >
@@ -130,7 +130,7 @@ select * from zeus.opportunity_gap_by_gender order by opportunity_rank
 
 <DataTable
     data={gender_table}
-    rows=all
+
     rowShading=true
     search=true
 >
@@ -174,7 +174,7 @@ select * from zeus.state_demand_index order by demand_rank
 
 <DataTable
     data={state_table}
-    rows=all
+
     rowShading=true
     search=true
 >

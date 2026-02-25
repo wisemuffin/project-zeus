@@ -143,7 +143,6 @@ order by total_courses desc
 
 <DataTable
     data={institution_summary}
-    rows=all
     rowShading=true
     search=true
 >

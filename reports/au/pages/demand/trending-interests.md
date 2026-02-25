@@ -56,7 +56,7 @@ order by opportunity_rank, trend
 
 <DataTable
     data={classified_trends}
-    rows=all
+
     rowShading=true
     search=true
 >
@@ -112,7 +112,7 @@ order by published desc
 
 <DataTable
     data={all_trends}
-    rows=all
+
     rowShading=true
     search=true
 >

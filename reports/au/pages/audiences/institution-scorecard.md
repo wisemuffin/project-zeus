@@ -112,7 +112,7 @@ select * from zeus.institution_scorecard
 
 <DataTable
     data={scorecard_table}
-    rows=all
+
     rowShading=true
     search=true
 >

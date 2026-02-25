@@ -160,7 +160,7 @@ select * from zeus.state_fos_demand order by state, state_specialisation_rank
 
 <DataTable
     data={detail_table}
-    rows=all
+
     rowShading=true
     search=true
 >
