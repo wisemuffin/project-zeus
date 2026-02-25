@@ -144,7 +144,7 @@ select * from zeus.opportunity_gap_by_gender order by opportunity_rank
 
 ## State-Level Demand
 
-Graduate vacancy density per 1,000 youth population highlights which states have the strongest labour market pull for university graduates. This supports geographic targeting of digital campaigns. See the [State Demand Index insight](/insights/state-demand-index) for marketing angles by state.
+Graduate vacancy density per 1,000 youth population highlights which states have the strongest labour market pull for university graduates. This supports geographic targeting of digital campaigns. See the [State Demand Index insight](/insights/state-demand) for marketing angles by state.
 
 ```sql state_chart
 select

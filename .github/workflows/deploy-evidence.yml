@@ -31,12 +31,10 @@ jobs:
       - name: Build Evidence site
         working-directory: reports/au
         run: npm run build
-        env:
-          EVIDENCE_BUILD_DIR: ./build/project-zeus
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: reports/au/build/project-zeus
+          path: reports/au/build
 
   deploy:
     needs: build
