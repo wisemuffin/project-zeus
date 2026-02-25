@@ -6,11 +6,14 @@ title: University Marketing Opportunities
 
 Market research insights to help universities optimise digital marketing campaigns for student acquisition. Data sourced from **Jobs and Skills Australia** (job vacancy statistics), the **University Admissions Centre** (UAC applicant preferences), and the **Australian Bureau of Statistics** (youth population estimates).
 
-## Explore
+## Dashboards
 
 - **[Audiences](/audiences)** — Who to target: profiles, brand awareness, segments, scorecards
 - **[Demand](/demand)** — Where and what to target: vacancy demand, state preferences, trends
 - **[Outcomes](/outcomes)** — What message to use: employment, salaries, satisfaction, field value
+
+## Reference
+
 - **[Insights](/insights)** — Narrative analyses with marketing angles and targeting recommendations
 - **[Research](/research)** — Competitor landscape, platform comparisons, market expansion
 - **[Methodology](/methodology)** — Data source transparency and ingestion reference

@@ -1,5 +1,6 @@
 ---
 title: Research
+sidebar_position: 5
 ---
 
 Competitor landscape analysis, platform comparisons, and market expansion research.

@@ -1,5 +1,6 @@
 ---
 title: Audiences
+sidebar_position: 1
 ---
 
 **Who to target** — audience profiles, brand awareness, course listings, institutional benchmarks, and segment playbooks.

@@ -1,5 +1,6 @@
 ---
 title: Insights
+sidebar_position: 4
 ---
 
 Narrative analyses of the data — actionable findings with marketing angles, targeting recommendations, and strategic context.

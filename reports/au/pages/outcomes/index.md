@@ -1,5 +1,6 @@
 ---
 title: Outcomes
+sidebar_position: 3
 ---
 
 **What message to use** — graduate employment rates, salaries, gender pay gaps, student satisfaction, and composite field value rankings.

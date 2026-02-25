@@ -1,5 +1,6 @@
 ---
 title: Demand
+sidebar_position: 2
 ---
 
 **Where and what to target** — job vacancy demand, student preferences, historical trends, and emerging occupations by state and field of study.

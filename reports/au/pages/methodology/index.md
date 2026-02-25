@@ -1,5 +1,6 @@
 ---
 title: Methodology
+sidebar_position: 6
 ---
 
 Data source transparency — how we collect, refresh, and validate the data that powers this research.
