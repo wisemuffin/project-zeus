@@ -2,6 +2,8 @@
 title: University Marketing Opportunities
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-amber-100 text-amber-800">National + State</span>
+
 Market research insights to help universities optimise digital marketing campaigns for student acquisition. Data sourced from **Jobs and Skills Australia** (job vacancy statistics), the **University Admissions Centre** (UAC applicant preferences), and the **Australian Bureau of Statistics** (youth population estimates).
 
 ## Explore

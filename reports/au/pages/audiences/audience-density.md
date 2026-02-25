@@ -2,6 +2,8 @@
 title: Audience Density by LGA
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">State-level</span>
+
 LGA-level youth population (ages 15-19) for hyper-local geo-targeting of digital campaigns. Identifies specific Local Government Areas with the highest youth concentration within each state. Data sourced from the **Australian Bureau of Statistics** (Estimated Resident Population and ASGS LGA boundaries).
 
 <ButtonGroup name=map_level display=tabs>

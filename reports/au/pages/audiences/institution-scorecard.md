@@ -2,6 +2,8 @@
 title: Institution Scorecard
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 Per-university benchmarks combining **student satisfaction** (QILT Student Experience Survey) with **graduate employment outcomes** (QILT Graduate Outcomes Survey). Use this to identify a university's strengths and weaknesses relative to the sector and its competitors.
 
 ```sql top_quality

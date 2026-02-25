@@ -2,6 +2,8 @@
 title: Field Value Proposition
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 Composite ranking of each field of study by opportunity gap, employment rate, and salary — a single "best bet" view for prioritising marketing spend. Data sourced from **Jobs and Skills Australia** (vacancy data), **QILT Graduate Outcomes Survey** (employment and salary), and the **University Admissions Centre** (preference share).
 
 ```sql top_field

@@ -2,6 +2,8 @@
 title: University Course Listings
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">State-level</span>
+
 Program-level view of **which institutions offer courses in high-demand fields**, enriched with opportunity gap and graduate outcome data from the **CRICOS Register**, **Jobs and Skills Australia**, and **QILT Graduate Outcomes Survey**. Use this to identify partner institutions and craft program-specific messaging.
 
 ```sql total_courses

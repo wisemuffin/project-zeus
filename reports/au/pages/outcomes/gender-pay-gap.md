@@ -2,6 +2,8 @@
 title: Gender Pay Gap × Opportunity
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 Gender salary gap alongside female/male preference shares and opportunity gap — a diversity-marketing view. Data sourced from **QILT Graduate Outcomes Survey** (salary by gender), the **University Admissions Centre** (gender preferences), and **Jobs and Skills Australia** (vacancy demand).
 
 ```sql top_gap

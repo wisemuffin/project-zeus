@@ -2,6 +2,8 @@
 title: Emerging Occupations
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 ANZSCO2 occupation groups ranked by 12-month vacancy growth, mapped to UAC fields of study. Identifies fast-growing occupations where student preference hasn't caught up with employer demand. Data sourced from **Jobs and Skills Australia** (Internet Vacancy Index) and the **University Admissions Centre** (preference share).
 
 ```sql fastest_growing

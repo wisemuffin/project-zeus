@@ -2,6 +2,8 @@
 title: State Preference Comparison
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">State-level</span>
+
 How applicant preferences differ by field of study across three states — based on **UAC** (NSW/ACT), **VTAC** (Victoria), and **SATAC** (SA/NT) first-preference data, covering ~72% of Australian applicants. Use these cross-state signals to tailor geo-targeted campaigns: a field that's popular in one state but underrepresented in another may indicate unmet demand or a saturated market.
 
 ```sql preferences

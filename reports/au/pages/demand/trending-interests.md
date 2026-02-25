@@ -2,6 +2,8 @@
 title: Trending Interests
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 Australian Google Trends matched to fields of study, enriched with opportunity gap context. Use this to identify timely content hooks and align paid media with what prospective students are searching for right now. See the [Trending Interests insight](/insights/trending-interests) for actionable ad hooks and the workflow for deploying timely campaigns.
 
 ```sql classified_count

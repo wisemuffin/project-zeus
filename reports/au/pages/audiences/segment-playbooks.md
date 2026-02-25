@@ -2,6 +2,8 @@
 title: Segment Playbooks
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 Per-applicant-type field affinity with employment outcomes context — shows which applicant segments over-index on which fields. Data sourced from the **University Admissions Centre** (applicant preferences by type), **QILT Graduate Outcomes Survey** (employment and salary), and **Jobs and Skills Australia** (vacancy demand).
 
 ```sql segments

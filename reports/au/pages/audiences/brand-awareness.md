@@ -2,6 +2,8 @@
 title: Brand Awareness
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">State-level</span>
+
 University brand awareness analysis combining **Google Trends** search interest (time series, geographic, and related queries) with **QILT** institution quality metrics. Identifies universities that are under-searched relative to their academic quality — prime candidates for marketing investment.
 
 ```sql uni_count

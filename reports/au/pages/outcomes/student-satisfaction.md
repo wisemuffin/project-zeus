@@ -2,6 +2,8 @@
 title: Student Satisfaction × Opportunity
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+
 QILT Student Experience Survey satisfaction scores aggregated to field-of-study level, joined with opportunity gap and graduate outcomes. Adds "student experience" proof points for marketing creative. Data sourced from the **QILT Student Experience Survey (SES)**, **QILT Graduate Outcomes Survey (GOS)**, **Jobs and Skills Australia**, and the **University Admissions Centre**.
 
 ```sql top_satisfaction

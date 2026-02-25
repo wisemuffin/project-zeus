@@ -2,6 +2,8 @@
 title: State × Field of Study Demand
 ---
 
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800">State-level</span>
+
 State-level job vacancy data crossed with fields of study to reveal **where to spend by state for specific programs**. Shows which fields are strongest in which states relative to the national average, using vacancy data from **Jobs and Skills Australia** and youth population estimates from the **Australian Bureau of Statistics**. See the [State x Field of Study insight](/insights/state-fos-demand) for geo-targeting recommendations and state specialisation analysis.
 
 ```sql state_count
