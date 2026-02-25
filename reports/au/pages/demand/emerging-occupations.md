@@ -71,7 +71,6 @@ select * from zeus.emerging_occupations order by growth_rank
 
 <DataTable
     data={occupations_table}
-
     rowShading=true
     search=true
 >

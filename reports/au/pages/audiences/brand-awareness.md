@@ -135,7 +135,6 @@ order by interest_rank asc nulls last
 
 <DataTable
     data={awareness_table}
-
     rowShading=true
     search=true
 >
@@ -169,7 +168,6 @@ order by query_type, value desc
 
 <DataTable
     data={related_queries}
-
     rowShading=true
     search=true
 >

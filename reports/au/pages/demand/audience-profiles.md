@@ -2,7 +2,7 @@
 title: Audience Profiles by Field of Study
 ---
 
-<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
+<span class="px-2 py-0.5 text-xs font-medium rounded-full bg-amber-100 text-amber-800">NSW/ACT</span>
 
 Who to target for each field of study — gender split, mature learner affinity, and geographic origin based on **University Admissions Centre (UAC)** Early Bird applicant data. See the [Audience Profile insight](/insights/audience-profile-by-fos) for detailed targeting strategies per field and audience segment recommendations.
 
@@ -161,7 +161,6 @@ select * from zeus.audience_profile_by_fos order by opportunity_rank
 
 <DataTable
     data={profile_table}
-
     rowShading=true
     search=true
 >

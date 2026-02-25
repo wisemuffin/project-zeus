@@ -96,7 +96,6 @@ select * from zeus.satisfaction_opportunity order by opportunity_rank nulls last
 
 <DataTable
     data={satisfaction_table}
-
     rowShading=true
     search=true
 >

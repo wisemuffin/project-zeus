@@ -106,7 +106,6 @@ order by state, density_rank_in_state
 
 <DataTable
     data={density_table}
-
     rowShading=true
     search=true
 >
@@ -173,7 +172,6 @@ order by youth_population desc
 
 <DataTable
     data={state_table}
-
     rowShading=true
 >
     <Column id=state_name title="State" />

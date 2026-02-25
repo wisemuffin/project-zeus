@@ -89,7 +89,6 @@ select * from zeus.field_value_proposition order by value_rank
 
 <DataTable
     data={value_table}
-
     rowShading=true
     search=true
 >
