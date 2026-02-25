@@ -91,6 +91,14 @@ sources:
         meta:
           dagster:
             asset_key: ["google_trends_interest"]
+      - name: google_trends_interest_by_state
+        description: >
+          Google Trends state-level search interest for 42 Australian university names.
+          Relative interest (0-100) per state/territory, cross-batch normalized.
+          Single snapshot representing ~5-year aggregate geographic search patterns.
+        meta:
+          dagster:
+            asset_key: ["google_trends_interest_by_state"]
       - name: vtac_fos_preferences
         description: >
           VTAC field-of-study first preferences by gender (Victorian applicants).

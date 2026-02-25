@@ -610,3 +610,59 @@ models:
         description: "Timestamp when this table was last built by dbt."
       - name: _dagster_run_id
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
+  - name: university_brand_awareness
+    description: >
+      Per-university brand awareness analysis combining Google Trends search interest
+      (time series + geographic) with QILT institution scorecard quality metrics.
+      Identifies universities that are under-searched relative to their academic quality
+      (positive interest-quality gap) — prime candidates for marketing investment.
+      Answers "Who" + "Where" by revealing which university brands need the most help
+      and in which states they are strongest or weakest.
+    columns:
+      - name: university
+        description: QILT institution name (join key across all university-level models)
+        tests:
+          - unique
+          - not_null
+      - name: avg_interest_12m
+        description: Average monthly Google Trends interest over the most recent 12 months (0-100 scale)
+      - name: avg_interest_all
+        description: Average monthly Google Trends interest over the full 5-year window
+      - name: peak_interest
+        description: Maximum monthly interest value observed across the full 5-year window
+      - name: interest_rank
+        description: Rank by avg_interest_12m descending (1 = most searched university)
+      - name: top_state
+        description: >
+          State/territory code (NSW, VIC, etc.) where this university has the highest
+          relative search interest. Indicates geographic brand stronghold.
+      - name: top_state_interest
+        description: Google Trends interest value (0-100) in the university's top state
+      - name: overall_quality
+        description: QILT overall quality of educational experience (% agreement)
+      - name: ft_employment_rate
+        description: QILT full-time employment rate for graduates (%)
+      - name: median_salary
+        description: QILT median graduate salary (AUD)
+      - name: quality_rank
+        description: Rank by overall_quality descending (1 = highest quality)
+      - name: employment_rank
+        description: Rank by ft_employment_rate descending (1 = best employment)
+      - name: salary_rank
+        description: Rank by median_salary descending (1 = highest salary)
+      - name: interest_quality_gap
+        description: >
+          quality_rank minus interest_rank. Positive values indicate the university
+          is under-searched relative to its quality ranking — a marketing opportunity.
+          Negative values indicate the university already has strong brand awareness
+          relative to its quality position.
+      - name: awareness_tier
+        description: >
+          High/Medium/Low classification based on interest_rank terciles (top 14 = High,
+          15-28 = Medium, 29+ = Low). Quick filter for segmenting universities by
+          current brand strength.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
