@@ -57,6 +57,8 @@ select
     preference_share,
     opportunity_gap,
     vacancy_growth_12m,
-    row_number() over (order by opportunity_gap desc) as opportunity_rank
+    row_number() over (order by opportunity_gap desc) as opportunity_rank,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from gap_analysis
 order by opportunity_gap desc

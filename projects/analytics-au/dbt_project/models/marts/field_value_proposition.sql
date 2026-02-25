@@ -71,6 +71,8 @@ select
     value_tier,
     row_number() over (order by value_score desc) as value_rank,
     sector_ft_employment_rate,
-    sector_median_salary
+    sector_median_salary,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from scored
 order by value_score desc

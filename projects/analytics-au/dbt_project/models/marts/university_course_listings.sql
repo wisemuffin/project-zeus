@@ -56,7 +56,10 @@ select
     oc.marketing_signal,
 
     -- Derived: institution breadth in this field
-    ifc.course_count_in_field
+    ifc.course_count_in_field,
+
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 
 from courses c
 left join opportunity og

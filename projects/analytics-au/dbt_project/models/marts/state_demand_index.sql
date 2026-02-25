@@ -25,6 +25,8 @@ joined as (
 
 select
     *,
-    row_number() over (order by graduate_vacancies_per_1k_youth desc) as demand_rank
+    row_number() over (order by graduate_vacancies_per_1k_youth desc) as demand_rank,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from joined
 order by graduate_vacancies_per_1k_youth desc

@@ -76,5 +76,9 @@ profiles as (
     left join opportunity o on a.field_of_study = o.field_of_study
 )
 
-select * from profiles
+select
+    *,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
+from profiles
 order by opportunity_rank nulls last

@@ -36,7 +36,9 @@ select
     og.opportunity_gap,
     og.opportunity_rank,
     og.preference_share,
-    row_number() over (order by mv.vacancy_growth_12m desc nulls last) as growth_rank
+    row_number() over (order by mv.vacancy_growth_12m desc nulls last) as growth_rank,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from mapped_vacancies mv
 left join opportunity og on mv.uac_field_of_study = og.field_of_study
 order by mv.vacancy_growth_12m desc nulls last

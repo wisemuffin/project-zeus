@@ -48,7 +48,10 @@ select
     -- Rankings
     row_number() over (order by s.overall_quality desc nulls last) as quality_rank,
     row_number() over (order by s.ft_employment_rate desc nulls last) as employment_rank,
-    row_number() over (order by s.median_salary desc nulls last) as salary_rank
+    row_number() over (order by s.median_salary desc nulls last) as salary_rank,
+
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 
 from scores s
 cross join sector_avg sa

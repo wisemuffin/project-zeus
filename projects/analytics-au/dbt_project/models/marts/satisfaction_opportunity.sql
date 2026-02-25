@@ -55,7 +55,9 @@ select
     og.opportunity_gap,
     og.opportunity_rank,
     og.vacancy_growth_12m,
-    s.qilt_areas_count
+    s.qilt_areas_count,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from ses_by_fos s
 cross join sector_averages sa
 left join opportunity og on s.field_of_study = og.field_of_study

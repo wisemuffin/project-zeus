@@ -52,6 +52,8 @@ select
     opportunity_rank,
     ft_employment_rate,
     vacancy_growth_12m,
-    diversity_opportunity
+    diversity_opportunity,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from classified
 order by opportunity_rank nulls last

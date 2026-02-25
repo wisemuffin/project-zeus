@@ -30,7 +30,9 @@ select
         when p.female_preference_share > p.male_preference_share then 'Female'
         when p.male_preference_share > p.female_preference_share then 'Male'
         else 'Balanced'
-    end as skew_direction
+    end as skew_direction,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from opportunity o
 inner join pivoted p on o.field_of_study = p.field_of_study
 order by o.opportunity_rank

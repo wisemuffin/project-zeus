@@ -43,6 +43,8 @@ select
     *,
     row_number() over (
         partition by state order by state_vs_national_skew desc
-    ) as state_specialisation_rank
+    ) as state_specialisation_rank,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from enriched
 order by state, state_vs_national_skew desc

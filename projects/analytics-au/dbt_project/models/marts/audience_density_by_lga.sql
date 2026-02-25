@@ -40,6 +40,8 @@ select
             order by youth_population desc
             rows between unbounded preceding and current row
         ) * 1.0 / state_total, 4
-    ) as cumulative_share
+    ) as cumulative_share,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from with_state_totals
 order by state, density_rank_in_state

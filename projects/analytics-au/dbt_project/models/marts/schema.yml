@@ -32,6 +32,10 @@ models:
         tests:
           - unique
           - not_null
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: opportunity_gap_by_gender
     description: >
@@ -62,6 +66,10 @@ models:
           indicate female-skewing fields, negative values indicate male-skewing.
       - name: skew_direction
         description: Which gender has higher preference share (Female, Male, or Balanced)
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: state_demand_index
     description: >
@@ -98,6 +106,10 @@ models:
         tests:
           - unique
           - not_null
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: audience_profile_by_fos
     description: >
@@ -141,6 +153,10 @@ models:
         description: >
           Interstate share divided by NSW share. Values above 1.0 indicate the
           field draws disproportionately from interstate — a signal for national campaigns.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: trending_interests
     description: >
@@ -180,6 +196,10 @@ models:
           Actionable recommendation based on match and opportunity gap:
           "High opportunity" for positive-gap fields, "Low opportunity" for
           negative-gap fields, "Unclassified" for unmatched trends.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: historical_demand_trends
     description: >
@@ -211,6 +231,10 @@ models:
         description: Compound annual growth rate across the full data window
       - name: trend_direction
         description: Current direction based on latest YoY growth (Growing, Declining, or Flat)
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: state_fos_demand
     description: >
@@ -253,6 +277,10 @@ models:
         description: >
           Rank within each state by state_vs_national_skew descending.
           Rank 1 = the field this state most over-indexes on.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: university_course_listings
     description: >
@@ -316,6 +344,10 @@ models:
         description: >
           Number of distinct courses this institution offers in this UAC field.
           Higher counts indicate institutional depth/commitment to the field.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: field_value_proposition
     description: >
@@ -357,6 +389,10 @@ models:
         description: Sector average FT employment rate across all fields
       - name: sector_median_salary
         description: Sector average median salary across all fields
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: gender_opportunity_profile
     description: >
@@ -401,6 +437,10 @@ models:
           Classification: "High diversity opportunity" (positive gap + women underrepresented >10pp),
           "Equity focus" (women underrepresented, low/no gap), "Gender balanced" (within 10pp),
           "Male underrepresented" (men underrepresented).
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: satisfaction_opportunity
     description: >
@@ -442,6 +482,10 @@ models:
         description: 12-month vacancy growth rate
       - name: qilt_areas_count
         description: Number of QILT study areas averaged into this UAC field
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: segment_field_affinity
     description: >
@@ -476,6 +520,10 @@ models:
         description: >
           Rank within each segment by preference share descending.
           Rank 1 = the field this segment prefers most.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: emerging_occupations
     description: >
@@ -510,6 +558,10 @@ models:
         tests:
           - unique
           - not_null
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: audience_density_by_lga
     description: >
@@ -554,3 +606,7 @@ models:
           Running sum of lga_share_of_state within each state, ordered by population
           descending. Shows what percentage of the state's youth are covered by
           the top N LGAs — useful for determining geo-targeting coverage thresholds.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."

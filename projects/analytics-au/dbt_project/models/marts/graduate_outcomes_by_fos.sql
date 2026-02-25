@@ -83,7 +83,10 @@ select
         else 'Challenging — low demand, weaker outcomes'
     end as marketing_signal,
 
-    oc.qilt_areas_count
+    oc.qilt_areas_count,
+
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 
 from outcomes_by_fos oc
 left join opportunity og on oc.field_of_study = og.field_of_study

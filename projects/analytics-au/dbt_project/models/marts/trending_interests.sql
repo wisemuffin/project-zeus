@@ -25,7 +25,9 @@ select
         when o.opportunity_gap is not null then 'Low opportunity — deprioritise'
         when t.matched_field_of_study is null then 'Unclassified — review manually'
         else 'Unmapped field'
-    end as marketing_signal
+    end as marketing_signal,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from trends t
 left join opportunity o on t.matched_field_of_study = o.field_of_study
 order by t.published desc

@@ -64,6 +64,8 @@ select
     ft_employment_rate,
     median_salary,
     vacancy_growth_12m,
-    segment_rank
+    segment_rank,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from affinity
 order by applicant_type, segment_rank

@@ -66,6 +66,8 @@ select
     peak_intake,
     recovery_ratio,
     cagr,
-    trend_direction
+    trend_direction,
+    current_timestamp as _loaded_at,
+    '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 from with_cagr
 order by latest_count desc
