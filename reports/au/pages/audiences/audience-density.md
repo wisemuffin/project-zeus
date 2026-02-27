@@ -72,7 +72,7 @@ from zeus.audience_density_by_lga
 
 <AreaMap
     data={map_data}
-    geoJsonUrl="/au_lga_2024_gen.geojson"
+    geoJsonUrl={addBasePath('/au_lga_2024_gen.geojson')}
     geoId="lga_code_2024"
     areaCol="lga_code_str"
     value="youth_population"
@@ -143,7 +143,7 @@ order by state, density_rank_in_state
 
 <AreaMap
     data={state_map_data}
-    geoJsonUrl="/au_state_2021_gen.geojson"
+    geoJsonUrl={addBasePath('/au_state_2021_gen.geojson')}
     geoId="state_name_2021"
     areaCol="state_name"
     value="youth_population"

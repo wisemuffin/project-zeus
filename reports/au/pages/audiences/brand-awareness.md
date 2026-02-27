@@ -98,7 +98,7 @@ where university = '${inputs.selected_university}'
 
 <AreaMap
     data={state_map_data}
-    geoJsonUrl="/au_state_2021_gen.geojson"
+    geoJsonUrl={addBasePath('/au_state_2021_gen.geojson')}
     geoId="state_name_2021"
     areaCol="state_name"
     value="interest"
