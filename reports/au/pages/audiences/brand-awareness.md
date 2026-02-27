@@ -107,7 +107,7 @@ where university = '${inputs.selected_university}'
     startingLong={134}
     startingZoom={4}
     legendType="scalar"
-    title="Search Interest by State — {inputs.selected_university}"
+    title={`Search Interest by State — ${inputs.selected_university}`}
     tooltip={[{id: 'state_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'interest', title: 'Interest', fmt: 'num1'}, {id: 'state_rank_for_uni', title: 'State Rank (for uni)'}, {id: 'uni_rank_in_state', title: 'Uni Rank (in state)'}, {id: 'interest_vs_uni_avg', title: 'vs Uni Avg', fmt: 'num1'}]}
 />
 
