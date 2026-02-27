@@ -1,1 +1,1 @@
-select * from staging.stg_google_trends_related_queries
+select * from marts.stg_google_trends_related_queries
