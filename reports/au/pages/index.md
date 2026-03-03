@@ -6,11 +6,23 @@ title: University Marketing Opportunities
 
 Market research insights to help universities optimise digital marketing campaigns for student acquisition. Data sourced from **Jobs and Skills Australia** (job vacancy statistics), the **University Admissions Centre** (UAC applicant preferences), and the **Australian Bureau of Statistics** (youth population estimates).
 
+## How it works
+
+We combine **8 government and public data sources** to answer three questions for every field of study, state, and institution:
+
+1. **What's the opportunity?** — We compare what students *want* to study (admissions preferences from UAC, VTAC, SATAC) against where employers *need* graduates (job vacancies from Jobs and Skills Australia). Fields where employer demand outstrips student interest are your strongest recruitment messaging opportunities.
+
+2. **What's the proof?** — High demand is more compelling when graduates also have strong employment rates and salaries. We layer in **QILT** graduate outcomes and student satisfaction data so every recommendation comes with proof points: *"87% full-time employment, $78K median salary."*
+
+3. **Where and who?** — Every insight is localised. We know which states have the highest demand per capita, which Local Government Areas concentrate the most prospective students, and which university brands are under-searched relative to their quality. **Google Trends** and **ABS** population data turn national insights into targeted, location-specific campaigns.
+
+The result: instead of *"Engineering has strong demand"*, we can say *"Your Bachelor of Civil Engineering at your Sydney campus is in a field with 12% more employer demand than student interest, 87% full-time employment, and $78K median salary — and youth density in Blacktown LGA is 3x the state average."*
+
 ## Dashboards
 
-- **[Audiences](/audiences)** — Who to target: profiles, brand awareness, segments, scorecards
-- **[Demand](/demand)** — Where and what to target: vacancy demand, state preferences, trends
-- **[Outcomes](/outcomes)** — What message to use: employment, salaries, satisfaction, field value
+- **[Audiences](/audiences)** — **Who** to target: profiles, brand awareness, segments, scorecards
+- **[Demand](/demand)** — **Where** and what to target: vacancy demand, state preferences, trends
+- **[Outcomes](/outcomes)** — **What message** to use: employment, salaries, satisfaction, field value
 
 ## Reference
 
