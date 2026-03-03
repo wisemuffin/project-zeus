@@ -90,6 +90,20 @@ graph LR
     REF -.->|occupation → field| EOG
 ```
 
+### How the domains work together
+
+Each domain answers a piece of the marketing puzzle. The power comes from connecting them:
+
+- **Student Demand + Employment & Opportunity Gap** — We know what students *want* to study (from admissions data) and where employers *need* graduates (from job vacancy data). The gap between the two reveals which fields have strong employer demand but low student interest — your strongest recruitment messaging opportunities.
+
+- **Employment & Opportunity Gap + Graduate Outcomes** — A field with high demand is even more compelling when graduates also have high employment rates and strong salaries. Combining these lets us classify fields into tiers: "no-brainer" fields that are strong on every dimension, vs fields where the story needs more nuance.
+
+- **Graduate Outcomes + University Brand** — We can compare a university's academic quality and graduate employment against its public search interest. Universities that rank well on quality but low on search interest have the clearest case for marketing investment — strong product, weak awareness.
+
+- **Geography + everything else** — Every insight can be localised. We know which states have the highest graduate job demand per capita, which fields dominate in which states, and where youth populations are most concentrated — down to the Local Government Area. This turns national insights into targeted, location-specific campaigns.
+
+- **Course Offerings** — Connects specific programs at specific campuses back to all of the above. Instead of "Engineering has a 12% opportunity gap", we can say "Your Bachelor of Civil Engineering at your Sydney campus is in a field with 12% more employer demand than student interest, 87% full-time employment, and $78K median salary."
+
 ## Join Paths
 
 The table below shows how to join between any two domains using shared entities.
