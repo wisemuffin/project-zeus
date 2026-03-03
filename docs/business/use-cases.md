@@ -100,6 +100,8 @@ Instead of guessing which fields to feature in your next campaign, you get a ran
 
 Every recommendation traces back to a public, auditable data source — Jobs and Skills Australia, QILT, the ABS, and three state admissions centres covering 72% of Australian applicants.
 
+See [The Pitch](pitch.md) for why universities need this despite having access to the underlying data sources.
+
 ## Data Sources
 
 | Source | What it provides | Coverage |
