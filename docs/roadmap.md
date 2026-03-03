@@ -202,6 +202,7 @@ These platforms from the student search analysis are **not viable** as data sour
 
 - [ ] **Migrate to dbt Fusion engine** — dbt Labs' next-generation engine (written in Rust) offers significantly faster compilation, dialect-aware SQL validation, and column-level lineage. DuckDB adapter [landed in Feb 2026](https://github.com/dbt-labs/dbt-fusion/issues/110) (preview.120+, SQL understanding from preview.137). MotherDuck and extension support still forthcoming. Evaluate migration once Fusion reaches GA and confirm Dagster's `DbtCliResource` works with the Fusion CLI.
 - [ ] **Evaluate DuckLake + MotherDuck** — Cloud-hosted DuckDB with the DuckLake open table format for ACID transactions, time travel, and collaborative access. Evaluate when the project needs multi-user access or multi-country deployment. See [ADR-002](architecture-decisions/002-ducklake-motherduck.md).
+- [ ] **Adopt dbt MetricFlow / semantic layer** — Centrally define metrics (opportunity_gap, value_score, etc.) in MetricFlow semantic models instead of the current manual glossary. Currently blocked by Python 3.13 incompatibility, lack of Evidence.dev integration, and snapshot-grain data being a poor fit. Metric definitions are captured in `docs/ontology/glossary.yml` as a migration path. See [ADR-003](architecture-decisions/003-metricflow-deferred.md) for full rationale and revisit criteria.
 
 ---
 
