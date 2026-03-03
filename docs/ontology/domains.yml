@@ -1,0 +1,204 @@
+# Data Domains
+#
+# The 7 domains organise all dbt models by subject area.
+# Every staging and mart model belongs to exactly one domain.
+# Each domain answers one or more of the three targeting questions:
+#   Who to target | Where to target | What message to use
+
+domains:
+  - name: student_demand
+    label: Student Demand
+    targeting_question: [who, what_message]
+    description: >
+      UAC, VTAC, and SATAC applicant preference data — what fields students
+      want to study, broken down by gender, applicant type, geography, and
+      historical trends. The demand side of the opportunity equation.
+    source_organisations:
+      - UAC (Universities Admissions Centre, NSW/ACT)
+      - VTAC (Victorian Tertiary Admissions Centre)
+      - SATAC (South Australian Tertiary Admissions Centre)
+    geographic_scope: NSW/ACT (UAC), VIC (VTAC), SA/NT (SATAC)
+    key_entities: [field_of_study, applicant_type]
+    models:
+      staging:
+        - stg_uac_fos_preferences
+        - stg_uac_fos_by_gender
+        - stg_uac_fos_by_app_type
+        - stg_uac_demand_by_year
+        - stg_vtac_fos_preferences
+        - stg_satac_fos_preferences
+        - stg_national_fos_preferences
+      marts:
+        - historical_demand_trends
+        - segment_field_affinity
+        - audience_profile_by_fos
+    insight_docs:
+      - docs/insights/audience-profile-by-fos.md
+      - docs/insights/historical-demand-trends.md
+    reports:
+      - reports/au/pages/demand/audience-profiles.md
+      - reports/au/pages/demand/historical-demand.md
+      - reports/au/pages/demand/state-preferences.md
+      - reports/au/pages/audiences/segment-playbooks.md
+      - reports/au/pages/insights/audience-profile-by-fos.md
+      - reports/au/pages/insights/historical-demand-trends.md
+
+  - name: employment_and_opportunity_gap
+    label: Employment & Opportunity Gap
+    targeting_question: [what_message]
+    description: >
+      IVI internet job vacancy data mapped to fields of study, combined with
+      student preference data to compute opportunity gaps. The supply side of
+      the opportunity equation and the core analytical output of the project.
+    source_organisations:
+      - "JSA (Jobs and Skills Australia — Internet Vacancy Index)"
+    geographic_scope: National + state-level
+    key_entities: [field_of_study, occupation_title, state]
+    models:
+      staging:
+        - stg_job_vacancies_by_state
+        - stg_job_vacancies_by_occupation
+        - stg_job_vacancies_by_state_fos
+      marts:
+        - opportunity_gap
+        - opportunity_gap_by_gender
+        - emerging_occupations
+        - field_value_proposition
+    insight_docs:
+      - docs/insights/opportunity-gap.md
+    reports:
+      - reports/au/pages/insights/opportunity-gap.md
+      - reports/au/pages/demand/emerging-occupations.md
+      - reports/au/pages/outcomes/field-value.md
+
+  - name: graduate_outcomes
+    label: Graduate Outcomes
+    targeting_question: [what_message]
+    description: >
+      QILT Graduate Outcomes Survey (employment rates, salaries) and Student
+      Experience Survey (satisfaction scores) data. Provides proof points for
+      marketing messaging — "graduates in this field earn X and Y% find
+      full-time work."
+    source_organisations:
+      - "QILT (Quality Indicators for Learning and Teaching)"
+    geographic_scope: National (institution and study-area level)
+    key_entities: [field_of_study, institution]
+    models:
+      staging:
+        - stg_qilt_graduate_outcomes
+        - stg_qilt_student_experience
+      marts:
+        - graduate_outcomes_by_fos
+        - satisfaction_opportunity
+        - gender_opportunity_profile
+    insight_docs: []
+    reports:
+      - reports/au/pages/outcomes/graduate-outcomes.md
+      - reports/au/pages/outcomes/student-satisfaction.md
+      - reports/au/pages/outcomes/gender-pay-gap.md
+
+  - name: university_brand
+    label: University Brand
+    targeting_question: [who, where]
+    description: >
+      Google Trends search interest (time-series and geographic) combined
+      with QILT institution scorecard metrics. Reveals which universities
+      are under-searched relative to their quality and where their brand
+      is strongest or weakest geographically.
+    source_organisations:
+      - Google Trends
+      - "QILT (Quality Indicators for Learning and Teaching)"
+    geographic_scope: National + state-level
+    key_entities: [institution, state]
+    models:
+      staging:
+        - stg_google_trends_interest
+        - stg_google_trends_interest_by_state
+        - stg_google_trends_related_queries
+      marts:
+        - university_brand_awareness
+        - university_state_interest
+        - institution_scorecard
+    insight_docs: []
+    reports:
+      - reports/au/pages/audiences/brand-awareness.md
+      - reports/au/pages/audiences/institution-scorecard.md
+
+  - name: geography
+    label: Geography
+    targeting_question: [where]
+    description: >
+      ABS population data and IVI vacancy data combined for geographic
+      targeting. State-level demand indices, state × field matrices, and
+      LGA-level youth density for hyper-local campaign targeting.
+    source_organisations:
+      - "ABS (Australian Bureau of Statistics)"
+      - "JSA (Jobs and Skills Australia — Internet Vacancy Index)"
+    geographic_scope: National (state and LGA level)
+    key_entities: [state, lga, field_of_study]
+    models:
+      staging:
+        - stg_youth_population_by_state
+        - stg_youth_population_by_lga
+      marts:
+        - state_demand_index
+        - state_fos_demand
+        - audience_density_by_lga
+    insight_docs:
+      - docs/insights/state-demand-index.md
+      - docs/insights/state-fos-demand.md
+    reports:
+      - reports/au/pages/insights/state-demand.md
+      - reports/au/pages/insights/state-fos-demand.md
+      - reports/au/pages/demand/state-fos-demand.md
+      - reports/au/pages/audiences/audience-density.md
+
+  - name: course_offerings
+    label: Course Offerings
+    targeting_question: [what_message]
+    description: >
+      CRICOS course registry data enriched with opportunity gap and graduate
+      outcomes. Enables program-level marketing recommendations linking
+      specific courses to demand signals and career outcomes.
+    source_organisations:
+      - "CRICOS (Commonwealth Register of Institutions and Courses for Overseas Students)"
+    geographic_scope: National (institution × course × location level)
+    key_entities: [institution, field_of_study, state]
+    models:
+      staging:
+        - stg_cricos_courses
+      marts:
+        - university_course_listings
+    insight_docs: []
+    reports:
+      - reports/au/pages/audiences/course-listings.md
+
+  - name: reference_data
+    label: Reference Data
+    targeting_question: [what_message]
+    description: >
+      Reference tables (LGA boundaries, occupation-to-field mappings) and
+      ephemeral content data (Google Trends trending searches). Provides
+      crosswalks that enable joins across domains and timely content hooks
+      for marketing campaigns.
+    source_organisations:
+      - "ABS (Australian Bureau of Statistics — ASGS boundaries)"
+      - Google Trends (trending searches RSS)
+      - "Manual mappings (occupation_fos_mapping)"
+    geographic_scope: National
+    key_entities: [lga, occupation_title, field_of_study]
+    models:
+      staging:
+        - stg_lga_reference
+        - stg_google_trends
+      marts:
+        - trending_interests
+    insight_docs:
+      - docs/insights/trending-interests.md
+    reports:
+      - reports/au/pages/demand/trending-interests.md
+      - reports/au/pages/insights/trending-interests.md
+
+# --- Verification ---
+# Staging models: 7 + 3 + 2 + 3 + 2 + 1 + 2 = 20 (all accounted for)
+# Mart models:    3 + 4 + 3 + 3 + 3 + 1 + 1 = 18 (all accounted for)

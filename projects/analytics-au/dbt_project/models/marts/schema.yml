@@ -2,6 +2,11 @@ version: 2
 
 models:
   - name: opportunity_gap
+    meta:
+      domain: employment_and_opportunity_gap
+      targeting_dimension: [what_message]
+      primary_entity: field_of_study
+      grain: field_of_study
     description: >
       Opportunity gap analysis comparing job vacancy demand (from IVI data) against
       student preference share (from UAC Early Bird data) by field of study.
@@ -38,6 +43,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: opportunity_gap_by_gender
+    meta:
+      domain: employment_and_opportunity_gap
+      targeting_dimension: [what_message, who]
+      primary_entity: field_of_study
+      grain: field_of_study
     description: >
       Extends the opportunity gap analysis with gender preference breakdowns.
       Shows which high-gap fields skew male or female, enabling gender-targeted
@@ -72,6 +82,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: state_demand_index
+    meta:
+      domain: geography
+      targeting_dimension: [where]
+      primary_entity: state
+      grain: state
     description: >
       State-level demand index comparing graduate-relevant job vacancies (ANZSCO
       skill levels 1-2) against youth population (15-19 year olds) by state.
@@ -112,6 +127,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: audience_profile_by_fos
+    meta:
+      domain: student_demand
+      targeting_dimension: [who, where]
+      primary_entity: field_of_study
+      grain: field_of_study
     description: >
       Audience targeting profile for each UAC field of study. Combines gender
       preference splits, mature learner affinity (Non-Year 12 over-indexing),
@@ -159,6 +179,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: trending_interests
+    meta:
+      domain: reference_data
+      targeting_dimension: [what_message]
+      primary_entity: field_of_study
+      grain: trend
     description: >
       Current Google trending searches in Australia enriched with best-effort
       field of study classification and opportunity gap context. Refreshes each
@@ -202,6 +227,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: historical_demand_trends
+    meta:
+      domain: student_demand
+      targeting_dimension: [who]
+      primary_entity: applicant_type
+      grain: applicant_type
     description: >
       Year-over-year UAC Early Bird applicant trends by segment (NSW Year 12,
       ACT Year 12, Interstate & IB, Non-Year 12, Total). Tracks volume growth,
@@ -237,6 +267,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: state_fos_demand
+    meta:
+      domain: geography
+      targeting_dimension: [where, what_message]
+      primary_entity: field_of_study
+      grain: [state, field_of_study]
     description: >
       State × field of study demand matrix. Shows which fields are strongest in
       which states relative to the national average. Enables geo-targeted ad
@@ -283,6 +318,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: university_course_listings
+    meta:
+      domain: course_offerings
+      targeting_dimension: [what_message]
+      primary_entity: institution
+      grain: [institution, course, location]
     description: >
       Program-level marketing recommendations joining CRICOS course listings with
       opportunity gap and graduate outcomes data. Grain is institution × course ×
@@ -350,6 +390,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: field_value_proposition
+    meta:
+      domain: employment_and_opportunity_gap
+      targeting_dimension: [what_message]
+      primary_entity: field_of_study
+      grain: field_of_study
     description: >
       Composite ranking of each field by opportunity gap, employment rate, and salary.
       Classifies fields into actionable tiers (No-brainer, High potential, Proven outcomes,
@@ -395,6 +440,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: gender_opportunity_profile
+    meta:
+      domain: graduate_outcomes
+      targeting_dimension: [what_message, who]
+      primary_entity: field_of_study
+      grain: field_of_study
     description: >
       Gender salary gap alongside female/male preference shares and opportunity gap
       in a diversity-marketing view. Classifies each field's diversity opportunity
@@ -443,6 +493,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: satisfaction_opportunity
+    meta:
+      domain: graduate_outcomes
+      targeting_dimension: [what_message]
+      primary_entity: field_of_study
+      grain: field_of_study
     description: >
       QILT Student Experience Survey satisfaction scores aggregated to UAC field level,
       joined with opportunity gap and graduate outcomes. Adds student experience proof
@@ -488,6 +543,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: segment_field_affinity
+    meta:
+      domain: student_demand
+      targeting_dimension: [who, what_message]
+      primary_entity: field_of_study
+      grain: [applicant_type, field_of_study]
     description: >
       Per-applicant-type field affinity with outcomes context. Grain is
       (applicant_type, field_of_study). Shows which UAC applicant segments
@@ -526,6 +586,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: emerging_occupations
+    meta:
+      domain: employment_and_opportunity_gap
+      targeting_dimension: [what_message]
+      primary_entity: occupation_title
+      grain: occupation_title
     description: >
       ANZSCO2 occupation groups ranked by 12-month vacancy growth, mapped to UAC
       fields of study. Identifies fast-growing occupations where student preference
@@ -564,6 +629,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: audience_density_by_lga
+    meta:
+      domain: geography
+      targeting_dimension: [where]
+      primary_entity: lga
+      grain: lga
     description: >
       LGA-level youth population (15-19) with state context for hyper-local
       geo-targeting of digital campaigns. Shows which Local Government Areas
@@ -612,6 +682,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: university_state_interest
+    meta:
+      domain: university_brand
+      targeting_dimension: [where]
+      primary_entity: institution
+      grain: [institution, state]
     description: >
       University × state search interest matrix with rankings and deviation
       from mean. Grain is university × state (~336 rows). Shows which states
@@ -650,6 +725,11 @@ models:
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
   - name: university_brand_awareness
+    meta:
+      domain: university_brand
+      targeting_dimension: [who, where]
+      primary_entity: institution
+      grain: institution
     description: >
       Per-university brand awareness analysis combining Google Trends search interest
       (time series + geographic) with QILT institution scorecard quality metrics.
@@ -715,6 +795,130 @@ models:
           High/Medium/Low classification based on interest_rank terciles (top 14 = High,
           15-28 = Medium, 29+ = Low). Quick filter for segmenting universities by
           current brand strength.
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
+  - name: graduate_outcomes_by_fos
+    meta:
+      domain: graduate_outcomes
+      targeting_dimension: [what_message]
+      primary_entity: field_of_study
+      grain: field_of_study
+    description: >
+      Graduate employment and salary outcomes from QILT Graduate Outcomes Survey,
+      aggregated to UAC field level and enriched with opportunity gap and gender
+      preference data. Multiple QILT study areas map to each UAC field (e.g. 6 QILT
+      areas → Health) and are averaged. Provides career outcome proof points for
+      marketing messaging — "graduates in this field earn X and Y% find full-time work."
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: ft_employment_rate
+        description: QILT full-time employment rate (%), averaged across QILT study areas in this field
+      - name: ft_employment_rate_prior
+        description: Prior-year full-time employment rate for trend comparison
+      - name: overall_employment_rate
+        description: Any-employment rate (%) — includes part-time and casual
+      - name: median_salary
+        description: QILT median graduate salary (AUD), averaged across QILT study areas
+      - name: median_salary_prior
+        description: Prior-year median salary for trend comparison
+      - name: median_salary_male
+        description: QILT median graduate salary for male graduates (AUD)
+      - name: median_salary_female
+        description: QILT median graduate salary for female graduates (AUD)
+      - name: salary_growth_pct
+        description: >
+          Year-over-year change in median salary as a percentage.
+          Computed as ((current - prior) / prior) * 100.
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+      - name: vacancy_share
+        description: This field's share of total mapped vacancies (0-1 decimal)
+      - name: preference_share
+        description: Share of UAC Early Bird first preferences for this field (0-1 decimal)
+      - name: vacancy_growth_12m
+        description: 12-month growth rate of vacancies for this field's mapped occupations
+      - name: female_preference_share
+        description: Share of female UAC applicants preferring this field (0-1 decimal)
+      - name: male_preference_share
+        description: Share of male UAC applicants preferring this field (0-1 decimal)
+      - name: salary_gender_gap
+        description: Male median salary minus female median salary (AUD). Positive = males earn more.
+      - name: marketing_signal
+        description: >
+          Composite marketing recommendation: "Strong — high demand, strong outcomes",
+          "Demand — high demand, moderate outcomes", "Outcomes — saturated but graduates
+          do well", "Unmapped", or "Challenging — low demand, weaker outcomes".
+      - name: qilt_areas_count
+        description: Number of QILT study areas averaged into this UAC field (indicates aggregation breadth)
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
+  - name: institution_scorecard
+    meta:
+      domain: university_brand
+      targeting_dimension: [who]
+      primary_entity: institution
+      grain: institution
+    description: >
+      Per-university scorecard combining QILT Student Experience Survey satisfaction
+      scores with Graduate Outcomes Survey employment metrics. Computes sector averages
+      and ranks each institution on quality, employment, and salary. Answers "Who" by
+      identifying which universities to target for marketing partnerships or competitive
+      positioning.
+    columns:
+      - name: institution
+        description: QILT institution name (canonical university identifier)
+        tests:
+          - unique
+          - not_null
+      - name: overall_quality
+        description: QILT overall quality of educational experience (% agreement)
+      - name: teaching_quality
+        description: QILT teaching quality (% agreement)
+      - name: skills_development
+        description: QILT skills development (% agreement)
+      - name: student_support
+        description: QILT student support (% agreement)
+      - name: learning_resources
+        description: QILT learning resources (% agreement)
+      - name: peer_engagement
+        description: QILT peer engagement (% agreement)
+      - name: ft_employment_rate
+        description: QILT full-time employment rate for graduates (%)
+      - name: median_salary
+        description: QILT median graduate salary (AUD)
+      - name: quality_vs_sector
+        description: >
+          Overall quality minus sector average. Positive = above-average satisfaction.
+      - name: employment_vs_sector
+        description: >
+          FT employment rate minus sector average. Positive = above-average employment.
+      - name: salary_vs_sector
+        description: >
+          Median salary minus sector average (AUD). Positive = above-average salary.
+      - name: avg_overall_quality
+        description: Sector average overall quality (for reference)
+      - name: avg_ft_employment_rate
+        description: Sector average FT employment rate (for reference)
+      - name: avg_median_salary
+        description: Sector average median salary in AUD (for reference)
+      - name: quality_rank
+        description: Rank by overall_quality descending (1 = highest quality)
+      - name: employment_rank
+        description: Rank by ft_employment_rate descending (1 = best employment)
+      - name: salary_rank
+        description: Rank by median_salary descending (1 = highest salary)
       - name: _loaded_at
         description: "Timestamp when this table was last built by dbt."
       - name: _dagster_run_id

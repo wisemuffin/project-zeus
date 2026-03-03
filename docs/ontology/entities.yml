@@ -1,0 +1,223 @@
+# Shared Entities
+#
+# These are the join keys that connect models across domains.
+# Each entity has a canonical source, a fixed set of allowed values,
+# and aliases showing how it appears in different models.
+
+entities:
+  - name: field_of_study
+    label: Field of Study
+    description: >
+      UAC broad field of education categories. The central hub entity —
+      most mart models join through this key to connect demand, outcomes,
+      and opportunity data. Based on ASCED broad fields mapped to UAC's
+      11 categories (10 after excluding "Mixed Field Programmes" which is
+      filtered out in staging).
+    canonical_source: stg_uac_fos_preferences
+    cardinality: 11
+    allowed_values:
+      - Agriculture, Environmental & Related Studies
+      - Architecture & Building
+      - Creative Arts
+      - Education
+      - Engineering & Related Technologies
+      - Food, Hospitality & Personal Services
+      - Health
+      - Information Technology
+      - Management & Commerce
+      - Natural & Physical Sciences
+      - Society & Culture
+    aliases:
+      - column: field_of_study
+        models:
+          - opportunity_gap
+          - opportunity_gap_by_gender
+          - audience_profile_by_fos
+          - graduate_outcomes_by_fos
+          - field_value_proposition
+          - gender_opportunity_profile
+          - satisfaction_opportunity
+          - state_fos_demand
+          - segment_field_affinity
+          - historical_demand_trends  # indirectly, via applicant_type grain
+      - column: uac_field_of_study
+        models:
+          - university_course_listings
+          - emerging_occupations
+          - stg_qilt_graduate_outcomes
+          - stg_qilt_student_experience
+          - stg_cricos_courses
+      - column: matched_field_of_study
+        models:
+          - trending_interests
+          - stg_google_trends
+    hierarchies:
+      - name: ASCED → UAC broad field
+        description: >
+          ASCED narrow fields (e.g. "0301 - Manufacturing Engineering") roll up
+          to 2-digit ASCED broad codes, which map to UAC categories. The mapping
+          is in stg_cricos_courses (asced_broad_code → uac_field_of_study).
+      - name: QILT study area → UAC broad field
+        description: >
+          QILT uses 21 study areas (e.g. Medicine, Nursing, Dentistry) that map
+          many-to-one to UAC fields. The CASE mapping is in stg_qilt_graduate_outcomes
+          and stg_qilt_student_experience.
+    notes: >
+      "Food, Hospitality & Personal Services" has no mapped IVI occupations,
+      so it appears in preference data but has null opportunity_gap values.
+
+  - name: institution
+    label: Institution
+    description: >
+      Australian universities identified by their QILT canonical name.
+      Used for institution-level quality, outcomes, and brand awareness analysis.
+      QILT names are the canonical form; CRICOS uses slightly different names.
+    canonical_source: stg_google_trends_interest
+    cardinality: ~42
+    allowed_values: "(dynamic — sourced from QILT institution list)"
+    aliases:
+      - column: university
+        models:
+          - university_brand_awareness
+          - university_state_interest
+          - stg_google_trends_interest
+          - stg_google_trends_interest_by_state
+          - stg_google_trends_related_queries
+      - column: institution
+        models:
+          - institution_scorecard
+      - column: institution_name
+        models:
+          - university_course_listings
+    notes: >
+      CRICOS provider names don't always match QILT names (e.g. abbreviations,
+      "The University of" vs "University of"). university_course_listings uses
+      CRICOS names; institution_scorecard and university_brand_awareness use
+      QILT names. Cross-joins between these require fuzzy matching or a lookup.
+
+  - name: state
+    label: State/Territory
+    description: >
+      Australian state and territory 2-letter codes. Used for geographic
+      targeting analysis across demand, population, and brand interest data.
+    canonical_source: stg_lga_reference
+    cardinality: 8
+    allowed_values:
+      - NSW
+      - VIC
+      - QLD
+      - SA
+      - WA
+      - TAS
+      - NT
+      - ACT
+    aliases:
+      - column: state
+        models:
+          - state_demand_index
+          - state_fos_demand
+          - audience_density_by_lga
+          - university_state_interest
+          - stg_job_vacancies_by_state
+          - stg_job_vacancies_by_state_fos
+          - stg_youth_population_by_state
+          - stg_youth_population_by_lga
+          - stg_lga_reference
+          - stg_google_trends_interest_by_state
+          - stg_vtac_fos_preferences
+          - stg_satac_fos_preferences
+          - stg_national_fos_preferences
+      - column: location_state
+        models:
+          - university_course_listings
+      - column: top_state
+        models:
+          - university_brand_awareness
+    hierarchies:
+      - name: LGA → State
+        description: >
+          LGAs roll up to states via stg_lga_reference (state_code mapping).
+          audience_density_by_lga includes both lga_code and state for direct joins.
+    notes: >
+      IVI job data uses state codes directly. ABS population data uses numeric
+      state codes (1=NSW, 2=VIC, etc.) mapped to 2-letter codes in stg_lga_reference.
+      Google Trends uses full state names mapped to codes in stg_google_trends_interest_by_state.
+
+  - name: applicant_type
+    label: Applicant Type
+    description: >
+      UAC applicant segments distinguishing school-leaver demographics
+      by origin and educational background. Used for segment-specific
+      targeting and historical trend analysis.
+    canonical_source: stg_uac_fos_by_app_type
+    cardinality: 5
+    allowed_values:
+      - NSW Year 12
+      - ACT Year 12
+      - Interstate & IB
+      - Non-Year 12
+      - Total
+    aliases:
+      - column: applicant_type
+        models:
+          - historical_demand_trends
+          - segment_field_affinity
+          - stg_uac_fos_by_app_type
+          - stg_uac_demand_by_year
+    notes: >
+      "Total" is the aggregate across all segments. segment_field_affinity
+      excludes "Total" (uses only the 4 sub-segments). historical_demand_trends
+      includes all 5 values.
+
+  - name: occupation_title
+    label: Occupation Title
+    description: >
+      ANZSCO2-level occupation group titles from IVI job vacancy data.
+      Mapped to UAC fields of study via the occupation_fos_mapping
+      reference table. Used for occupation-level demand signals.
+    canonical_source: stg_job_vacancies_by_occupation
+    cardinality: ~12
+    allowed_values: "(dynamic — sourced from IVI ANZSCO2 occupation groups after filtering)"
+    aliases:
+      - column: occupation_title
+        models:
+          - emerging_occupations
+          - stg_job_vacancies_by_occupation
+    crosswalks:
+      - name: occupation_fos_mapping
+        description: >
+          Maps ANZSCO2 occupation_title → uac_field_of_study. This is a
+          manual mapping (dagster source asset). Multiple occupations can
+          map to the same field. Used in stg_job_vacancies_by_state_fos
+          and emerging_occupations.
+    notes: >
+      Not all ANZSCO2 groups have a UAC field mapping. Some occupation titles
+      are excluded in staging (all-caps entries filtered as data quality issue).
+
+  - name: lga
+    label: Local Government Area
+    description: >
+      ABS Local Government Area codes and names (2024 ASGS boundaries).
+      Used for hyper-local geographic targeting of youth populations.
+    canonical_source: stg_lga_reference
+    cardinality: ~544
+    allowed_values: "(dynamic — sourced from ABS ASGS 2024 LGA boundaries)"
+    aliases:
+      - column: lga_code
+        models:
+          - audience_density_by_lga
+          - stg_youth_population_by_lga
+          - stg_lga_reference
+      - column: lga_name
+        models:
+          - audience_density_by_lga
+          - stg_youth_population_by_lga
+          - stg_lga_reference
+    hierarchies:
+      - name: LGA → State
+        description: >
+          Each LGA belongs to exactly one state. The mapping is in
+          stg_lga_reference (lga_code → state_code → state 2-letter code).
+    notes: >
+      LGA boundaries change annually. This project uses 2024 ASGS boundaries.
+      Population data is matched to the same boundary vintage.

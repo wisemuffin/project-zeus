@@ -1,0 +1,134 @@
+# Entity Relationships & Data Lineage
+
+## Entity-Relationship Diagram
+
+```mermaid
+erDiagram
+    FIELD_OF_STUDY {
+        string field_of_study PK "11 UAC broad fields"
+    }
+    INSTITUTION {
+        string institution PK "~42 QILT universities"
+    }
+    STATE {
+        string state PK "8 AU states/territories"
+    }
+    APPLICANT_TYPE {
+        string applicant_type PK "5 UAC segments"
+    }
+    OCCUPATION_TITLE {
+        string occupation_title PK "~12 ANZSCO2 groups"
+    }
+    LGA {
+        string lga_code PK "~544 ABS LGAs"
+        string lga_name
+        string state FK
+    }
+
+    FIELD_OF_STUDY ||--o{ OCCUPATION_TITLE : "occupation_fos_mapping"
+    FIELD_OF_STUDY ||--o{ APPLICANT_TYPE : "segment_field_affinity"
+    STATE ||--o{ LGA : "stg_lga_reference"
+    STATE ||--o{ INSTITUTION : "university_state_interest"
+    FIELD_OF_STUDY ||--o{ STATE : "state_fos_demand"
+    INSTITUTION ||--o{ FIELD_OF_STUDY : "university_course_listings"
+```
+
+## Domain Connectivity
+
+```mermaid
+graph LR
+    SD[Student Demand] -->|field_of_study| EOG[Employment &<br/>Opportunity Gap]
+    EOG -->|field_of_study| GO[Graduate Outcomes]
+    GO -->|institution| UB[University Brand]
+    GEO[Geography] -->|state| UB
+    GEO -->|state + field_of_study| EOG
+    CO[Course Offerings] -->|field_of_study| EOG
+    CO -->|field_of_study| GO
+    CO -->|institution| UB
+    REF[Reference Data] -.->|lga → state| GEO
+    REF -.->|occupation → field| EOG
+```
+
+## Join Paths
+
+The table below shows how to join between any two domains using shared entities.
+
+| From Domain | To Domain | Join Key | Join Path | Notes |
+|---|---|---|---|---|
+| Student Demand | Employment & Opportunity Gap | `field_of_study` | Direct join | Core opportunity gap calculation |
+| Student Demand | Graduate Outcomes | `field_of_study` | Direct join | Preference + outcomes context |
+| Student Demand | Geography | `field_of_study` + `state` | Via `state_fos_demand` | State-level demand by field |
+| Employment & Opportunity Gap | Graduate Outcomes | `field_of_study` | Direct join | Demand + outcomes for value scoring |
+| Employment & Opportunity Gap | Geography | `field_of_study` + `state` | Via `state_fos_demand` | State-level vacancy patterns |
+| Graduate Outcomes | University Brand | `institution` | `institution_scorecard` → `university_brand_awareness` | Quality metrics + brand interest |
+| University Brand | Geography | `state` | Via `university_state_interest` | Geographic brand presence |
+| Course Offerings | Employment & Opportunity Gap | `field_of_study` | `uac_field_of_study` → `field_of_study` | Course-level opportunity context |
+| Course Offerings | Graduate Outcomes | `field_of_study` | `uac_field_of_study` → `field_of_study` | Course-level outcome context |
+| Reference Data | Geography | `lga_code` → `state` | Via `stg_lga_reference` | LGA-to-state rollup |
+| Reference Data | Employment & Opportunity Gap | `occupation_title` → `field_of_study` | Via `occupation_fos_mapping` | Occupation-to-field crosswalk |
+
+## Critical Crosswalks
+
+### 1. Occupation → Field of Study Mapping
+
+**Source:** `dagster.occupation_fos_mapping` (manual/hardcoded asset)
+
+Maps ANZSCO2 occupation group titles to UAC fields of study. This is the bridge
+between IVI job vacancy data (occupation-grain) and UAC preference data
+(field-of-study-grain). Used in:
+- `stg_job_vacancies_by_state_fos` — aggregates occupations to state × field
+- `emerging_occupations` — enriches occupation growth with field context
+
+**Limitation:** Many-to-one mapping (multiple occupations → one field). Not all
+ANZSCO2 groups have a mapping. The mapping is manually maintained and may drift
+as the occupation landscape evolves.
+
+### 2. QILT Study Area → UAC Field of Study Mapping
+
+**Source:** CASE statements in `stg_qilt_graduate_outcomes` and `stg_qilt_student_experience`
+
+Maps 21 QILT study areas to 11 UAC broad fields. This is a many-to-one mapping:
+for example, Medicine, Nursing, Dentistry, Pharmacy, Rehabilitation, and
+Veterinary Science all map to "Health". The mapping uses SQL CASE statements
+hardcoded in the staging models.
+
+**Limitation:** Averaging across multiple QILT areas into one UAC field loses
+granularity. The `qilt_areas_count` column in mart models indicates how many
+QILT areas were averaged.
+
+### 3. ASCED Broad Field → UAC Field of Study Mapping
+
+**Source:** CASE statement in `stg_cricos_courses`
+
+Maps 2-digit ASCED broad field codes (extracted from the CRICOS `broad_field`
+string) to UAC categories. Enables joining CRICOS course data with
+opportunity gap and outcomes data.
+
+**Limitation:** "Mixed Field Programmes" (ASCED code 12) is excluded as it
+has no meaningful UAC equivalent. Some ASCED→UAC mappings are approximate
+(e.g. ASCED "Society and Culture" maps directly but covers a broad range).
+
+### 4. State Name → State Code Mapping
+
+**Source:** CASE statements in `stg_lga_reference`, `stg_google_trends_interest_by_state`
+
+Multiple sources use different state representations:
+- ABS: numeric codes (1=NSW, 2=VIC, 3=QLD, 4=SA, 5=WA, 6=TAS, 7=NT, 8=ACT)
+- Google Trends: full names ("New South Wales", "Victoria", etc.)
+- IVI: 2-letter codes (NSW, VIC, etc.)
+
+All staging models normalise to 2-letter codes. The `stg_lga_reference` model
+handles the ABS numeric → 2-letter mapping. The `stg_google_trends_interest_by_state`
+model handles the full name → 2-letter mapping.
+
+### 5. UAC Field Name Standardisation
+
+**Source:** CASE statements in `stg_uac_fos_by_gender`, `stg_vtac_fos_preferences`, `stg_satac_fos_preferences`
+
+Different admissions centres use slightly different field names:
+- UAC: "Engineering & Related Tech." (abbreviated)
+- VTAC: "Engineering and Related Technologies"
+- SATAC: "Engineering and Related Technologies"
+
+Staging models standardise all variants to the canonical UAC form
+(e.g. "Engineering & Related Technologies") using CASE statements.

@@ -63,6 +63,15 @@ Every Dagster asset and dbt model must document both **what it contains** and **
 - Resource `name=` must match the expected DuckDB table name and dbt source name
 - dlt assets add `"dlt"` to `kinds=` alongside the existing method badge (e.g. `{"python", "api", "dlt"}`)
 
+## Data Ontology
+- The project maintains a data ontology in `docs/ontology/` that documents domains, entities, metrics, and relationships
+- When creating a **new mart model**, also:
+  - Add it to the appropriate domain in `docs/ontology/domains.yml`
+  - Add any new computed metrics to `docs/ontology/glossary.yml`
+  - Add a `meta:` block in `models/marts/schema.yml` with `domain`, `targeting_dimension`, `primary_entity`, and `grain`
+- When creating a **new staging model**, add it to `docs/ontology/domains.yml`
+- When introducing a **new entity or join key**, add it to `docs/ontology/entities.yml` and update `docs/ontology/relationships.md`
+
 ## Python Dependencies
 - Use `uv` to manage Python environments and dependencies
 - Always use `uv add <package>` to install packages (not pip)

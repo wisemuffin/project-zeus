@@ -1,0 +1,323 @@
+# Business Glossary
+#
+# Definitions of key metrics and business terms used across mart models.
+# Each entry includes the formula (where applicable), unit, source models,
+# and domain. Ordered alphabetically within each category.
+
+metrics:
+  # --- Core opportunity metrics ---
+
+  - name: opportunity_gap
+    label: Opportunity Gap
+    definition: >
+      The difference between a field's share of job vacancies and its share
+      of student first preferences. A positive gap means employer demand
+      exceeds student interest — the strongest marketing messaging opportunity.
+    formula: vacancy_share - preference_share
+    unit: decimal (typically -0.15 to +0.15)
+    models: [opportunity_gap, opportunity_gap_by_gender, audience_profile_by_fos, graduate_outcomes_by_fos, field_value_proposition, gender_opportunity_profile, satisfaction_opportunity, state_fos_demand, segment_field_affinity, emerging_occupations, university_course_listings, trending_interests]
+    domain: employment_and_opportunity_gap
+
+  - name: vacancy_share
+    label: Vacancy Share
+    definition: >
+      A field of study's share of total internet job vacancies across all
+      mapped ANZSCO2 occupations. Represents employer demand signal.
+    formula: total_vacancies_for_field / grand_total_vacancies
+    unit: decimal (0-1)
+    models: [opportunity_gap, opportunity_gap_by_gender, audience_profile_by_fos]
+    domain: employment_and_opportunity_gap
+
+  - name: preference_share
+    label: Preference Share
+    definition: >
+      A field of study's share of UAC Early Bird first preferences.
+      Represents student demand signal. Calculated for total and by
+      segment (gender, applicant type).
+    formula: first_preferences_for_field / total_first_preferences
+    unit: decimal (0-1)
+    models: [opportunity_gap, segment_field_affinity, emerging_occupations]
+    domain: student_demand
+
+  - name: vacancy_growth_12m
+    label: 12-Month Vacancy Growth
+    definition: >
+      Year-over-year growth rate of job vacancies, comparing the latest
+      month's snapshot against the same period 12 months prior.
+    formula: (current_vacancies - prior_vacancies) / prior_vacancies
+    unit: decimal (e.g. 0.15 = 15% growth)
+    models: [opportunity_gap, opportunity_gap_by_gender, state_demand_index, state_fos_demand, emerging_occupations, graduate_outcomes_by_fos, gender_opportunity_profile, satisfaction_opportunity, segment_field_affinity, university_course_listings]
+    domain: employment_and_opportunity_gap
+
+  # --- Value and ranking metrics ---
+
+  - name: value_score
+    label: Value Score
+    definition: >
+      Composite ranking of a field's attractiveness across three dimensions:
+      opportunity gap, full-time employment rate, and median salary. Each
+      dimension is converted to a percentile rank (0-1) and averaged.
+    formula: (opportunity_pctile + employment_pctile + salary_pctile) / 3
+    unit: decimal (0-1, higher is better)
+    models: [field_value_proposition]
+    domain: employment_and_opportunity_gap
+
+  - name: value_tier
+    label: Value Tier
+    definition: >
+      Actionable classification of each field based on opportunity gap
+      and graduate outcomes. Used for prioritising marketing spend.
+    formula: >
+      CASE:
+        "No-brainer" — positive opportunity gap + FT employment ≥80% + above-median salary
+        "High potential" — positive opportunity gap, weaker outcomes
+        "Proven outcomes" — no gap but strong outcomes
+        "Challenging" — low demand, weak outcomes
+    unit: category
+    models: [field_value_proposition]
+    domain: employment_and_opportunity_gap
+
+  - name: marketing_signal
+    label: Marketing Signal
+    definition: >
+      Composite recommendation label. Two variants exist: one for trending
+      interests (based on opportunity gap match) and one for graduate outcomes
+      (based on demand + outcomes combination).
+    formula: >
+      trending_interests variant:
+        "High opportunity" — matched field has positive opportunity gap
+        "Low opportunity" — matched field has negative opportunity gap
+        "Unclassified" — no field match
+      graduate_outcomes variant:
+        "Strong" — high demand + strong outcomes
+        "Demand" — high demand, moderate outcomes
+        "Outcomes" — saturated but graduates do well
+        "Unmapped" — no QILT data
+        "Challenging" — low demand, weaker outcomes
+    unit: category
+    models: [trending_interests, graduate_outcomes_by_fos, university_course_listings]
+    domain: employment_and_opportunity_gap
+
+  # --- Graduate outcome metrics ---
+
+  - name: ft_employment_rate
+    label: Full-Time Employment Rate
+    definition: >
+      Percentage of graduates employed full-time within 4 months of
+      completing their degree, from the QILT Graduate Outcomes Survey.
+      Averaged across QILT study areas mapped to each UAC field.
+    formula: "(sourced directly from QILT GOS data)"
+    unit: percentage (e.g. 85.0 = 85%)
+    models: [graduate_outcomes_by_fos, field_value_proposition, gender_opportunity_profile, satisfaction_opportunity, segment_field_affinity, university_course_listings, institution_scorecard, university_brand_awareness]
+    domain: graduate_outcomes
+
+  - name: median_salary
+    label: Median Salary
+    definition: >
+      Median annual salary of graduates 4 months after completing their
+      degree, from the QILT Graduate Outcomes Survey. Reported in AUD.
+    formula: "(sourced directly from QILT GOS data)"
+    unit: AUD
+    models: [graduate_outcomes_by_fos, field_value_proposition, satisfaction_opportunity, segment_field_affinity, university_course_listings, institution_scorecard, university_brand_awareness]
+    domain: graduate_outcomes
+
+  - name: salary_gender_gap
+    label: Salary Gender Gap
+    definition: >
+      Absolute difference between male and female median graduate salaries.
+      Positive values indicate males earn more.
+    formula: median_salary_male - median_salary_female
+    unit: AUD
+    models: [graduate_outcomes_by_fos, gender_opportunity_profile]
+    domain: graduate_outcomes
+
+  - name: salary_growth_pct
+    label: Salary Growth Percentage
+    definition: >
+      Year-over-year change in median graduate salary compared to the
+      prior survey period.
+    formula: ((median_salary - median_salary_prior) / median_salary_prior) * 100
+    unit: percentage points
+    models: [graduate_outcomes_by_fos]
+    domain: graduate_outcomes
+
+  - name: quality_vs_sector
+    label: Quality vs Sector Average
+    definition: >
+      Difference between a field's (or institution's) overall quality score
+      and the sector-wide average. Positive values indicate above-average
+      student satisfaction.
+    formula: overall_quality - sector_avg_overall_quality
+    unit: percentage points
+    models: [satisfaction_opportunity, institution_scorecard]
+    domain: graduate_outcomes
+
+  # --- Audience and demographic metrics ---
+
+  - name: mature_learner_index
+    label: Mature Learner Index
+    definition: >
+      Ratio of Non-Year 12 preference share to total preference share
+      for a field. Values above 1.0 indicate the field attracts
+      disproportionately more mature-age (non-school-leaver) applicants.
+    formula: non_yr12_preference_share / total_preference_share
+    unit: index (>1 = over-index)
+    models: [audience_profile_by_fos]
+    domain: student_demand
+
+  - name: interstate_draw_ratio
+    label: Interstate Draw Ratio
+    definition: >
+      Ratio of Interstate & IB preference share to NSW preference share.
+      Values above 1.0 indicate the field draws disproportionately from
+      interstate — a signal for national vs state-based campaigns.
+    formula: interstate_preference_share / nsw_preference_share
+    unit: index (>1 = national draw)
+    models: [audience_profile_by_fos]
+    domain: student_demand
+
+  - name: segment_affinity_index
+    label: Segment Affinity Index
+    definition: >
+      Ratio of a segment's preference share for a field to the total
+      population's preference share. Values above 1.0 indicate the
+      segment over-indexes on that field relative to all applicants.
+    formula: segment_preference_share / total_preference_share
+    unit: index (>1 = over-index)
+    models: [segment_field_affinity]
+    domain: student_demand
+
+  - name: gender_skew
+    label: Gender Skew
+    definition: >
+      Difference between female and male preference shares for a field.
+      Positive values indicate female-skewing fields, negative values
+      indicate male-skewing fields.
+    formula: female_preference_share - male_preference_share
+    unit: decimal
+    models: [opportunity_gap_by_gender, audience_profile_by_fos]
+    domain: student_demand
+
+  - name: female_underrepresentation
+    label: Female Underrepresentation
+    definition: >
+      How far below gender parity (50%) the female preference share falls.
+      Values above 0.10 indicate significant underrepresentation of women
+      in the applicant pool for that field.
+    formula: 0.5 - female_preference_share
+    unit: decimal (>0 = underrepresented)
+    models: [gender_opportunity_profile]
+    domain: student_demand
+
+  - name: diversity_opportunity
+    label: Diversity Opportunity
+    definition: >
+      Classification combining opportunity gap with gender representation
+      to identify fields where diversity-focused marketing is most impactful.
+    formula: >
+      CASE:
+        "High diversity opportunity" — positive gap + women underrepresented >10pp
+        "Equity focus" — women underrepresented, low/no gap
+        "Gender balanced" — within 10pp of parity
+        "Male underrepresented" — men underrepresented
+    unit: category
+    models: [gender_opportunity_profile]
+    domain: student_demand
+
+  # --- Geographic metrics ---
+
+  - name: graduate_vacancies_per_1k_youth
+    label: Graduate Vacancies per 1,000 Youth
+    definition: >
+      Density of graduate-level job vacancies (ANZSCO skill levels 1-2)
+      relative to the youth population aged 15-19 in each state. Higher
+      values indicate stronger graduate job markets per capita.
+    formula: (graduate_vacancies * 1000) / youth_population_15_19
+    unit: vacancies per 1,000 youth
+    models: [state_demand_index]
+    domain: geography
+
+  - name: youth_density_per_sqkm
+    label: Youth Density per km²
+    definition: >
+      Youth population (15-19) per square kilometre within a Local
+      Government Area. Identifies geographically compact high-youth areas
+      ideal for efficient local ad targeting.
+    formula: youth_population / area_albers_sqkm
+    unit: people per km²
+    models: [audience_density_by_lga]
+    domain: geography
+
+  - name: state_vs_national_skew
+    label: State vs National Skew
+    definition: >
+      Difference between a field's vacancy share within a state and
+      its national vacancy share. Positive values indicate the state
+      over-indexes on that field relative to the national average.
+    formula: fos_share_in_state - national_vacancy_share
+    unit: decimal
+    models: [state_fos_demand]
+    domain: geography
+
+  # --- Brand awareness metrics ---
+
+  - name: interest_quality_gap
+    label: Interest-Quality Gap
+    definition: >
+      Difference between a university's quality ranking and its search
+      interest ranking. Positive values indicate the university is
+      under-searched relative to its academic quality — a prime candidate
+      for marketing investment.
+    formula: quality_rank - interest_rank
+    unit: rank positions
+    models: [university_brand_awareness]
+    domain: university_brand
+
+  - name: interest_momentum
+    label: Interest Momentum
+    definition: >
+      Ratio of average Google Trends interest in the last 3 months vs
+      the prior 3 months, expressed as a decimal change. Measures recent
+      directional shift in brand awareness.
+    formula: (avg_last_3m / avg_prior_3m) - 1
+    unit: decimal (e.g. 0.10 = 10% increase)
+    models: [university_brand_awareness]
+    domain: university_brand
+
+  - name: awareness_tier
+    label: Awareness Tier
+    definition: >
+      High/Medium/Low classification of university brand strength based
+      on interest_rank terciles within the 42-university panel.
+    formula: >
+      CASE:
+        "High" — interest_rank ≤ 14
+        "Medium" — interest_rank 15-28
+        "Low" — interest_rank > 28
+    unit: category
+    models: [university_brand_awareness]
+    domain: university_brand
+
+  # --- Historical trend metrics ---
+
+  - name: recovery_ratio
+    label: Recovery Ratio
+    definition: >
+      Latest applicant count divided by the historical peak count for
+      that segment. Values below 1.0 indicate the segment has not
+      recovered to its historical peak.
+    formula: latest_count / peak_count
+    unit: ratio (1.0 = at peak)
+    models: [historical_demand_trends]
+    domain: student_demand
+
+  - name: cagr
+    label: Compound Annual Growth Rate
+    definition: >
+      Annualised growth rate of applicant volumes across the full
+      data window (~10 years). Smooths year-to-year volatility to
+      reveal underlying trend direction.
+    formula: "(standard CAGR formula over the data window)"
+    unit: decimal (e.g. 0.02 = 2% annual growth)
+    models: [historical_demand_trends]
+    domain: student_demand
