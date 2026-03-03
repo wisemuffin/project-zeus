@@ -1,5 +1,46 @@
 # Entity Relationships & Data Lineage
 
+## Data Source Flow
+
+How external data sources feed into the seven analytical domains.
+
+```mermaid
+graph LR
+    subgraph Sources
+        UAC[UAC<br/><small>NSW/ACT admissions</small>]
+        VTAC[VTAC<br/><small>VIC admissions</small>]
+        SATAC[SATAC<br/><small>SA/NT admissions</small>]
+        JSA[JSA / IVI<br/><small>Job vacancies</small>]
+        ABS[ABS<br/><small>Population &amp; geography</small>]
+        GT[Google Trends<br/><small>Search interest</small>]
+        QILT[QILT<br/><small>Graduate surveys</small>]
+        CRICOS[CRICOS<br/><small>Course register</small>]
+    end
+
+    subgraph Domains
+        SD[Student<br/>Demand]
+        EOG[Employment &<br/>Opportunity Gap]
+        GEO[Geography]
+        REF[Reference<br/>Data]
+        UB[University<br/>Brand]
+        GO[Graduate<br/>Outcomes]
+        CO[Course<br/>Offerings]
+    end
+
+    UAC --> SD
+    VTAC --> SD
+    SATAC --> SD
+    JSA --> EOG
+    JSA --> GEO
+    ABS --> GEO
+    ABS --> REF
+    GT --> REF
+    GT --> UB
+    QILT --> UB
+    QILT --> GO
+    CRICOS --> CO
+```
+
 ## Entity-Relationship Diagram
 
 ```mermaid

@@ -6,6 +6,7 @@ This directory provides a single reference for understanding the entire data lan
 
 The project has 7 data domains, 18 mart models, 20 staging models, and 20 source tables. Each is individually documented (dbt schema.yml descriptions, Dagster asset docstrings, insight docs). But there was no single place to understand:
 
+- **Where the data comes from** (source organisations, coverage, refresh cadence)
 - **What domains exist** and what question each answers
 - **How data connects** across domains (shared entities, join keys)
 - **What metrics mean** (formulas, units, which models contain them)
@@ -16,10 +17,11 @@ This ontology fills that gap.
 
 | File | Purpose |
 |---|---|
+| [`sources.yml`](sources.yml) | 8 source organisations (UAC, VTAC, SATAC, JSA, QILT, ABS, CRICOS, Google Trends) with coverage, refresh cadence, raw tables, and limitations |
 | [`entities.yml`](entities.yml) | 6 shared entities (field_of_study, institution, state, applicant_type, occupation_title, lga) with canonical sources, allowed values, and cross-model aliases |
 | [`glossary.yml`](glossary.yml) | ~25 business metrics with plain-language definitions, exact formulas, units, and source models |
 | [`domains.yml`](domains.yml) | 7 data domains with exhaustive model lists, source organisations, and links to insight docs and report pages |
-| [`relationships.md`](relationships.md) | Mermaid ER diagram, cross-domain join paths, and documentation of critical crosswalks (QILT→UAC, ANZSCO→FOS, ASCED→UAC mappings) |
+| [`relationships.md`](relationships.md) | Source-to-domain flow diagram, Mermaid ER diagram, cross-domain join paths, and critical crosswalk documentation |
 
 ## How It Relates to Other Documentation
 
@@ -39,7 +41,8 @@ When the data model changes, update the ontology to stay in sync:
 3. **New entity or join key** → Add to `entities.yml`. Update `relationships.md` if it creates a new cross-domain join path.
 4. **New metric column** → Add to `glossary.yml` with definition, formula, unit, and source models.
 5. **New domain** → Add to `domains.yml` with all required fields. Update the ER diagram in `relationships.md`.
-6. **Renamed model/column** → Update references in all ontology files.
+6. **New source organisation** → Add to `sources.yml`. Update the source flow diagram in `relationships.md`.
+7. **Renamed model/column** → Update references in all ontology files.
 
 These rules are also captured in the project's `CLAUDE.md` to ensure they're followed during development.
 

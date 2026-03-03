@@ -1,0 +1,180 @@
+# Source Organisations
+#
+# Every external data provider that feeds into Project Zeus.
+# Each source maps to one or more raw tables (Dagster assets)
+# and flows into specific analytical domains.
+
+sources:
+  - name: uac
+    label: UAC
+    full_name: Universities Admissions Centre
+    description: >
+      Admissions data for NSW and ACT. Publishes Early Bird first preference
+      statistics by field of study, broken down by applicant type (Year 12,
+      Non-Year 12, Interstate), gender, and age. The canonical source for
+      student demand signals and the origin of the 11 field-of-study categories
+      used across the entire project.
+    url: https://www.uac.edu.au/
+    geographic_scope: NSW, ACT
+    market_share: ~40% of Australian higher-ed applicants
+    refresh: Annual (Early Bird closing stats, typically January)
+    access_method: Excel file download
+    raw_tables:
+      - uac_fos_by_app_type
+      - uac_fos_by_gender
+      - uac_early_bird_closing_count
+      - uac_applicants_by_age
+      - uac_applicants_by_gender
+    domains: [student_demand]
+    limitations:
+      - Early Bird snapshot only (not final offers/enrolments)
+      - NSW/ACT coverage only — must combine with VTAC and SATAC for national view
+
+  - name: vtac
+    label: VTAC
+    full_name: Victorian Tertiary Admissions Centre
+    description: >
+      Admissions data for Victoria. Publishes Section D statistics with
+      field-of-study first preferences by gender using ASCED classification.
+      Field names are normalised to UAC categories in staging.
+    url: https://vtac.edu.au/statistics/
+    geographic_scope: VIC
+    market_share: ~25% of Australian higher-ed applicants
+    refresh: Annual
+    access_method: HTML table scraping
+    raw_tables:
+      - vtac_fos_preferences
+    domains: [student_demand]
+    limitations:
+      - HTML tables require scraping (no API or bulk download)
+      - Uses ASCED field names (slightly different from UAC — normalised in staging)
+
+  - name: satac
+    label: SATAC
+    full_name: South Australian Tertiary Admissions Centre
+    description: >
+      Admissions data for South Australia and Northern Territory. Publishes
+      annual statistics PDF with field-of-study first preferences by gender.
+      Combined with UAC and VTAC, brings national applicant coverage to ~72%.
+    url: https://www.satac.edu.au/
+    geographic_scope: SA, NT
+    market_share: ~7% of Australian higher-ed applicants
+    refresh: Annual
+    access_method: PDF extraction
+    raw_tables:
+      - satac_fos_preferences
+    domains: [student_demand]
+    limitations:
+      - PDF extraction is fragile (layout changes can break parsing)
+      - Uses ASCED field names (normalised to UAC categories in staging)
+
+  - name: jsa
+    label: JSA
+    full_name: Jobs and Skills Australia
+    description: >
+      Internet Vacancy Index (IVI) — monthly count of online job vacancies
+      by ANZSCO skill level, occupation group, and state. The primary source
+      for employer demand signals. Vacancy data is mapped to UAC fields of
+      study via a manual occupation-to-field crosswalk.
+    url: https://www.jobsandskills.gov.au/data/internet-vacancy-index
+    geographic_scope: National (state-level breakdown)
+    refresh: Monthly
+    access_method: Excel file download
+    raw_tables:
+      - job_market
+      - job_market_occupations
+      - occupation_fos_mapping
+    domains: [employment_and_opportunity_gap, geography]
+    limitations:
+      - Internet vacancies only (excludes positions filled via networks, agencies, internal moves)
+      - ANZSCO2-to-UAC field mapping is manual and approximate
+      - Not all occupation groups map to a UAC field
+
+  - name: qilt
+    label: QILT
+    full_name: Quality Indicators for Learning and Teaching
+    description: >
+      Australian Government survey program measuring graduate employment
+      outcomes (GOS), student satisfaction (SES), and institution-level
+      quality scores. Covers all 42 Australian universities across 21 study
+      areas. The primary source for "what message" proof points — employment
+      rates, salaries, and satisfaction indicators.
+    url: https://www.qilt.edu.au/
+    geographic_scope: National (institution × study area)
+    refresh: Annual (published ~September)
+    access_method: Excel/ZIP file download
+    raw_tables:
+      - qilt_graduate_outcomes
+      - qilt_student_experience
+      - qilt_institution_scores
+    domains: [graduate_outcomes, university_brand]
+    limitations:
+      - 21 QILT study areas don't map 1:1 to UAC fields (many-to-one averaging)
+      - Response rates vary by institution and study area
+      - Published annually with ~12-month lag
+
+  - name: abs
+    label: ABS
+    full_name: Australian Bureau of Statistics
+    description: >
+      Estimated Resident Population (ERP) by Local Government Area for the
+      15-19 age group (the addressable youth market), plus LGA reference
+      data (boundaries, state mapping, land area). Used for geographic
+      targeting — youth density per km² and state-level population context.
+    url: https://www.abs.gov.au/
+    geographic_scope: National (LGA and state level)
+    refresh: Annual (ERP) / as-needed (ASGS boundaries)
+    access_method: API (ABS.Stat SDMX) and CSV download
+    raw_tables:
+      - abs_population_by_lga
+      - abs_lga_reference
+    domains: [geography, reference_data]
+    limitations:
+      - LGA boundaries change annually (currently using 2024 ASGS vintage)
+      - Population estimates have a ~12-month lag
+
+  - name: cricos
+    label: CRICOS
+    full_name: Commonwealth Register of Institutions and Courses for Overseas Students
+    description: >
+      Official register of all higher-education courses approved for
+      international students in Australia. Provides institution, course,
+      location, duration, and fee data. Enriched with opportunity gap and
+      graduate outcomes for program-level marketing recommendations.
+    url: https://data.gov.au/data/dataset/cricos
+    geographic_scope: National (institution × course × location)
+    refresh: Monthly
+    access_method: CSV file download (data.gov.au, Creative Commons 2.5 AU)
+    raw_tables:
+      - cricos_courses
+    domains: [course_offerings]
+    limitations:
+      - International-student-registered courses only (most uni courses qualify, but some domestic-only programs absent)
+      - No ATAR/entry requirements
+      - No delivery mode (online vs on-campus)
+      - ASCED field codes require mapping to UAC categories
+
+  - name: google_trends
+    label: Google Trends
+    full_name: Google Trends
+    description: >
+      Two distinct data feeds. (1) Trending searches RSS — current trending
+      topics in Australia, matched to fields of study for timely content
+      hooks. (2) Search interest API — 5-year monthly time series and
+      state-level geographic interest for 42 Australian university names,
+      used for brand awareness analysis.
+    url: https://trends.google.com/
+    geographic_scope: National (state-level for university interest)
+    refresh: Trending searches (daily RSS), university interest (on-demand, 5-year rolling window)
+    access_method: RSS feed (trending) and API via pytrends (university interest)
+    raw_tables:
+      - google_trends
+      - google_trends_interest
+      - google_trends_interest_by_state
+      - google_trends_related_queries
+    domains: [reference_data, university_brand]
+    limitations:
+      - Interest values are relative (0-100 scale), not absolute search volumes
+      - Trending searches are ephemeral (refresh daily, most don't match any field)
+      - pytrends is unofficial (no Google SLA, rate-limited)
+      - Cross-batch normalisation required for comparable university interest scores
