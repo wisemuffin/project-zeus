@@ -93,7 +93,7 @@ select
     uni_rank_in_state,
     interest_vs_uni_avg
 from zeus.university_state_interest
-where university = '${inputs.selected_university}'
+where university = '${inputs.selected_university.value}'
 ```
 
 <AreaMap
@@ -107,7 +107,7 @@ where university = '${inputs.selected_university}'
     startingLong={134}
     startingZoom={4}
     legendType="scalar"
-    title={`Search Interest by State — ${inputs.selected_university}`}
+    title={`Search Interest by State — ${inputs.selected_university.value}`}
     tooltip={[{id: 'state_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'interest', title: 'Interest', fmt: 'num1'}, {id: 'state_rank_for_uni', title: 'State Rank (for uni)'}, {id: 'uni_rank_in_state', title: 'Uni Rank (in state)'}, {id: 'interest_vs_uni_avg', title: 'vs Uni Avg', fmt: 'num1'}]}
 />
 
@@ -162,7 +162,7 @@ select
     query_type,
     value
 from zeus.stg_google_trends_related_queries
-where university = '${inputs.selected_university}'
+where university = '${inputs.selected_university.value}'
 order by query_type, value desc
 ```
 

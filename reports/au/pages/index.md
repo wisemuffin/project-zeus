@@ -18,6 +18,10 @@ We combine **8 government and public data sources** to answer three questions fo
 
 The result: instead of *"Engineering has strong demand"*, we can say *"Your Bachelor of Civil Engineering at your Sydney campus is in a field with 12% more employer demand than student interest, 87% full-time employment, and $78K median salary — and youth density in Blacktown LGA is 3x the state average."*
 
+## University Brief
+
+- **[University Brief](/university-brief)** — Per-university marketing intelligence: brand position, program portfolio, audience targeting, and geographic demand. Select any of the 42 Australian universities.
+
 ## Dashboards
 
 - **[Audiences](/audiences)** — **Who** to target: profiles, brand awareness, segments, scorecards

@@ -336,13 +336,22 @@ Project Zeus is built on open-source and low-cost infrastructure:
 
 ## Go-to-Market Strategy
 
+> Full strategy: [Go-to-Market Strategy](go-to-market.md)
+
+The GTM approach is built around a core insight: **formal procurement channels (tenders,
+vendor panels) are the wrong starting point** for a product category universities don't
+yet know they need. Instead, we use our ability to generate unsolicited, personalised
+marketing intelligence briefs to demonstrate value before any commercial conversation.
+
 ### Phase 1: Validate with Pilot Institutions (Current)
 
-- Build the complete data platform with all core analysis models
-- Create the Evidence.dev report suite demonstrating each targeting dimension
-- Approach **2–3 mid-tier Australian universities** (not Group of Eight, who may have
-  internal capabilities) for pilot engagements
-- Validate willingness to pay and identify which insights drive the most value
+- Generate personalised university briefs for **10 target mid-tier universities** using
+  existing pipeline data — the brief is both the sales tool and the product demo
+- Direct outreach to marketing directors / heads of student recruitment via LinkedIn and
+  email, with the brief attached
+- Convert walkthroughs into **6-month pilot subscriptions priced under the procurement
+  threshold** ($15-25K) to avoid formal tender processes
+- Target: 1-2 signed pilots within 3 months of first outreach
 
 ### Phase 2: Productise
 
@@ -351,9 +360,13 @@ Project Zeus is built on open-source and low-cost infrastructure:
 - Build self-service dashboard access with institution-specific filtering
 - Implement row-level security and embed analytics into a client-facing application
 - Develop white-label theming for institutional branding
+- Begin conference circuit (ATEM, EPHEA) with pilot case studies
+- Explore agency partnerships as a distribution channel
 
 ### Phase 3: Scale
 
+- Register on university procurement platforms (VendorPanel, SAP Ariba) — now with the
+  references and case studies they require
 - Expand data sources (CRICOS course listings, QTAC, VTAC/SATAC/TISC)
 - Add institution-specific recommendations ("promote your [X] degree because...")
 - Explore channel partnerships with university marketing agencies or TACs
