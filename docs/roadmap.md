@@ -196,6 +196,14 @@ These platforms from the student search analysis are **not viable** as data sour
 
 ---
 
+## Infrastructure
+
+### Planned
+
+- [ ] **Migrate to dbt Fusion engine** — dbt Labs' next-generation engine (written in Rust) offers significantly faster compilation, dialect-aware SQL validation, and column-level lineage. DuckDB adapter [landed in Feb 2026](https://github.com/dbt-labs/dbt-fusion/issues/110) (preview.120+, SQL understanding from preview.137). MotherDuck and extension support still forthcoming. Evaluate migration once Fusion reaches GA and confirm Dagster's `DbtCliResource` works with the Fusion CLI.
+
+---
+
 ## Squiz-Actionable Recommendations
 
 **Goal:** Package Zeus's insights so they map directly to actions university marketing teams can execute in Squiz DXP — the CMS used by 15+ confirmed (and likely 22+) Australian universities. See [Squiz market research](research/squiz-university-cms.md) for full analysis.
