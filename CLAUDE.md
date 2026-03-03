@@ -68,9 +68,19 @@ Every Dagster asset and dbt model must document both **what it contains** and **
 - When creating a **new mart model**, also:
   - Add it to the appropriate domain in `docs/ontology/domains.yml`
   - Add any new computed metrics to `docs/ontology/glossary.yml`
-  - Add a `meta:` block in `models/marts/schema.yml` with `domain`, `targeting_dimension`, `primary_entity`, and `grain`
+  - Add a `config: meta:` block in `models/marts/schema.yml` with `domain`, `targeting_dimension`, `primary_entity`, and `grain`
 - When creating a **new staging model**, add it to `docs/ontology/domains.yml`
 - When introducing a **new entity or join key**, add it to `docs/ontology/entities.yml` and update `docs/ontology/relationships.md`
+
+## dbt Fusion
+- The project uses **dbt Fusion** (Rust-based next-gen engine), not dbt-core
+- Fusion CLI is a standalone binary at `~/.local/bin/dbt` with a wrapper script at `~/.local/bin/dbtf`
+- Run dbt commands via `dbtf` (e.g. `dbtf build --project-dir dbt_project`), not via `uv run dbt`
+- `dbt-core` remains installed as a transitive dependency of `dagster-dbt`, but `dbt-duckdb` is removed
+- Dagster's `dagster-dbt` auto-detects `dbtf` on PATH (preferred over venv's `dbt`) and routes events through `DbtFusionCliEventMessage`
+- Because Fusion is version 2.x, dagster-dbt skips dbt-core adapter initialization entirely
+- YAML `meta:` blocks must be nested under `config:` (e.g. `config: meta: dagster: asset_key:`)
+- Fusion's SQL parser does not yet support DuckDB's `UNPIVOT` statement — use `UNION ALL` instead
 
 ## Python Dependencies
 - Use `uv` to manage Python environments and dependencies

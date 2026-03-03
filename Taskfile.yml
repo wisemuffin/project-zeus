@@ -16,7 +16,7 @@ tasks:
   analytics:dbt-build:
     desc: Build dbt models directly (AU)
     dir: projects/analytics-au
-    cmd: uv run dbt build --project-dir dbt_project
+    cmd: dbtf build --project-dir dbt_project
 
   analytics-uk:sync:
     desc: Install/sync Python dependencies (UK)
@@ -33,7 +33,7 @@ tasks:
   analytics-uk:dbt-build:
     desc: Build dbt models directly (UK)
     dir: projects/analytics-uk
-    cmd: uv run dbt build --project-dir dbt_project
+    cmd: dbtf build --project-dir dbt_project
 
   reports:install:
     desc: Install Node dependencies (AU)
