@@ -88,6 +88,10 @@ Every Dagster asset and dbt model must document both **what it contains** and **
 - YAML `meta:` blocks must be nested under `config:` (e.g. `config: meta: dagster: asset_key:`)
 - Fusion's SQL parser does not yet support DuckDB's `UNPIVOT` statement — use `UNION ALL` instead
 
+## Playwright Screenshots
+- Always save Playwright screenshots to `screenshots/` (e.g. `filename: "screenshots/page.png"`)
+- This directory is git-ignored — screenshots are for local debugging only
+
 ## Python Dependencies
 - Use `uv` to manage Python environments and dependencies
 - Always use `uv add <package>` to install packages (not pip)

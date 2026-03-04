@@ -27,6 +27,7 @@ Thumbs.db
 
 # Playwright
 .playwright-mcp/
+screenshots/
 
 # dbt
 .user.yml
