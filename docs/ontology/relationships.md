@@ -43,6 +43,8 @@ graph LR
     QILT --> UB
     QILT --> GO
     CRICOS --> CO
+    CS[CourseSeeker<br/><small>ATAR data</small>] --> CO
+    ADCOST[Ad Cost<br/><small>Benchmarks</small>] --> EOG
 ```
 
 ## Entity-Relationship Diagram
@@ -224,3 +226,28 @@ Different admissions centres use slightly different field names:
 
 Staging models standardise all variants to the canonical UAC form
 (e.g. "Engineering & Related Technologies") using CASE statements.
+
+### 8. ASCED Broad Field → UAC Field of Study (QILT ESS)
+
+**Source:** CASE statement in `stg_qilt_employer_satisfaction`
+
+Maps QILT Employer Satisfaction Survey ASCED broad field names (e.g. "Natural
+and Physical Sciences", "Agriculture, Environmental and Related Studies") to
+UAC categories. Similar to crosswalk #4 (DET) — ESS uses ASCED broad field
+names with commas (e.g. "Agriculture, Environmental and Related Studies")
+rather than the QILT 21-study-area names used by GOS and SES.
+
+**Limitation:** One-to-one mapping (no many-to-one aggregation needed unlike
+GOS/SES study areas). "Mixed Field Programs" is not present in ESS data.
+
+### 9. ASCED Broad Study Area → UAC Field of Study (CourseSeeker)
+
+**Source:** CASE statement in `stg_courseseeker_atar`
+
+Maps CourseSeeker's ASCED broad study area names (e.g. "Engineering and Related
+Technologies", "Agriculture, Environmental and Related Studies") to UAC categories.
+Same pattern as crosswalks #4 (DET) and #8 (ESS). CourseSeeker uses the same
+ASCED naming convention as DET/ESS with commas.
+
+**Limitation:** "Mixed Field Programmes" courses are excluded (no UAC equivalent).
+Not all courses have a study area populated.

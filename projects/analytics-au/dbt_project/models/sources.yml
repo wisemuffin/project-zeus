@@ -165,3 +165,41 @@ sources:
           meta:
             dagster:
               asset_key: ["ncver_vet_students"]
+      - name: qilt_employer_satisfaction_by_field
+        description: >
+          QILT Employer Satisfaction Survey (ESS) — employer ratings of graduate
+          skills by Broad Field of Education. Covers 6 skill dimensions:
+          foundation, adaptive, collaborative, technical, employability, and
+          overall satisfaction. ASCED broad field classification.
+        config:
+          meta:
+            dagster:
+              asset_key: ["qilt_employer_satisfaction_by_field"]
+      - name: qilt_employer_satisfaction_by_institution
+        description: >
+          QILT Employer Satisfaction Survey (ESS) — employer ratings of graduate
+          skills by institution (3-year pooled for statistical reliability).
+          Same 6 skill dimensions as by-field data but at university level.
+        config:
+          meta:
+            dagster:
+              asset_key: ["qilt_employer_satisfaction_by_institution"]
+      - name: ad_cost_benchmarks
+        description: >
+          Digital advertising cost benchmarks by UAC field of study. Estimated
+          CPC, CPL, and CTR for education-sector campaigns, adjusted for
+          Australian market. Manually curated from industry benchmarks.
+        config:
+          meta:
+            dagster:
+              asset_key: ["ad_cost_benchmarks"]
+      - name: courseseeker_atar
+        description: >
+          CourseSeeker course data with ATAR selection rank profiles and student
+          admission basis breakdown. Sourced from the courseseeker.edu.au public
+          Elasticsearch API. Covers ~5,300 university courses with ATAR data
+          including lowest/median/highest ranks (adjusted and unadjusted).
+        config:
+          meta:
+            dagster:
+              asset_key: ["courseseeker_atar"]

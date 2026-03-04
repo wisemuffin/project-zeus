@@ -35,8 +35,10 @@ entities:
           - audience_profile_by_fos
           - graduate_outcomes_by_fos
           - field_value_proposition
+          - field_roi_recommendation
           - gender_opportunity_profile
           - satisfaction_opportunity
+          - employer_satisfaction_by_fos
           - state_fos_demand
           - segment_field_affinity
           - historical_demand_trends  # indirectly, via applicant_type grain
@@ -47,8 +49,11 @@ entities:
           - institution_enrolment_profile
           - stg_qilt_graduate_outcomes
           - stg_qilt_student_experience
+          - stg_qilt_employer_satisfaction
           - stg_cricos_courses
+          - stg_courseseeker_atar
           - stg_det_he_enrolments
+          - stg_ad_cost_benchmarks
       - column: matched_field_of_study
         models:
           - trending_interests

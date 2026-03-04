@@ -20,6 +20,8 @@ inst_field as (
         sum(e.enrolment_count) as total_enrolments,
         sum(case when e.citizenship = 'International' then e.enrolment_count else 0 end) as international_enrolments,
         sum(case when e.mode_of_attendance = 'External' then e.enrolment_count else 0 end) as external_enrolments,
+        sum(case when e.mode_of_attendance = 'Multi-modal' then e.enrolment_count else 0 end) as multimodal_enrolments,
+        sum(case when e.mode_of_attendance = 'Internal' then e.enrolment_count else 0 end) as internal_enrolments,
         sum(case when e.gender = 'Female' then e.enrolment_count else 0 end) as female_enrolments,
         sum(case when e.commencing = 'Commencing' then e.enrolment_count else 0 end) as commencing_enrolments
     from enrolments e
@@ -34,6 +36,8 @@ sector as (
         uac_field_of_study,
         sum(total_enrolments) as sector_total,
         sum(international_enrolments) as sector_international,
+        sum(external_enrolments) as sector_external,
+        sum(multimodal_enrolments) as sector_multimodal,
         sum(female_enrolments) as sector_female
     from inst_field
     group by uac_field_of_study
@@ -47,17 +51,23 @@ enriched as (
         i.total_enrolments,
         i.international_enrolments,
         i.external_enrolments,
+        i.multimodal_enrolments,
+        i.internal_enrolments,
         i.female_enrolments,
         i.commencing_enrolments,
 
         -- Institution-level shares
         round(i.international_enrolments * 1.0 / nullif(i.total_enrolments, 0), 4) as international_share,
         round(i.external_enrolments * 1.0 / nullif(i.total_enrolments, 0), 4) as external_share,
+        round(i.multimodal_enrolments * 1.0 / nullif(i.total_enrolments, 0), 4) as multimodal_share,
+        round(i.internal_enrolments * 1.0 / nullif(i.total_enrolments, 0), 4) as internal_share,
         round(i.female_enrolments * 1.0 / nullif(i.total_enrolments, 0), 4) as female_share,
         round(i.commencing_enrolments * 1.0 / nullif(i.total_enrolments, 0), 4) as commencing_share,
 
         -- Sector-level shares for comparison
         round(s.sector_international * 1.0 / nullif(s.sector_total, 0), 4) as sector_international_share,
+        round(s.sector_external * 1.0 / nullif(s.sector_total, 0), 4) as sector_external_share,
+        round(s.sector_multimodal * 1.0 / nullif(s.sector_total, 0), 4) as sector_multimodal_share,
         round(s.sector_female * 1.0 / nullif(s.sector_total, 0), 4) as sector_female_share,
 
         -- International index (>1.0 = over-indexed vs sector)
@@ -94,12 +104,18 @@ select
     total_enrolments,
     international_enrolments,
     external_enrolments,
+    multimodal_enrolments,
+    internal_enrolments,
     female_enrolments,
     commencing_enrolments,
     international_share,
     sector_international_share,
     international_index,
     external_share,
+    sector_external_share,
+    multimodal_share,
+    sector_multimodal_share,
+    internal_share,
     female_share,
     sector_female_share,
     commencing_share,

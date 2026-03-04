@@ -7,6 +7,10 @@ with scores as (
     select * from {{ source('dagster', 'qilt_institution_scores') }}
 ),
 
+ess as (
+    select * from {{ source('dagster', 'qilt_employer_satisfaction_by_institution') }}
+),
+
 sector_avg as (
     select
         round(avg(overall_quality), 1) as avg_overall_quality,
@@ -18,6 +22,13 @@ sector_avg as (
         round(avg(median_salary), 0)::int as avg_median_salary
     from scores
     where overall_quality is not null
+),
+
+ess_sector_avg as (
+    select
+        round(avg(overall_employer_satisfaction), 1) as avg_employer_satisfaction
+    from ess
+    where overall_employer_satisfaction is not null
 )
 
 select
@@ -35,6 +46,11 @@ select
     s.ft_employment_rate,
     s.median_salary,
 
+    -- ESS employer satisfaction
+    e.overall_employer_satisfaction,
+    round(e.overall_employer_satisfaction - ea.avg_employer_satisfaction, 1) as employer_sat_vs_sector,
+    row_number() over (order by e.overall_employer_satisfaction desc nulls last) as employer_sat_rank,
+
     -- Difference from sector average
     round(s.overall_quality - sa.avg_overall_quality, 1) as quality_vs_sector,
     round(s.ft_employment_rate - sa.avg_ft_employment_rate, 1) as employment_vs_sector,
@@ -44,6 +60,7 @@ select
     sa.avg_overall_quality,
     sa.avg_ft_employment_rate,
     sa.avg_median_salary,
+    ea.avg_employer_satisfaction,
 
     -- Rankings
     row_number() over (order by s.overall_quality desc nulls last) as quality_rank,
@@ -55,4 +72,6 @@ select
 
 from scores s
 cross join sector_avg sa
+cross join ess_sector_avg ea
+left join ess e on s.institution = e.institution
 order by s.overall_quality desc nulls last

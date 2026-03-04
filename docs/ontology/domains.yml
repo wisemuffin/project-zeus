@@ -65,11 +65,13 @@ domains:
         - stg_job_vacancies_by_state
         - stg_job_vacancies_by_occupation
         - stg_job_vacancies_by_state_fos
+        - stg_ad_cost_benchmarks
       marts:
         - opportunity_gap
         - opportunity_gap_by_gender
         - emerging_occupations
         - field_value_proposition
+        - field_roi_recommendation
     insight_docs:
       - docs/insights/opportunity-gap.md
     reports:
@@ -81,10 +83,11 @@ domains:
     label: Graduate Outcomes
     targeting_question: [what_message]
     description: >
-      QILT Graduate Outcomes Survey (employment rates, salaries) and Student
-      Experience Survey (satisfaction scores) data. Provides proof points for
-      marketing messaging — "graduates in this field earn X and Y% find
-      full-time work."
+      QILT Graduate Outcomes Survey (employment rates, salaries), Student
+      Experience Survey (satisfaction scores), and Employer Satisfaction
+      Survey (skill ratings) data. Provides proof points for marketing
+      messaging — "graduates in this field earn X and Y% find full-time work"
+      plus employer-side validation ("89% of employers rate technical skills positively").
     source_organisations:
       - "QILT (Quality Indicators for Learning and Teaching)"
     geographic_scope: National (institution and study-area level)
@@ -93,10 +96,12 @@ domains:
       staging:
         - stg_qilt_graduate_outcomes
         - stg_qilt_student_experience
+        - stg_qilt_employer_satisfaction
       marts:
         - graduate_outcomes_by_fos
         - satisfaction_opportunity
         - gender_opportunity_profile
+        - employer_satisfaction_by_fos
     insight_docs: []
     reports:
       - reports/au/pages/outcomes/graduate-outcomes.md
@@ -168,11 +173,13 @@ domains:
       specific courses to demand signals and career outcomes.
     source_organisations:
       - "CRICOS (Commonwealth Register of Institutions and Courses for Overseas Students)"
+      - "CourseSeeker (courseseeker.edu.au — Australian Government + TACs)"
     geographic_scope: National (institution × course × location level)
     key_entities: [institution, field_of_study, state]
     models:
       staging:
         - stg_cricos_courses
+        - stg_courseseeker_atar
       marts:
         - university_course_listings
     insight_docs: []
@@ -183,14 +190,14 @@ domains:
     label: Reference Data
     targeting_question: [what_message]
     description: >
-      Reference tables (LGA boundaries, occupation-to-field mappings) and
-      ephemeral content data (Google Trends trending searches). Provides
-      crosswalks that enable joins across domains and timely content hooks
-      for marketing campaigns.
+      Reference tables (LGA boundaries, occupation-to-field mappings, ad cost
+      benchmarks) and ephemeral content data (Google Trends trending searches).
+      Provides crosswalks that enable joins across domains, cost benchmarks for
+      ROI analysis, and timely content hooks for marketing campaigns.
     source_organisations:
       - "ABS (Australian Bureau of Statistics — ASGS boundaries)"
       - Google Trends (trending searches RSS)
-      - "Manual mappings (occupation_fos_mapping)"
+      - "Manual mappings (occupation_fos_mapping, ad_cost_benchmarks)"
     geographic_scope: National
     key_entities: [lga, occupation_title, field_of_study]
     models:
@@ -206,5 +213,5 @@ domains:
       - reports/au/pages/insights/trending-interests.md
 
 # --- Verification ---
-# Staging models: 9 + 3 + 2 + 3 + 2 + 1 + 2 = 22 (all accounted for)
-# Mart models:    5 + 4 + 3 + 3 + 3 + 1 + 1 = 20 (all accounted for)
+# Staging models: 9 + 4 + 3 + 3 + 2 + 2 + 2 = 25 (all accounted for)
+# Mart models:    5 + 5 + 4 + 3 + 3 + 1 + 1 = 22 (all accounted for)

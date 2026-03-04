@@ -910,6 +910,10 @@ models:
         description: International student enrolments for this institution × field
       - name: external_enrolments
         description: External (online/distance) mode enrolments for this institution × field
+      - name: multimodal_enrolments
+        description: Multi-modal (blended online + on-campus) enrolments for this institution × field
+      - name: internal_enrolments
+        description: Internal (on-campus) mode enrolments for this institution × field
       - name: female_enrolments
         description: Female student enrolments for this institution × field
       - name: commencing_enrolments
@@ -927,6 +931,14 @@ models:
           students in this field relative to the sector average.
       - name: external_share
         description: Proportion of students studying externally (online/distance) in this institution × field (0-1 decimal)
+      - name: sector_external_share
+        description: Sector-wide external (online/distance) student share for this field (0-1 decimal)
+      - name: multimodal_share
+        description: Proportion of students studying in multi-modal (blended) mode in this institution × field (0-1 decimal)
+      - name: sector_multimodal_share
+        description: Sector-wide multi-modal student share for this field (0-1 decimal)
+      - name: internal_share
+        description: Proportion of students studying internally (on-campus) in this institution × field (0-1 decimal)
       - name: female_share
         description: Proportion of female students in this institution × field (0-1 decimal)
       - name: sector_female_share
@@ -1005,6 +1017,110 @@ models:
       - name: _dagster_run_id
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
+  - name: employer_satisfaction_by_fos
+    config:
+      meta:
+        domain: graduate_outcomes
+        targeting_dimension: [what_message]
+        primary_entity: field_of_study
+        grain: field_of_study
+    description: >
+      QILT Employer Satisfaction Survey scores aggregated to UAC field level,
+      enriched with opportunity gap and graduate outcomes context. Adds employer-side
+      proof points (skill ratings) for "What message" targeting — complements
+      graduate employment data with the employer perspective.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: foundation_skills
+        description: Employer rating of graduates' foundation skills (% positive)
+      - name: adaptive_skills
+        description: Employer rating of graduates' adaptive skills (% positive)
+      - name: collaborative_skills
+        description: Employer rating of graduates' collaborative skills (% positive)
+      - name: technical_skills
+        description: Employer rating of graduates' technical skills (% positive)
+      - name: employability_skills
+        description: Employer rating of graduates' employability skills (% positive)
+      - name: overall_employer_satisfaction
+        description: Overall employer satisfaction with graduates (% positive)
+      - name: employer_sat_vs_sector
+        description: >
+          Overall employer satisfaction minus sector average. Positive values indicate
+          employers rate graduates from this field above the sector mean.
+      - name: ft_employment_rate
+        description: QILT full-time employment rate (%) from graduate outcomes
+      - name: median_salary
+        description: QILT median graduate salary (AUD) from graduate outcomes
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
+  - name: field_roi_recommendation
+    config:
+      meta:
+        domain: employment_and_opportunity_gap
+        targeting_dimension: [what_message]
+        primary_entity: field_of_study
+        grain: field_of_study
+    description: >
+      ROI-adjusted field recommendations combining opportunity gap, graduate outcomes,
+      and digital advertising cost benchmarks. Identifies which fields offer the best
+      return on ad spend — high demand gap with lower CPC — enabling budget-efficient
+      campaign allocation. Answers "What message" with cost-adjusted prioritisation.
+    columns:
+      - name: field_of_study
+        description: UAC field of study category
+        tests:
+          - unique
+          - not_null
+      - name: estimated_cpc_aud
+        description: Estimated cost per click (AUD) for education ads targeting this field
+      - name: estimated_cpl_aud
+        description: Estimated cost per lead (AUD) for education ads targeting this field
+      - name: estimated_ctr_pct
+        description: Estimated click-through rate (%) for education ads targeting this field
+      - name: opportunity_gap
+        description: Vacancy share minus preference share (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+      - name: ft_employment_rate
+        description: QILT full-time employment rate (%) from graduate outcomes
+      - name: median_salary
+        description: QILT median graduate salary (AUD)
+      - name: gap_per_cpc_dollar
+        description: >
+          Opportunity gap divided by CPC. Higher values indicate fields where demand
+          gap is large relative to advertising cost — best ROI for ad spend.
+      - name: outcome_value_proxy
+        description: >
+          Median salary multiplied by employment rate (as decimal). Proxy for the
+          economic value of the graduate outcome used in ROI calculations.
+      - name: roi_tier
+        description: >
+          Actionable ROI classification: "High ROI" (positive gap + below-median CPC),
+          "Strong demand" (positive gap, higher CPC), "Low cost" (negative gap, low CPC),
+          "Challenging" (negative gap, higher CPC).
+      - name: roi_rank
+        description: Rank by gap_per_cpc_dollar descending (1 = best ROI)
+        tests:
+          - unique
+          - not_null
+      - name: source_note
+        description: Citation for the ad cost benchmark data
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
   - name: institution_scorecard
     config:
       meta:
@@ -1014,10 +1130,10 @@ models:
         grain: institution
     description: >
       Per-university scorecard combining QILT Student Experience Survey satisfaction
-      scores with Graduate Outcomes Survey employment metrics. Computes sector averages
-      and ranks each institution on quality, employment, and salary. Answers "Who" by
-      identifying which universities to target for marketing partnerships or competitive
-      positioning.
+      scores with Graduate Outcomes Survey employment metrics and Employer Satisfaction
+      Survey ratings. Computes sector averages and ranks each institution on quality,
+      employment, salary, and employer satisfaction. Answers "Who" by identifying which
+      universities to target for marketing partnerships or competitive positioning.
     columns:
       - name: institution
         description: QILT institution name (canonical university identifier)
@@ -1040,6 +1156,13 @@ models:
         description: QILT full-time employment rate for graduates (%)
       - name: median_salary
         description: QILT median graduate salary (AUD)
+      - name: overall_employer_satisfaction
+        description: ESS overall employer satisfaction with graduates (% positive, 3-year pooled)
+      - name: employer_sat_vs_sector
+        description: >
+          Employer satisfaction minus sector average. Positive = above-average employer ratings.
+      - name: employer_sat_rank
+        description: Rank by overall_employer_satisfaction descending (1 = highest employer satisfaction)
       - name: quality_vs_sector
         description: >
           Overall quality minus sector average. Positive = above-average satisfaction.
@@ -1055,6 +1178,8 @@ models:
         description: Sector average FT employment rate (for reference)
       - name: avg_median_salary
         description: Sector average median salary in AUD (for reference)
+      - name: avg_employer_satisfaction
+        description: Sector average employer satisfaction (% positive, for reference)
       - name: quality_rank
         description: Rank by overall_quality descending (1 = highest quality)
       - name: employment_rank

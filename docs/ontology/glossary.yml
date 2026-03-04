@@ -152,6 +152,83 @@ metrics:
     models: [satisfaction_opportunity, institution_scorecard]
     domain: graduate_outcomes
 
+  # --- Employer satisfaction metrics ---
+
+  - name: overall_employer_satisfaction
+    label: Overall Employer Satisfaction
+    definition: >
+      Percentage of employers rating overall satisfaction with graduates
+      positively, from the QILT Employer Satisfaction Survey. By-field data
+      uses ASCED broad fields (single-year); by-institution data uses
+      3-year pooled responses for statistical reliability.
+    formula: "(sourced directly from QILT ESS data)"
+    unit: percentage (e.g. 89.0 = 89% positive)
+    models: [employer_satisfaction_by_fos, institution_scorecard]
+    domain: graduate_outcomes
+
+  - name: employer_sat_vs_sector
+    label: Employer Satisfaction vs Sector
+    definition: >
+      Difference between a field's (or institution's) overall employer
+      satisfaction and the sector-wide average. Positive values indicate
+      employers rate graduates above the sector mean.
+    formula: overall_employer_satisfaction - avg_employer_satisfaction
+    unit: percentage points
+    models: [employer_satisfaction_by_fos, institution_scorecard]
+    domain: graduate_outcomes
+
+  # --- Ad cost and ROI metrics ---
+
+  - name: gap_per_cpc_dollar
+    label: Gap per CPC Dollar
+    definition: >
+      Opportunity gap divided by estimated cost per click. Higher values
+      indicate fields where the demand gap is large relative to the
+      advertising cost — the best ROI for marketing spend.
+    formula: opportunity_gap / estimated_cpc_aud
+    unit: decimal (higher is better)
+    models: [field_roi_recommendation]
+    domain: employment_and_opportunity_gap
+
+  - name: roi_tier
+    label: ROI Tier
+    definition: >
+      Actionable ROI classification combining opportunity gap direction
+      with relative ad cost position (above/below median CPC).
+    formula: >
+      CASE:
+        "High ROI" — positive opportunity gap + below-median CPC
+        "Strong demand" — positive opportunity gap + above-median CPC
+        "Low cost" — non-positive gap + below-median CPC
+        "Challenging" — non-positive gap + above-median CPC
+    unit: category
+    models: [field_roi_recommendation]
+    domain: employment_and_opportunity_gap
+
+  # --- Delivery mode metrics ---
+
+  - name: multimodal_share
+    label: Multi-modal Share
+    definition: >
+      Proportion of students enrolled in multi-modal (blended online +
+      on-campus) mode for an institution × field combination. Rising
+      multimodal shares indicate institutions investing in flexible delivery.
+    formula: multimodal_enrolments / total_enrolments
+    unit: decimal (0-1)
+    models: [institution_enrolment_profile]
+    domain: student_demand
+
+  - name: internal_share
+    label: Internal Share
+    definition: >
+      Proportion of students enrolled in internal (on-campus) mode for
+      an institution × field combination. Compare with external_share
+      and multimodal_share to understand delivery mode mix.
+    formula: internal_enrolments / total_enrolments
+    unit: decimal (0-1)
+    models: [institution_enrolment_profile]
+    domain: student_demand
+
   # --- Audience and demographic metrics ---
 
   - name: mature_learner_index
