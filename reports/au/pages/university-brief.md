@@ -108,31 +108,214 @@ from zeus.institution_scorecard
 where institution = '${inputs.selected_university.value}'
 ```
 
+### Selected University vs Sector Average
+
+<Grid cols=3>
 <BarChart
     data={scorecard_comparison}
     x=group_label
-    y={['overall_quality', 'ft_employment_rate']}
-    y2=median_salary
-    y2Fmt=usd0
-    title="Selected University vs Sector Average"
-    yAxisTitle="% Rating"
-    y2AxisTitle="Median Salary"
-    type=grouped
+    y=overall_quality
+    series=group_label
+    title="Overall Quality"
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt={'0.0"%"'}
+    labelPosition=above
+    legend=false
+/>
+<BarChart
+    data={scorecard_comparison}
+    x=group_label
+    y=ft_employment_rate
+    series=group_label
+    title="FT Employment Rate"
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt={'0.0"%"'}
+    labelPosition=above
+    legend=false
+/>
+<BarChart
+    data={scorecard_comparison}
+    x=group_label
+    y=median_salary
+    series=group_label
+    title="Median Salary"
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt=usd0
+    labelPosition=above
+    legend=false
+/>
+</Grid>
+
+<BigValue
+    data={scorecard}
+    value=overall_quality
+    title="Overall Quality"
+    fmt={'0.0"%"'}
+    comparison=quality_vs_sector
+    comparisonTitle="vs sector"
+    comparisonFmt={'"+0.0;-0.0"'}
+/>
+<BigValue
+    data={scorecard}
+    value=ft_employment_rate
+    title="FT Employment Rate"
+    fmt={'0.0"%"'}
+    comparison=employment_vs_sector
+    comparisonTitle="vs sector"
+    comparisonFmt={'"+0.0;-0.0"'}
+/>
+<BigValue
+    data={scorecard}
+    value=median_salary
+    title="Median Salary"
+    fmt=usd0
+    comparison=salary_vs_sector
+    comparisonTitle="vs sector"
+    comparisonFmt=usd0
 />
 
-<DataTable data={scorecard} rowShading=true>
-    <Column id=overall_quality title="Overall Quality %" fmt=num1 />
-    <Column id=teaching_quality title="Teaching %" fmt=num1 />
-    <Column id=skills_development title="Skills %" fmt=num1 />
-    <Column id=student_support title="Support %" fmt=num1 />
-    <Column id=learning_resources title="Resources %" fmt=num1 />
-    <Column id=peer_engagement title="Peers %" fmt=num1 />
-    <Column id=ft_employment_rate title="FT Employment %" fmt=num1 />
-    <Column id=median_salary title="Median Salary" fmt=usd0 />
-    <Column id=quality_vs_sector title="Quality vs Sector" fmt=num1 contentType=colorscale />
-    <Column id=employment_vs_sector title="Employment vs Sector" fmt=num1 contentType=colorscale />
-    <Column id=salary_vs_sector title="Salary vs Sector" fmt=usd0 contentType=colorscale />
+### QILT Quality Breakdown
+
+The overall quality score is a composite of five QILT Student Experience Survey dimensions. This breakdown shows where the university is strongest and where there's room to improve messaging around the student experience.
+
+```sql quality_breakdown
+with selected as (
+    select teaching_quality, skills_development, student_support, learning_resources, peer_engagement
+    from zeus.institution_scorecard
+    where institution = '${inputs.selected_university.value}'
+),
+sector as (
+    select
+        avg(teaching_quality) as teaching_quality,
+        avg(skills_development) as skills_development,
+        avg(student_support) as student_support,
+        avg(learning_resources) as learning_resources,
+        avg(peer_engagement) as peer_engagement
+    from zeus.institution_scorecard
+)
+select dimension, score, group_label from (
+    select 'Teaching' as dimension, teaching_quality as score, 'Selected' as group_label, 1 as sort_order from selected
+    union all select 'Skills Development', skills_development, 'Selected', 2 from selected
+    union all select 'Student Support', student_support, 'Selected', 3 from selected
+    union all select 'Learning Resources', learning_resources, 'Selected', 4 from selected
+    union all select 'Peer Engagement', peer_engagement, 'Selected', 5 from selected
+    union all select 'Teaching', teaching_quality, 'Sector Average', 1 from sector
+    union all select 'Skills Development', skills_development, 'Sector Average', 2 from sector
+    union all select 'Student Support', student_support, 'Sector Average', 3 from sector
+    union all select 'Learning Resources', learning_resources, 'Sector Average', 4 from sector
+    union all select 'Peer Engagement', peer_engagement, 'Sector Average', 5 from sector
+)
+order by sort_order, group_label
+```
+
+<BarChart
+    data={quality_breakdown}
+    x=dimension
+    y=score
+    series=group_label
+    swapXY=true
+    sort=false
+    type=grouped
+    labels=true
+    labelFmt={'0.0"%"'}
+    labelPosition=above
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    title="Student Experience Dimensions"
+    yGridlines=false
+    yAxisLabels=false
+    xAxisTitle=""
+/>
+
+## Enrolment Profile
+
+DET Higher Education enrolment data showing the selected university's student composition by field of study — international share, online/external delivery, gender mix, and pipeline health. Use this to tailor messaging to each field's actual student profile.
+
+```sql enrolment_summary
+select
+    institution,
+    sum(total_enrolments) as total_enrolments,
+    round(sum(international_enrolments) * 1.0 / nullif(sum(total_enrolments), 0), 3) as intl_share,
+    round(sum(external_enrolments) * 1.0 / nullif(sum(total_enrolments), 0), 3) as ext_share,
+    count(distinct uac_field_of_study) as fields_count
+from zeus.institution_enrolment_profile
+where institution = '${inputs.selected_university.value}'
+group by institution
+```
+
+<BigValue
+    data={enrolment_summary}
+    value=total_enrolments
+    title="Total Enrolments"
+    fmt=num0
+/>
+<BigValue
+    data={enrolment_summary}
+    value=intl_share
+    title="International Share"
+    fmt=pct1
+/>
+<BigValue
+    data={enrolment_summary}
+    value=ext_share
+    title="External/Online Share"
+    fmt=pct1
+/>
+<BigValue
+    data={enrolment_summary}
+    value=fields_count
+    title="Fields with Enrolments"
+/>
+
+```sql enrolment_detail
+select
+    uac_field_of_study as field_of_study,
+    total_enrolments,
+    international_enrolments,
+    international_share,
+    sector_international_share,
+    international_index,
+    external_enrolments,
+    external_share,
+    female_share,
+    sector_female_share,
+    commencing_share,
+    opportunity_gap,
+    opportunity_rank,
+    field_rank_in_institution
+from zeus.institution_enrolment_profile
+where institution = '${inputs.selected_university.value}'
+order by field_rank_in_institution
+```
+
+<DataTable data={enrolment_detail} rowShading=true>
+    <Column id=field_of_study title="Field of Study" />
+    <Column id=total_enrolments title="Enrolments" fmt=num0 />
+    <Column id=international_share title="Intl %" fmt=pct1 />
+    <Column id=sector_international_share title="Sector Intl %" fmt=pct1 />
+    <Column id=international_index title="Intl Index" fmt=num2 contentType=colorscale />
+    <Column id=external_share title="External %" fmt=pct1 />
+    <Column id=female_share title="Female %" fmt=pct1 />
+    <Column id=sector_female_share title="Sector Female %" fmt=pct1 />
+    <Column id=commencing_share title="Commencing %" fmt=pct1 />
+    <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
 </DataTable>
+
+**Reading the enrolment data:**
+- **International index** above 1.0 means this institution has a higher-than-sector share of international students in that field — a signal for international recruitment messaging or to diversify toward domestic
+- **External share** shows online/distance penetration — high values indicate established distance programs suitable for "study from anywhere" campaigns
+- **Commencing share** above ~0.3 suggests healthy pipeline; below ~0.2 may indicate mature programs with limited new student inflow
 
 ## Geographic Brand Strength
 
@@ -322,17 +505,34 @@ inner join (${uni_fields}) f on g.field_of_study = f.uac_field_of_study
 order by g.ft_employment_rate desc
 ```
 
+<Grid cols=2>
 <BarChart
     data={outcomes}
     x=field_of_study
     y=ft_employment_rate
-    y2=median_salary
-    y2Fmt=usd0
-    title="Graduate Outcomes — Fields Offered by This University"
-    yAxisTitle="FT Employment Rate (%)"
-    y2AxisTitle="Median Salary"
+    yFmt=num1
+    title="FT Employment Rate by Field"
+    yAxisTitle="FT Employment %"
+    yMin=0
     sort=false
+    swapXY=true
+    labels=true
+    labelFmt=num1
 />
+<BarChart
+    data={outcomes}
+    x=field_of_study
+    y=median_salary
+    yFmt=usd0
+    title="Median Salary by Field"
+    yAxisTitle="Salary"
+    yMin=0
+    labels=true
+    labelFmt=usd0
+    sort=false
+    swapXY=true
+/>
+</Grid>
 
 <DataTable data={outcomes} rowShading=true>
     <Column id=field_of_study title="Field of Study" />
@@ -389,6 +589,7 @@ order by s.vacancies desc
 - **Internet Vacancy Index (IVI)** — Jobs and Skills Australia. Monthly online job vacancy counts by occupation and state. Used for opportunity gap, vacancy growth, and state demand calculations.
 - **UAC Early Bird Applicant Preferences** — University Admissions Centre. Annual first-preference counts by field of study, gender, and applicant type. NSW/ACT applicants only.
 - **ABS Estimated Resident Population** — Australian Bureau of Statistics. Youth population (15-19) by state for demand density calculations.
+- **DET Higher Education Student Enrolments** — Department of Education, Australian Government. Institution × field × citizenship × mode enrolments from 2016-2020 pivot table. National coverage (~47 institutions).
 - **Occupation-to-Field-of-Study mapping** — manually curated crosswalk linking ANZSCO occupation groups to broad fields of education.
 
 </Details>
