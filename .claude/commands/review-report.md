@@ -72,3 +72,60 @@ For each recommendation:
 A short list of small changes that would have outsized impact on readability or storytelling.
 
 Keep the tone constructive and practical. Focus on changes that improve comprehension and decision-making for the target audience (university marketing managers). Reference specific Evidence.dev component props and config where possible so the feedback is directly actionable.
+
+## Project Colour & Comparison Conventions
+
+When reviewing charts, check that these established conventions are followed:
+
+### Focal vs Context Pattern
+When comparing a selected entity against a baseline (e.g. a university vs sector average), the project uses:
+- **Grey `#b0b0b0`** for context/baseline data (sector average, national benchmark, "all universities")
+- **Dark blue `#1e3a5f`** for the focal/selected data (the chosen university, the highlighted field)
+
+This follows Cole Nussbaumer Knaflic's "push to background / pull to foreground" principle — grey recedes visually, letting the saturated colour carry the reader's attention to the data that matters. Apply via: `colorPalette={['#b0b0b0', '#1e3a5f']}`
+
+### Multi-Series Semantic Colours
+When a chart has 3+ series with different meanings, assign colours by role:
+- **Grey `#b0b0b0`** — total/context (e.g. "all courses")
+- **Dark blue `#1e3a5f`** — primary signal (e.g. "strong signal")
+- **Orange `#e07020`** — secondary signal or opportunity highlight (e.g. "high opportunity")
+
+Apply via: `colorPalette={['#b0b0b0', '#1e3a5f', '#e07020']}`
+
+### BigValue Comparison Props
+BigValue cards should use the `comparison`, `comparisonTitle`, and `comparisonFmt` props to give the reader instant context on whether a value is good or bad. Standalone numbers without context force the reader to hold benchmarks in their head.
+
+### Flag violations of these conventions
+If a chart uses Evidence's default colour palette (multiple saturated colours with no semantic meaning) for a comparison that has a clear focal-vs-context relationship, flag it as a recommendation.
+
+## Evidence.dev Branding & Theming
+
+The project's theme is configured in `reports/au/evidence.config.yaml`. When reviewing, check that charts and pages align with the project's brand system.
+
+### Brand Colour System
+Configured under `theme:` in `evidence.config.yaml`:
+
+**Semantic colours** (`theme.colors`):
+- `primary` — links, active states, interactive elements
+- `accent` — secondary emphasis
+- `positive` / `negative` / `warning` / `info` — status indicators
+- `base` — backgrounds
+
+**Chart palettes** (`theme.colorPalettes`):
+- `default` — used when no `colorPalette` prop is specified. First colour (`#1e3a5f` dark blue) is used for single-series charts. Ordered: dark blue, teal, orange, grey, then extended palette.
+- `comparison` — a named 2-colour palette (`#b0b0b0`, `#1e3a5f`) for focal-vs-context comparisons. Apply via `colorPalette="comparison"` on any chart component.
+
+**Colour scales** (`theme.colorScales`):
+- `default` — sequential gradient from light blue `#ADD8E6` to dark blue `#00008B`, used for `contentType=colorscale` in table columns.
+
+### Branding Assets
+- **Logo**: Set via `logo`, `lightLogo`, `darkLogo` props on `EvidenceDefaultLayout` in `.evidence/template/src/pages/+layout.svelte`
+- **Favicon/icons**: Replace files in `.evidence/template/static/` (favicon.ico, icon.svg, icon-192.png, icon-512.png, apple-touch-icon.png)
+- **Fonts**: Configured in `.evidence/template/tailwind.config.cjs` — currently uses Inter (sans), Spectral (serif)
+
+### What to Check During Review
+- Are single-series charts inheriting the default palette (dark blue first)?
+- Do comparison charts use the `comparison` palette or manually specify `{['#b0b0b0', '#1e3a5f']}`?
+- Is the colour scale on table columns appropriate for the data? (diverging data like "vs average" may need a diverging scale, not the default sequential one)
+- Are there any charts using arbitrary or rainbow colours that should use the brand palette instead?
+- Do `colorPalette` overrides on individual charts stay within the brand system?

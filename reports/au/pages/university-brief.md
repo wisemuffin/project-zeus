@@ -64,29 +64,70 @@ from zeus.institution_scorecard
 where institution = '${inputs.selected_university.value}'
 ```
 
+```sql brand_ranked
+select
+    *,
+    21 - quality_rank as quality_rank_vs_median,
+    21 - interest_rank as interest_rank_vs_median
+from (${brand})
+```
+
 <BigValue
-    data={brand}
+    data={brand_ranked}
     value=quality_rank
     title="Quality Rank"
-    description="out of 42 universities"
+    description="out of 42 universities (1 = best)"
+    comparison=quality_rank_vs_median
+    comparisonTitle="vs median"
+    downIsGood=true
 />
 <BigValue
-    data={brand}
+    data={brand_ranked}
     value=interest_rank
     title="Search Interest Rank"
-    description="out of 42 universities"
+    description="out of 42 universities (1 = most searched)"
+    comparison=interest_rank_vs_median
+    comparisonTitle="vs median"
+    downIsGood=true
 />
 <BigValue
     data={brand}
     value=interest_quality_gap
     title="Interest-Quality Gap"
     description="Positive = under-searched for quality"
+    comparison=interest_trend
+    comparisonTitle="trend"
 />
+{#if brand[0].awareness_tier === 'High'}
 <BigValue
     data={brand}
     value=awareness_tier
     title="Awareness Tier"
+    comparison=avg_interest_12m
+    comparisonTitle="avg interest"
+    comparisonFmt=num1
+    valueClass="text-positive"
 />
+{:else if brand[0].awareness_tier === 'Low'}
+<BigValue
+    data={brand}
+    value=awareness_tier
+    title="Awareness Tier"
+    comparison=avg_interest_12m
+    comparisonTitle="avg interest"
+    comparisonFmt=num1
+    valueClass="text-negative"
+/>
+{:else}
+<BigValue
+    data={brand}
+    value=awareness_tier
+    title="Awareness Tier"
+    comparison=avg_interest_12m
+    comparisonTitle="avg interest"
+    comparisonFmt=num1
+/>
+{/if}
 
 A positive interest-quality gap means the university is **under-searched relative to its academic quality** — the marketing story is about increasing awareness of an already-strong product. A negative gap means the brand is well-known but quality metrics don't match — messaging should lead with specific program strengths.
 
@@ -237,7 +278,7 @@ order by sort_order, group_label
     labelFmt={'0.0"%"'}
     labelPosition=above
     colorPalette={['#b0b0b0', '#1e3a5f']}
-    title="Student Experience Dimensions"
+    title="Where does the student experience stand out?"
     yGridlines=false
     yAxisLabels=false
     xAxisTitle=""
@@ -389,11 +430,14 @@ order by opportunity_gap desc nulls last
     data={course_field_summary}
     x=field_of_study
     y={['courses', 'strong_signal', 'high_opp_courses']}
-    title="Course Portfolio by Field of Study"
-    xAxisTitle="Field of Study"
+    title="Where are the strongest courses?"
     yAxisTitle="Number of Courses"
     type=grouped
     sort=false
+    swapXY=true
+    colorPalette={['#b0b0b0', '#1e3a5f', '#e07020']}
+    labels=true
+    labelPosition=above
 />
 
 <DataTable data={course_field_summary} rowShading=true>
@@ -414,36 +458,54 @@ select
     course_name,
     course_level,
     uac_field_of_study,
-    location_state,
-    location_city,
     marketing_signal,
     opportunity_gap,
-    vacancy_growth_12m,
     ft_employment_rate,
     median_salary,
+    vacancy_growth_12m,
+    location_state,
+    location_city,
     estimated_total_cost
 from zeus.university_course_listings
-where institution_name like '${inputs.selected_university.value}%'
-   or institution_name like 'The ' || '${inputs.selected_university.value}' || '%'
+where (institution_name like '${inputs.selected_university.value}%'
+   or institution_name like 'The ' || '${inputs.selected_university.value}' || '%')
+   and uac_field_of_study like '${inputs.field_filter.value}%'
 order by opportunity_gap desc nulls last
 ```
 
+```sql field_options
+select distinct uac_field_of_study as field
+from zeus.university_course_listings
+where institution_name like '${inputs.selected_university.value}%'
+   or institution_name like 'The ' || '${inputs.selected_university.value}' || '%'
+order by field
+```
+
+<Dropdown
+    name=field_filter
+    data={field_options}
+    value=field
+    title="Filter by Field"
+>
+    <DropdownOption value="" valueLabel="All Fields" />
+</Dropdown>
+
 <DataTable
     data={courses}
-    rows=15
+    rows=20
     rowShading=true
     search=true
 >
     <Column id=course_name title="Course" />
     <Column id=course_level title="Level" />
     <Column id=uac_field_of_study title="Field" />
-    <Column id=location_state title="State" />
-    <Column id=location_city title="City" />
     <Column id=marketing_signal title="Signal" />
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
-    <Column id=vacancy_growth_12m title="Vacancy Growth" fmt=pct1 contentType=colorscale />
     <Column id=ft_employment_rate title="FT Employ %" fmt=num1 />
     <Column id=median_salary title="Salary" fmt=usd0 />
+    <Column id=vacancy_growth_12m title="Vacancy Growth" fmt=pct1 contentType=colorscale />
+    <Column id=location_state title="State" />
+    <Column id=location_city title="City" />
     <Column id=estimated_total_cost title="Est. Cost" fmt=usd0 />
 </DataTable>
 
@@ -504,7 +566,9 @@ select
     g.salary_growth_pct,
     g.median_salary_male,
     g.median_salary_female,
-    g.marketing_signal
+    g.marketing_signal,
+    g.survey_year,
+    g.survey_year_prior
 from zeus.graduate_outcomes_by_fos g
 inner join (${uni_fields}) f on g.field_of_study = f.uac_field_of_study
 order by g.ft_employment_rate desc
@@ -516,7 +580,7 @@ order by g.ft_employment_rate desc
     x=field_of_study
     y=ft_employment_rate
     yFmt=num1
-    title="FT Employment Rate by Field"
+    title="Which fields lead on employment?"
     yAxisTitle="FT Employment %"
     yMin=0
     sort=false
@@ -529,7 +593,7 @@ order by g.ft_employment_rate desc
     x=field_of_study
     y=median_salary
     yFmt=usd0
-    title="Median Salary by Field"
+    title="Which fields pay the most?"
     yAxisTitle="Salary"
     yMin=0
     labels=true
@@ -538,6 +602,8 @@ order by g.ft_employment_rate desc
     swapXY=true
 />
 </Grid>
+
+Salary growth shows the percentage change in median graduate salary between **{outcomes[0].survey_year_prior}** and **{outcomes[0].survey_year}** (QILT Graduate Outcomes Survey). Large values typically reflect small base salaries in the earlier period rather than dramatic market shifts.
 
 <DataTable data={outcomes} rowShading=true>
     <Column id=field_of_study title="Field of Study" />
@@ -578,11 +644,11 @@ order by s.vacancies desc
     <Column id=state title="State" />
     <Column id=field_of_study title="Field" />
     <Column id=vacancies title="Vacancies" fmt=num0 />
-    <Column id=fos_share_in_state title="FoS Share in State" fmt=pct1 />
-    <Column id=state_vs_national_skew title="State vs National" fmt=num2 contentType=colorscale />
-    <Column id=vacancy_growth_12m title="Vacancy Growth (12m)" fmt=pct1 contentType=colorscale />
-    <Column id=vacancies_per_1k_youth title="Vacancies / 1k Youth" fmt=num1 />
-    <Column id=state_specialisation_rank title="Specialisation Rank" />
+    <Column id=vacancy_growth_12m title="Vacancy Growth" fmt=pct1 contentType=colorscale />
+    <Column id=state_vs_national_skew title="State vs National" fmt={'+0.00;-0.00'} contentType=colorscale />
+    <Column id=fos_share_in_state title="FoS Share" fmt=pct1 />
+    <Column id=vacancies_per_1k_youth title="Per 1k Youth" fmt=num1 />
+    <Column id=state_specialisation_rank title="Spec. Rank" />
 </DataTable>
 
 <Details title="Data Sources">

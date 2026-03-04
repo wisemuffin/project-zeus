@@ -85,6 +85,10 @@ select
 
     oc.qilt_areas_count,
 
+    -- Survey period metadata (for dynamic labelling in reports)
+    2024 as survey_year,
+    2023 as survey_year_prior,
+
     current_timestamp as _loaded_at,
     '{{ var("dagster_run_id", "manual") }}' as _dagster_run_id
 
