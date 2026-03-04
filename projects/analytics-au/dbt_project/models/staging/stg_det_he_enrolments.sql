@@ -13,7 +13,7 @@ mapped as (
         year,
         institution,
         state,
-        citizenship,
+        case citizenship when 'Overseas' then 'International' else citizenship end as citizenship,
         commencing,
         broad_course_level,
         detailed_course_level,
@@ -40,7 +40,11 @@ mapped as (
 
     from source
     where broad_field_of_education_primary is not null
-      and broad_field_of_education_primary not in ('Mixed Field Programs', 'Non-Award course')
+      and broad_field_of_education_primary not in (
+          'Mixed Field Programs', 'Mixed Field Programmes',
+          'Non-Award course', 'Non-Award Courses',
+          'Non-Award/Microcredentials', 'Not provided'
+      )
 )
 
 select * from mapped
