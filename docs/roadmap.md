@@ -26,6 +26,9 @@ Mart models that transform raw Dagster assets into marketing-actionable insights
 - [x] **Emerging Occupations** (`emerging_occupations`) — ANZSCO2 occupations ranked by 12-month vacancy growth, mapped to UAC fields. Identifies fast-growing occupations for messaging.
 - [x] **Audience Density by LGA** (`audience_density_by_lga`) — LGA-level youth population for hyper-local geo-targeting of digital campaigns.
 
+- [x] **Institution Enrolment Profile** (`institution_enrolment_profile`) — Institution × field enrolment profile from DET Higher Education Statistics. International share, external/online penetration, gender composition, and pipeline health (commencing share) per field, with sector benchmarks and opportunity gap context. Answers "Who" and "Where".
+- [x] **VET Competition by State** (`vet_competition_by_state`) — VET sector competition context by state. VET density (students per 1k youth), growth trends, and comparison with graduate job vacancy density. Answers "Where" and "What message".
+
 ### Planned
 
 *(none currently)*
@@ -129,12 +132,90 @@ VTAC publishes Section D tables with field-of-study preference data using ASCED 
 | **CourseSeeker** ([courseseeker.edu.au](https://www.courseseeker.edu.au/)) | National course listings across all institutions | Investigated — no API or bulk download; Angular SPA with private backend. CRICOS used instead. |
 | **SATAC** ([satac.edu.au](https://www.satac.edu.au/)) | SA/NT admissions stats | **Implemented** — `satac_fos_preferences` Dagster asset + `stg_satac_fos_preferences` staging model. Added to national union. Brings coverage to ~72%. |
 
+### Priority 5: QTAC (Queensland Tertiary Admissions Centre)
+
+**Source:** [qtac.edu.au](https://www.qtac.edu.au/) | **Owner:** QLD consortium
+**Access:** TBD — no FOS preference data found in initial investigation, only ATAR scaling PDFs. Needs deeper research into annual reports or data request.
+**Coverage:** Queensland (~20% of Australian higher-ed applicants)
+
+Adding QTAC would bring national admissions coverage from 72% to ~92% and enable briefs for major Queensland universities (UQ, QUT, Griffith, JCU, USQ). This is the single biggest geographic gap.
+
+**Implementation plan:**
+- [ ] Re-investigate QTAC website and annual reports for FOS preference data
+- [ ] If available: build Dagster asset, staging model, add to national union
+- [ ] If not public: submit formal data request to QTAC
+
+### Priority 6: TISC (Tertiary Institutions Service Centre, WA)
+
+**Source:** [tisc.edu.au](https://www.tisc.edu.au/) | **Owner:** WA consortium
+**Access:** TBD — no FOS data found in initial investigation. Has a formal data request process.
+**Coverage:** Western Australia (~8% of Australian higher-ed applicants)
+
+Would bring coverage to ~100% and enable briefs for WA universities (UWA, Curtin, Murdoch, ECU).
+
+**Implementation plan:**
+- [ ] Investigate TISC publications and data request process
+- [ ] If available: build Dagster asset, staging model, add to national union
+
+### Priority 7: CourseSeeker / ATAR & Entry Requirements
+
+**Source:** [courseseeker.edu.au](https://www.courseseeker.edu.au/) | **Owner:** Australian Government (DESE)
+**Access:** Angular SPA with private backend — no API or bulk download. CRICOS used instead for course data.
+
+ATAR/selection rank data would add selectivity context to course recommendations (e.g. "your mid-ATAR courses in high-demand fields are your best growth opportunity"). No open data source identified yet.
+
+**Implementation plan:**
+- [ ] Research whether CourseSeeker's backend API can be reverse-engineered for ATAR data
+- [ ] Investigate alternative sources: UAC course search, individual university websites
+- [ ] If viable: build Dagster asset for ATAR/entry requirements, join to university_course_listings
+
+### Priority 8: Online vs On-Campus Delivery Mode
+
+Post-COVID, online delivery is a major differentiator for marketing targeting. CRICOS doesn't include delivery mode.
+
+**Implementation plan:**
+- [ ] Check if CRICOS data includes any delivery mode flags we missed
+- [ ] Research TEQSA (Tertiary Education Quality and Standards Agency) provider register for delivery mode data
+- [ ] If no bulk source: consider scraping individual university course pages (low priority)
+
+### Priority 9: DET Higher Education Student Enrolments
+
+**Source:** [education.gov.au/higher-education-statistics](https://www.education.gov.au/higher-education-statistics/resources/student-enrolments-pivot-table) | **Owner:** Australian Government Department of Education
+**Access:** Free Excel download — pivot table with embedded cache of 201K microdata records
+**Coverage:** All 47 Australian higher education institutions, 2016-2020
+**Frequency:** Annual (published ~September)
+
+The Student Enrolments Pivot Table provides institution × field × citizenship × mode of attendance × gender enrolments. This is the single richest source for per-university analysis — enables "45% of your IT enrolments are international" and "70% of your Engineering students study on-campus" insights.
+
+**Implementation plan:**
+- [x] Research DET pivot table structure and extract pivot cache XML
+- [x] Build Dagster asset — `det_he_enrolments` — parses pivot cache records (201K rows)
+- [x] Create dbt staging model — `stg_det_he_enrolments` — maps ASCED broad fields to UAC categories
+- [x] Add to dbt sources with dagster asset_key lineage
+- [x] Build mart model: **institution_enrolment_profile** — per-institution enrolment profile by field (international share, external share, gender, pipeline health)
+
+### Priority 10: NCVER VET Historical Time Series
+
+**Source:** [ncver.edu.au](https://www.ncver.edu.au/research-and-statistics/data) | **Owner:** National Centre for Vocational Education Research
+**Access:** Free Excel download (1.5MB) — government-funded VET students 1981-2024
+**Coverage:** All states/territories, gender, 44 years of data
+**Frequency:** Annual (published ~August)
+
+Provides VET enrolment trends by state and gender for competitive context. Field of education breakdown only available 2002-2014 (NCVER changed classification after 2014). Recent FoE data requires interactive DataBuilder tool (not automatable).
+
+**Implementation plan:**
+- [x] Research NCVER public data availability (historical time series, DataBuilder)
+- [x] Build Dagster asset — `ncver_vet_students` — parses Table 1 (students by state/gender)
+- [x] Create dbt staging model — `stg_ncver_vet_students`
+- [x] Add to dbt sources with dagster asset_key lineage
+- [x] Build mart model: **vet_competition_by_state** — VET vs higher-ed trend comparison by state
+
+**Note:** NCVER website uses Cloudflare — automated downloads may fail. DataBuilder provides richer cross-tabulations (field of education × state × year) but requires interactive browser session.
+
 ### Investigated (No Action)
 
 | Platform | Finding |
 |----------|---------|
-| **QTAC** ([qtac.edu.au](https://www.qtac.edu.au/)) | No FOS preference data published. Only ATAR scaling reports (PDFs). Parked. |
-| **TISC** ([tisc.edu.au](https://www.tisc.edu.au/)) | No FOS data found. Has a formal data request process. |
 | **Good Universities Guide** ([gooduniversitiesguide.com.au](https://www.gooduniversitiesguide.com.au/)) | Repackages QILT data we already ingest directly. No additional value. |
 
 ### Not Accessible (Commercial / Paywalled)

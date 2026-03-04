@@ -71,6 +71,12 @@ Every Dagster asset and dbt model must document both **what it contains** and **
   - Add a `config: meta:` block in `models/marts/schema.yml` with `domain`, `targeting_dimension`, `primary_entity`, and `grain`
 - When creating a **new staging model**, add it to `docs/ontology/domains.yml`
 - When introducing a **new entity or join key**, add it to `docs/ontology/entities.yml` and update `docs/ontology/relationships.md`
+- When adding a **new data source**, update `docs/ontology/relationships.md`:
+  - Add the source to the Data Source Flow diagram
+  - Add any new entity relationships to the ER diagram
+  - Add new join paths to the Join Paths table
+  - Document any new crosswalks (field mappings, state code mappings, etc.) in the Critical Crosswalks section
+  - Update `docs/ontology/entities.yml` with any new model aliases for existing entities
 
 ## dbt Fusion
 - The project uses **dbt Fusion** (Rust-based next-gen engine), not dbt-core

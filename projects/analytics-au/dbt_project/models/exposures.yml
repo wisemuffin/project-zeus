@@ -81,6 +81,7 @@ exposures:
       ones that need repositioning.
     depends_on:
       - ref('historical_demand_trends')
+      - ref('vet_competition_by_state')
     owner:
       name: Project Zeus Team
 
@@ -219,5 +220,26 @@ exposures:
       each state for efficient local ad targeting. Serves "Where" targeting.
     depends_on:
       - ref('audience_density_by_lga')
+    owner:
+      name: Project Zeus Team
+
+  - name: university_brief_report
+    label: University Brief
+    type: dashboard
+    maturity: medium
+    description: >
+      Per-university marketing intelligence brief combining brand positioning,
+      enrolment profile (international/external/gender mix), program portfolio,
+      audience profiles, graduate outcomes, and geographic targeting data.
+      Serves all three targeting dimensions — Who, Where, and What message.
+    depends_on:
+      - ref('university_brand_awareness')
+      - ref('institution_scorecard')
+      - ref('institution_enrolment_profile')
+      - ref('university_state_interest')
+      - ref('university_course_listings')
+      - ref('audience_profile_by_fos')
+      - ref('graduate_outcomes_by_fos')
+      - ref('state_fos_demand')
     owner:
       name: Project Zeus Team

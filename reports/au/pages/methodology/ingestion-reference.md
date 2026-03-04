@@ -22,6 +22,8 @@ Complete inventory of how each data source is ingested, how often it publishes n
 | UAC Early Bird Closing Count | UAC | Excel file download | Annual (~Sep/Oct) | `0 9 1 11 *` | NSW/ACT |
 | ABS LGA Reference | ABS | REST API (JSON) | Annual | `0 9 1 11 *` | National (AU) |
 | ABS Population by LGA | ABS | REST API (SDMX CSV) | Annual (~12 month pub lag) | `0 9 1 11 *` | National (AU) |
+| DET HE Enrolments | Dept of Education | Pivot cache extraction (Excel/XML) | Annual (~September) | `0 9 1 10 *` | National (AU) |
+| NCVER VET Students | NCVER | Excel file download | Annual (~August) | `0 9 1 9 *` | National (AU) |
 | VTAC Preferences | VTAC | Web scraping (HTML table) | Annual | Manual trigger | Victoria |
 | SATAC Preferences | SATAC | PDF extraction | Annual | Manual trigger | SA/NT |
 | Occupation-FoS Mapping | Internal | Manual (hardcoded) | Static | N/A | N/A |
@@ -37,6 +39,7 @@ All cron schedules run in **Australia/Sydney** time.
 | **RSS feed** | Google Trends | `trendspyg` library wrapping Google Trends RSS. Migrated to **dlt** with replace strategy for ephemeral data. |
 | **Web scraping** | VTAC Preferences | `requests` + `BeautifulSoup` for HTML table parsing. Remains as-is — custom parsing IS the value. |
 | **PDF extraction** | SATAC Preferences | `requests` + `pdfplumber` for PDF table parsing. Remains as-is — custom parsing IS the value. |
+| **Pivot cache extraction** | DET HE Enrolments | `openpyxl` to extract pivot cache XML records from Excel workbook. Reconstructs 201K microdata rows from compressed pivot table cache. |
 | **Manual** | Occupation-FoS Mapping | Hardcoded Python dict. No external source to ingest. |
 
 ### dlt-migrated sources
@@ -73,6 +76,24 @@ Monthly Internet Vacancy Index (IVI) from **Jobs and Skills Australia**. Two ass
 - **Frequency:** Monthly, ~1 month publication lag
 - URL follows a publication-lag pattern: data for month X published in folder `{X+1}`.
 
+### DET Higher Education Student Enrolments
+
+**Department of Education** Student Enrolments Pivot Table. Contains 201K microdata records covering institution × field of education × citizenship × mode of attendance × gender enrolments for all 47 Australian higher education institutions, 2016-2020.
+
+- **Extraction:** `openpyxl` for pivot cache XML extraction from Excel workbook
+- **Frequency:** Annual (~September)
+- **Asset:** `det_he_enrolments`
+- **Note:** Data is extracted from the pivot cache embedded in the Excel file, not from visible worksheet cells. This captures the full 201K underlying records that the pivot table summarises.
+
+### NCVER Government-Funded VET Students
+
+**National Centre for Vocational Education Research** historical time series of government-funded VET students by state and gender, 1981-2024.
+
+- **Extraction:** `requests` + `pandas` for Excel file download
+- **Frequency:** Annual (~August)
+- **Asset:** `ncver_vet_students`
+- **Note:** NCVER website uses Cloudflare protection. Government-funded students only — total VET enrolments including fee-for-service would be higher. Field of education breakdown only available 2002-2014 in this dataset.
+
 ### UAC Early Bird Applicant Data
 
 **University Admissions Centre** (UAC) Early Bird domestic undergraduate application statistics. Five assets parse different sheets from the same Excel file:
@@ -95,7 +116,7 @@ Each automated source has a staleness threshold in the pipeline's freshness chec
 | 6-hourly | 12 hours | Google Trends |
 | Weekly | 14 days | CRICOS |
 | Monthly | 45 days | IVI (both) |
-| Annual | 400 days | QILT, UAC, ABS |
+| Annual | 400 days | QILT, UAC, ABS, DET, NCVER |
 
 ## Manual-Update Sources
 
@@ -121,6 +142,8 @@ Each asset's Python docstring is the source of truth for detailed field descript
 - **VTAC** — Victorian Tertiary Admissions Centre annual statistics (HTML table scraping).
 - **SATAC** — South Australian Tertiary Admissions Centre annual statistics (PDF extraction).
 - **CRICOS** — Commonwealth Register of Institutions and Courses for Overseas Students (CSV download).
+- **DET (Department of Education)** — Higher Education Student Enrolments pivot table (Excel pivot cache extraction). National coverage.
+- **NCVER (National Centre for Vocational Education Research)** — Government-funded VET students historical time series (Excel download). National coverage.
 - All extraction code located in `analytics/src/analytics/defs/assets/`.
 
 </Details>

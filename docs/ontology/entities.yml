@@ -44,9 +44,11 @@ entities:
         models:
           - university_course_listings
           - emerging_occupations
+          - institution_enrolment_profile
           - stg_qilt_graduate_outcomes
           - stg_qilt_student_experience
           - stg_cricos_courses
+          - stg_det_he_enrolments
       - column: matched_field_of_study
         models:
           - trending_interests
@@ -56,7 +58,8 @@ entities:
         description: >
           ASCED narrow fields (e.g. "0301 - Manufacturing Engineering") roll up
           to 2-digit ASCED broad codes, which map to UAC categories. The mapping
-          is in stg_cricos_courses (asced_broad_code → uac_field_of_study).
+          is in stg_cricos_courses (asced_broad_code → uac_field_of_study) and
+          stg_det_he_enrolments (broad_field_of_education_primary → uac_field_of_study).
       - name: QILT study area → UAC broad field
         description: >
           QILT uses 21 study areas (e.g. Medicine, Nursing, Dentistry) that map
@@ -69,11 +72,12 @@ entities:
   - name: institution
     label: Institution
     description: >
-      Australian universities identified by their QILT canonical name.
-      Used for institution-level quality, outcomes, and brand awareness analysis.
-      QILT names are the canonical form; CRICOS uses slightly different names.
+      Australian universities identified by name. QILT names are canonical
+      for brand/outcomes analysis (~42 unis); DET enrolment data covers ~47
+      institutions (Table A universities + non-university HE providers).
+      CRICOS uses slightly different names again.
     canonical_source: stg_google_trends_interest
-    cardinality: ~42
+    cardinality: ~47
     allowed_values: "(dynamic — sourced from QILT institution list)"
     aliases:
       - column: university
@@ -86,14 +90,17 @@ entities:
       - column: institution
         models:
           - institution_scorecard
+          - institution_enrolment_profile
+          - stg_det_he_enrolments
       - column: institution_name
         models:
           - university_course_listings
     notes: >
-      CRICOS provider names don't always match QILT names (e.g. abbreviations,
-      "The University of" vs "University of"). university_course_listings uses
-      CRICOS names; institution_scorecard and university_brand_awareness use
-      QILT names. Cross-joins between these require fuzzy matching or a lookup.
+      Three naming conventions exist: QILT names (institution_scorecard,
+      university_brand_awareness), CRICOS names (university_course_listings),
+      and DET names (stg_det_he_enrolments). DET names generally match QILT
+      names but include non-university providers. Cross-joins between naming
+      conventions may require fuzzy matching or a lookup table.
 
   - name: state
     label: State/Territory
@@ -117,6 +124,7 @@ entities:
           - state_demand_index
           - state_fos_demand
           - audience_density_by_lga
+          - vet_competition_by_state
           - university_state_interest
           - stg_job_vacancies_by_state
           - stg_job_vacancies_by_state_fos
@@ -127,6 +135,8 @@ entities:
           - stg_vtac_fos_preferences
           - stg_satac_fos_preferences
           - stg_national_fos_preferences
+          - stg_det_he_enrolments
+          - stg_ncver_vet_students
       - column: location_state
         models:
           - university_course_listings
@@ -142,6 +152,9 @@ entities:
       IVI job data uses state codes directly. ABS population data uses numeric
       state codes (1=NSW, 2=VIC, etc.) mapped to 2-letter codes in stg_lga_reference.
       Google Trends uses full state names mapped to codes in stg_google_trends_interest_by_state.
+      DET HE enrolment data uses full state names mapped at source in the Dagster asset.
+      NCVER uses non-standard abbreviations (Vic., Qld, Tas.) mapped to 2-letter
+      codes in the ncver_vet_students Dagster asset.
 
   - name: applicant_type
     label: Applicant Type

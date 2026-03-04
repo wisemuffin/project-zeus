@@ -17,8 +17,10 @@ domains:
       - UAC (Universities Admissions Centre, NSW/ACT)
       - VTAC (Victorian Tertiary Admissions Centre)
       - SATAC (South Australian Tertiary Admissions Centre)
-    geographic_scope: NSW/ACT (UAC), VIC (VTAC), SA/NT (SATAC)
-    key_entities: [field_of_study, applicant_type]
+      - DET (Department of Education — Higher Education Statistics)
+      - NCVER (National Centre for Vocational Education Research)
+    geographic_scope: NSW/ACT (UAC), VIC (VTAC), SA/NT (SATAC), National (DET, NCVER)
+    key_entities: [field_of_study, applicant_type, institution]
     models:
       staging:
         - stg_uac_fos_preferences
@@ -28,10 +30,14 @@ domains:
         - stg_vtac_fos_preferences
         - stg_satac_fos_preferences
         - stg_national_fos_preferences
+        - stg_det_he_enrolments
+        - stg_ncver_vet_students
       marts:
         - historical_demand_trends
         - segment_field_affinity
         - audience_profile_by_fos
+        - institution_enrolment_profile
+        - vet_competition_by_state
     insight_docs:
       - docs/insights/audience-profile-by-fos.md
       - docs/insights/historical-demand-trends.md
@@ -200,5 +206,5 @@ domains:
       - reports/au/pages/insights/trending-interests.md
 
 # --- Verification ---
-# Staging models: 7 + 3 + 2 + 3 + 2 + 1 + 2 = 20 (all accounted for)
-# Mart models:    3 + 4 + 3 + 3 + 3 + 1 + 1 = 18 (all accounted for)
+# Staging models: 9 + 3 + 2 + 3 + 2 + 1 + 2 = 22 (all accounted for)
+# Mart models:    5 + 4 + 3 + 3 + 3 + 1 + 1 = 20 (all accounted for)

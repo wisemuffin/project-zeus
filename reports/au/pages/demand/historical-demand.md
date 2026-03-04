@@ -134,9 +134,76 @@ select * from zeus.historical_demand_trends order by latest_count desc
     <Column id=trend_direction title="Trend" />
 </DataTable>
 
+## VET Sector Context
+
+How does the VET (vocational education and training) sector compare across states? Government-funded VET students from **NCVER** (National Centre for Vocational Education Research) provide competitive context — states with large, growing VET sectors mean more competition for student attention.
+
+```sql vet_growing
+select count(*) as total from zeus.vet_competition_by_state where vet_trend_direction = 'Growing'
+```
+
+```sql vet_declining
+select count(*) as total from zeus.vet_competition_by_state where vet_trend_direction = 'Declining'
+```
+
+<BigValue
+    data={vet_growing}
+    value=total
+    title="States with Growing VET"
+/>
+<BigValue
+    data={vet_declining}
+    value=total
+    title="States with Declining VET"
+/>
+
+### VET Students vs Graduate Vacancies per 1k Youth
+
+```sql vet_vs_he
+select
+    state,
+    vet_students_per_1k_youth,
+    graduate_vacancies_per_1k_youth
+from zeus.vet_competition_by_state
+order by vet_students_per_1k_youth desc
+```
+
+<BarChart
+    data={vet_vs_he}
+    x=state
+    y={['vet_students_per_1k_youth', 'graduate_vacancies_per_1k_youth']}
+    title="VET Students vs Graduate Vacancies per 1k Youth (by State)"
+    yAxisTitle="Per 1,000 Youth (15-19)"
+    type=grouped
+    sort=false
+    labels=true
+    labelFmt=num0
+/>
+
+### VET Trends by State
+
+```sql vet_detail
+select * from zeus.vet_competition_by_state order by vet_students_per_1k_youth desc
+```
+
+<DataTable data={vet_detail} rowShading=true>
+    <Column id=state title="State" />
+    <Column id=vet_students title="VET Students" fmt=num0 />
+    <Column id=vet_students_per_1k_youth title="VET / 1k Youth" fmt=num1 />
+    <Column id=graduate_vacancies_per_1k_youth title="Grad Vac / 1k Youth" fmt=num1 />
+    <Column id=vet_yoy_growth title="VET YoY" fmt=pct1 contentType=colorscale />
+    <Column id=vet_cagr_5yr title="VET 5yr CAGR" fmt=pct1 contentType=colorscale />
+    <Column id=vet_recovery_ratio title="Recovery Ratio" fmt=num2 />
+    <Column id=vet_female_share title="Female %" fmt=pct1 />
+    <Column id=vet_trend_direction title="Trend" />
+</DataTable>
+
 <Details title="Data Sources">
 
 - **UAC Early Bird Closing Count** — University Admissions Centre. Annual applicant counts by segment, covering intake years 2016-17 to 2025-26. NSW/ACT applicants only.
-- **Note:** early bird figures are point-in-time snapshots taken at the early bird closing date, not final application numbers. Actual enrolments may differ.
+- **NCVER Government-Funded VET Students** — National Centre for Vocational Education Research. Historical time series of government-funded VET students by state and gender, 1981-2024. National coverage.
+- **Internet Vacancy Index (IVI)** — Jobs and Skills Australia. Graduate-level vacancies per 1,000 youth from state demand index.
+- **ABS Estimated Resident Population** — Australian Bureau of Statistics. Youth population (15-19) by state for density calculations.
+- **Note:** UAC early bird figures are point-in-time snapshots taken at the early bird closing date, not final application numbers. VET student counts are government-funded students only — total VET enrolments including fee-for-service would be higher.
 
 </Details>

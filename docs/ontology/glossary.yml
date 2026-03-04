@@ -224,6 +224,55 @@ metrics:
     models: [gender_opportunity_profile]
     domain: student_demand
 
+  # --- Enrolment profile metrics ---
+
+  - name: international_share
+    label: International Share
+    definition: >
+      Proportion of international students in an institution × field combination.
+      Compare with sector_international_share to assess whether the institution
+      is over- or under-indexed on international enrolments for that field.
+    formula: international_enrolments / total_enrolments
+    unit: decimal (0-1)
+    models: [institution_enrolment_profile]
+    domain: student_demand
+
+  - name: international_index
+    label: International Index
+    definition: >
+      Institution's international share divided by the sector-wide international
+      share for the same field. Values above 1.0 indicate the institution has
+      a higher-than-sector proportion of international students in that field.
+    formula: international_share / sector_international_share
+    unit: index (>1 = over-indexed)
+    models: [institution_enrolment_profile]
+    domain: student_demand
+
+  # --- VET competition metrics ---
+
+  - name: vet_students_per_1k_youth
+    label: VET Students per 1,000 Youth
+    definition: >
+      Density of government-funded VET students relative to the youth population
+      aged 15-19 in each state. Higher values indicate states where VET is a
+      stronger competitor for student attention. Compare with
+      graduate_vacancies_per_1k_youth for HE vs VET context.
+    formula: (vet_students * 1000) / youth_population_15_19
+    unit: students per 1,000 youth
+    models: [vet_competition_by_state]
+    domain: student_demand
+
+  - name: vet_cagr_5yr
+    label: VET 5-Year CAGR
+    definition: >
+      Compound annual growth rate of government-funded VET students over the
+      most recent 5-year window. Positive values indicate a growing VET sector;
+      negative values indicate structural decline.
+    formula: (latest_students / base_students) ^ (1/5) - 1
+    unit: decimal (e.g. 0.02 = 2% annual growth)
+    models: [vet_competition_by_state]
+    domain: student_demand
+
   # --- Geographic metrics ---
 
   - name: graduate_vacancies_per_1k_youth

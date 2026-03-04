@@ -57,6 +57,17 @@ SA has the strongest graduate vacancy growth (+2.5%) among states with meaningfu
 
 The lowest demand density (48.4) and contracting graduate vacancies (-4.7%) make TAS the least attractive state for career-outcomes-based marketing.
 
+## VET Competition Context
+
+The VET sector is a major competitor for student attention. **NCVER** data on government-funded VET students adds context to the higher education demand picture. States with high VET density (students per 1k youth) may have a larger share of the youth population already engaged in vocational training rather than considering university.
+
+| Insight | Detail |
+|---------|--------|
+| **NT has extreme VET density** | ~947 VET students per 1k youth — far exceeding any other state. Combined with its #2 HE demand rank, NT is a small but intense market where VET and HE compete directly for a tiny youth pool. |
+| **WA and QLD have growing VET** | Both states show growing VET sectors alongside moderate HE demand density (~63-65 grad vacancies per 1k youth). Marketing in these states should emphasise degree advantages over VET pathways. |
+| **ACT's VET sector is small** | At 455 VET students per 1k youth (lowest in the country), ACT's youth are more oriented toward higher education — consistent with its #1 HE demand ranking. |
+| **NSW has high VET despite high HE demand** | ~787 VET students per 1k youth alongside 63.6 grad vacancies per 1k youth suggests a large, diverse education market. Both VET and HE compete actively. |
+
 ## Methodology Notes
 
 - **Graduate-level** = ANZSCO skill levels 1 (bachelor degree or higher) and 2 (advanced diploma/diploma)
@@ -68,6 +79,7 @@ The lowest demand density (48.4) and contracting graduate vacancies (-4.7%) make
 
 - **Internet Vacancy Index (IVI)** — Jobs and Skills Australia. Monthly online job vacancy counts by ANZSCO skill level and state. National and state-level coverage.
 - **Estimated Resident Population** — Australian Bureau of Statistics (ABS). Annual population estimates for 15-19 year olds by LGA, aggregated to state level.
-- **Source models:** `state_demand_index`, `stg_job_vacancies_by_state`, `stg_youth_population_by_state`
+- **NCVER Government-Funded VET Students** — National Centre for Vocational Education Research. Historical time series by state and gender, 1981-2024. Government-funded students only.
+- **Source models:** `state_demand_index`, `vet_competition_by_state`, `stg_job_vacancies_by_state`, `stg_youth_population_by_state`, `stg_ncver_vet_students`
 
 </Details>

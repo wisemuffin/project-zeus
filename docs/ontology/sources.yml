@@ -178,3 +178,45 @@ sources:
       - Trending searches are ephemeral (refresh daily, most don't match any field)
       - pytrends is unofficial (no Google SLA, rate-limited)
       - Cross-batch normalisation required for comparable university interest scores
+
+  - name: det
+    label: DET
+    full_name: Australian Government Department of Education
+    description: >
+      Higher Education Student Statistics — enrolments by institution, field of
+      education, citizenship (domestic/overseas), mode of attendance, gender,
+      and course level. Extracted from the Student Enrolments Pivot Table
+      (embedded pivot cache with 201K microdata records). Covers 47 institutions
+      across 5 years (2016-2020).
+    url: https://www.education.gov.au/higher-education-statistics
+    geographic_scope: National (institution × state level)
+    refresh: Annual (published ~September)
+    access_method: Excel download (pivot table with embedded cache)
+    raw_tables:
+      - det_he_enrolments
+    domains: [student_demand]
+    limitations:
+      - Currently covers 2016-2020 (DET publishes updated files annually)
+      - 13 ASCED broad fields require mapping to UAC categories
+      - Some cross-tab combinations have small cell sizes
+      - Non-university HE providers grouped as single entity
+
+  - name: ncver
+    label: NCVER
+    full_name: National Centre for Vocational Education Research
+    description: >
+      Historical time series of government-funded VET students by state/territory
+      and gender, 1981-2024. Provides 44 years of vocational education enrolment
+      data for competitive context — showing VET vs higher-ed trends.
+    url: https://www.ncver.edu.au/research-and-statistics/data
+    geographic_scope: National (state/territory level)
+    refresh: Annual (published ~August)
+    access_method: Excel download (NCVER website, Cloudflare-protected)
+    raw_tables:
+      - ncver_vet_students
+    domains: [student_demand]
+    limitations:
+      - Government-funded students only (excludes fee-for-service VET)
+      - No field-of-education breakdown in time series (only in DataBuilder)
+      - Values reported in thousands (rounded)
+      - Cloudflare protection may block automated downloads

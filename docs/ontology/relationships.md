@@ -10,6 +10,8 @@ graph LR
         UAC[UAC<br/><small>NSW/ACT admissions</small>]
         VTAC[VTAC<br/><small>VIC admissions</small>]
         SATAC[SATAC<br/><small>SA/NT admissions</small>]
+        DET[DET<br/><small>HE enrolments</small>]
+        NCVER[NCVER<br/><small>VET students</small>]
         JSA[JSA / IVI<br/><small>Job vacancies</small>]
         ABS[ABS<br/><small>Population &amp; geography</small>]
         GT[Google Trends<br/><small>Search interest</small>]
@@ -30,6 +32,8 @@ graph LR
     UAC --> SD
     VTAC --> SD
     SATAC --> SD
+    DET --> SD
+    NCVER --> SD
     JSA --> EOG
     JSA --> GEO
     ABS --> GEO
@@ -49,7 +53,7 @@ erDiagram
         string field_of_study PK "11 UAC broad fields"
     }
     INSTITUTION {
-        string institution PK "~42 QILT universities"
+        string institution PK "~47 DET/QILT universities"
     }
     STATE {
         string state PK "8 AU states/territories"
@@ -72,6 +76,9 @@ erDiagram
     STATE ||--o{ INSTITUTION : "university_state_interest"
     FIELD_OF_STUDY ||--o{ STATE : "state_fos_demand"
     INSTITUTION ||--o{ FIELD_OF_STUDY : "university_course_listings"
+    INSTITUTION ||--o{ FIELD_OF_STUDY : "institution_enrolment_profile"
+    INSTITUTION ||--o{ FIELD_OF_STUDY : "stg_det_he_enrolments"
+    STATE ||--o{ INSTITUTION : "stg_det_he_enrolments"
 ```
 
 ## Domain Connectivity
@@ -120,6 +127,11 @@ The table below shows how to join between any two domains using shared entities.
 | Course Offerings | Employment & Opportunity Gap | `field_of_study` | `uac_field_of_study` → `field_of_study` | Course-level opportunity context |
 | Course Offerings | Graduate Outcomes | `field_of_study` | `uac_field_of_study` → `field_of_study` | Course-level outcome context |
 | Reference Data | Geography | `lga_code` → `state` | Via `stg_lga_reference` | LGA-to-state rollup |
+| Student Demand (DET) | Employment & Opportunity Gap | `uac_field_of_study` | ASCED→UAC mapping in `stg_det_he_enrolments` | Enrolment volumes by field |
+| Student Demand (DET) | Graduate Outcomes | `uac_field_of_study` + `institution` | Direct join | Enrolment patterns + outcomes per institution |
+| Student Demand (DET) | University Brand | `institution` | Via institution entity | Enrolment mix + brand awareness |
+| Student Demand (DET) | Course Offerings | `institution` + `uac_field_of_study` | Direct join | Actual enrolments vs course listings |
+| Student Demand (NCVER) | Geography | `state` | Direct join | VET competition by state |
 | Reference Data | Employment & Opportunity Gap | `occupation_title` → `field_of_study` | Via `occupation_fos_mapping` | Occupation-to-field crosswalk |
 
 ## Critical Crosswalks
@@ -151,19 +163,44 @@ hardcoded in the staging models.
 granularity. The `qilt_areas_count` column in mart models indicates how many
 QILT areas were averaged.
 
-### 3. ASCED Broad Field → UAC Field of Study Mapping
+### 3. ASCED Broad Field → UAC Field of Study (CRICOS)
 
 **Source:** CASE statement in `stg_cricos_courses`
 
 Maps 2-digit ASCED broad field codes (extracted from the CRICOS `broad_field`
 string) to UAC categories. Enables joining CRICOS course data with
-opportunity gap and outcomes data.
+opportunity gap and outcomes data. See also crosswalk #4 for the DET variant.
 
 **Limitation:** "Mixed Field Programmes" (ASCED code 12) is excluded as it
 has no meaningful UAC equivalent. Some ASCED→UAC mappings are approximate
 (e.g. ASCED "Society and Culture" maps directly but covers a broad range).
 
-### 4. State Name → State Code Mapping
+### 4. ASCED Broad Field → UAC Field of Study (DET HE Enrolments)
+
+**Source:** CASE statement in `stg_det_he_enrolments`
+
+Maps DET's ASCED broad field of education names (e.g. "Natural and Physical
+Sciences", "Agriculture Environmental and Related Studies") to UAC categories.
+Similar to crosswalk #3 (CRICOS) but DET uses slightly different naming
+conventions (e.g. no commas in "Agriculture Environmental and Related Studies"
+vs ASCED code-based extraction in CRICOS).
+
+**Limitation:** "Mixed Field Programs" and "Non-Award course" are excluded
+(no UAC equivalent). DET uses 13 ASCED broad fields; after exclusions, 11 map
+to UAC categories.
+
+### 5. NCVER State Abbreviation Mapping
+
+**Source:** `_STATE_MAP` dict in the `ncver_vet_students` Dagster asset
+
+NCVER uses non-standard abbreviations for some states (e.g. "Vic." → VIC,
+"Qld" → QLD, "Tas." → TAS). The mapping normalises these to 2-letter codes
+at the asset level, so `stg_ncver_vet_students` receives clean state codes.
+
+**Limitation:** The "Australia" national total row is included in the raw data
+but filtered out in `stg_ncver_vet_students` (state-level rows can be summed).
+
+### 6. State Name → State Code Mapping
 
 **Source:** CASE statements in `stg_lga_reference`, `stg_google_trends_interest_by_state`
 
@@ -176,7 +213,7 @@ All staging models normalise to 2-letter codes. The `stg_lga_reference` model
 handles the ABS numeric → 2-letter mapping. The `stg_google_trends_interest_by_state`
 model handles the full name → 2-letter mapping.
 
-### 5. UAC Field Name Standardisation
+### 7. UAC Field Name Standardisation
 
 **Source:** CASE statements in `stg_uac_fos_by_gender`, `stg_vtac_fos_preferences`, `stg_satac_fos_preferences`
 

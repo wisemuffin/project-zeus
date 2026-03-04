@@ -881,6 +881,130 @@ models:
       - name: _dagster_run_id
         description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
 
+  - name: institution_enrolment_profile
+    config:
+      meta:
+        domain: student_demand
+        targeting_dimension: [who, where]
+        primary_entity: institution
+        grain: [institution, uac_field_of_study]
+    description: >
+      Institution × field enrolment profile from DET Higher Education Statistics.
+      Latest-year snapshot showing domestic/international mix, external (online/distance)
+      penetration, gender composition, and pipeline health (commencing share) per field.
+      Enriched with sector benchmarks and opportunity gap context. Answers "Who" by
+      revealing each university's student composition, and "Where" by identifying
+      institutions with distinctive enrolment profiles worth targeting.
+    columns:
+      - name: institution
+        description: Higher education institution name from DET enrolment data
+        tests:
+          - not_null
+      - name: uac_field_of_study
+        description: UAC field of study category mapped from ASCED broad field
+        tests:
+          - not_null
+      - name: total_enrolments
+        description: Total student enrolments for this institution × field in the latest year
+      - name: international_enrolments
+        description: International student enrolments for this institution × field
+      - name: external_enrolments
+        description: External (online/distance) mode enrolments for this institution × field
+      - name: female_enrolments
+        description: Female student enrolments for this institution × field
+      - name: commencing_enrolments
+        description: Commencing (new) student enrolments for this institution × field
+      - name: international_share
+        description: >
+          Proportion of international students in this institution × field (0-1 decimal).
+          Compare with sector_international_share to assess relative positioning.
+      - name: sector_international_share
+        description: Sector-wide international student share for this field (0-1 decimal)
+      - name: international_index
+        description: >
+          Institution international share divided by sector international share.
+          Values above 1.0 indicate the institution is over-indexed on international
+          students in this field relative to the sector average.
+      - name: external_share
+        description: Proportion of students studying externally (online/distance) in this institution × field (0-1 decimal)
+      - name: female_share
+        description: Proportion of female students in this institution × field (0-1 decimal)
+      - name: sector_female_share
+        description: Sector-wide female student share for this field (0-1 decimal)
+      - name: commencing_share
+        description: >
+          Proportion of commencing (new) students vs total enrolments. Higher values
+          indicate a growing pipeline; lower values suggest established but potentially
+          stagnating programs.
+      - name: field_rank_in_institution
+        description: Rank of this field by total enrolments within the institution (1 = largest field)
+      - name: opportunity_gap
+        description: Vacancy share minus preference share for this field (from opportunity_gap mart)
+      - name: opportunity_rank
+        description: Rank by opportunity_gap descending (1 = largest gap)
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
+  - name: vet_competition_by_state
+    config:
+      meta:
+        domain: student_demand
+        targeting_dimension: [where, what_message]
+        primary_entity: state
+        grain: state
+    description: >
+      VET sector competition context by Australian state. Combines NCVER government-funded
+      VET student volumes with youth population and higher education demand metrics.
+      Shows VET density (students per 1k youth), growth trends, and comparison with
+      graduate job vacancy density — enabling messaging about vocational alternatives
+      and identifying states where VET is a strong competitor for student attention.
+    columns:
+      - name: state
+        description: Australian state/territory code (NSW, VIC, QLD, SA, WA, TAS, NT, ACT)
+        tests:
+          - unique
+          - not_null
+      - name: latest_year
+        description: Most recent year of NCVER VET data included in the snapshot
+      - name: vet_students
+        description: Total government-funded VET students in this state (latest year)
+      - name: youth_population_15_19
+        description: ABS estimated resident population aged 15-19 (latest available year)
+      - name: vet_students_per_1k_youth
+        description: >
+          VET students per 1,000 youth (15-19). Compare with graduate_vacancies_per_1k_youth
+          to assess relative HE vs VET density in each state.
+      - name: graduate_vacancies_per_1k_youth
+        description: >
+          Graduate-level job vacancies per 1,000 youth from state_demand_index.
+          Side-by-side with vet_students_per_1k_youth shows HE demand vs VET supply.
+      - name: vet_yoy_growth
+        description: Year-over-year growth rate of VET students in this state
+      - name: vet_cagr_5yr
+        description: >
+          5-year compound annual growth rate of VET students. Smooths annual
+          volatility to reveal underlying trend direction.
+      - name: vet_recovery_ratio
+        description: >
+          Latest VET students divided by historical peak. Values below 1.0 indicate
+          the state's VET sector has not recovered to its peak.
+      - name: vet_female_share
+        description: Proportion of female VET students in this state (0-1 decimal)
+      - name: vet_trend_direction
+        description: >
+          Categorical trend label based on YoY growth: "Growing" (>+1%),
+          "Declining" (<-1%), or "Stable" (within +/-1%).
+      - name: graduate_vacancy_growth_12m
+        description: 12-month growth rate of graduate-level job vacancies from state_demand_index
+      - name: he_demand_rank
+        description: State's rank by graduate vacancies per 1k youth (from state_demand_index)
+      - name: _loaded_at
+        description: "Timestamp when this table was last built by dbt."
+      - name: _dagster_run_id
+        description: "Dagster run ID that triggered this dbt build. Shows 'manual' for CLI runs."
+
   - name: institution_scorecard
     config:
       meta:
