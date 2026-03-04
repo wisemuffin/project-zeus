@@ -100,7 +100,7 @@ from zeus.institution_scorecard
 where institution = '${inputs.selected_university.value}'
 union all
 select
-    'Sector Average' as group_label,
+    'Sector Avg' as group_label,
     avg_overall_quality as overall_quality,
     avg_ft_employment_rate as ft_employment_rate,
     avg_median_salary as median_salary
@@ -111,53 +111,7 @@ where institution = '${inputs.selected_university.value}'
 ### Selected University vs Sector Average
 
 <Grid cols=3>
-<BarChart
-    data={scorecard_comparison}
-    x=group_label
-    y=overall_quality
-    series=group_label
-    title="Overall Quality"
-    yMin=0
-    yGridlines=false
-    yAxisLabels=false
-    colorPalette={['#b0b0b0', '#1e3a5f']}
-    labels=true
-    labelFmt={'0.0"%"'}
-    labelPosition=above
-    legend=false
-/>
-<BarChart
-    data={scorecard_comparison}
-    x=group_label
-    y=ft_employment_rate
-    series=group_label
-    title="FT Employment Rate"
-    yMin=0
-    yGridlines=false
-    yAxisLabels=false
-    colorPalette={['#b0b0b0', '#1e3a5f']}
-    labels=true
-    labelFmt={'0.0"%"'}
-    labelPosition=above
-    legend=false
-/>
-<BarChart
-    data={scorecard_comparison}
-    x=group_label
-    y=median_salary
-    series=group_label
-    title="Median Salary"
-    yMin=0
-    yGridlines=false
-    yAxisLabels=false
-    colorPalette={['#b0b0b0', '#1e3a5f']}
-    labels=true
-    labelFmt=usd0
-    labelPosition=above
-    legend=false
-/>
-</Grid>
-
+<div style="background-color: #f8f8f8; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5;">
 <BigValue
     data={scorecard}
     value=overall_quality
@@ -167,6 +121,23 @@ where institution = '${inputs.selected_university.value}'
     comparisonTitle="vs sector"
     comparisonFmt={'"+0.0;-0.0"'}
 />
+<BarChart
+    data={scorecard_comparison}
+    x=group_label
+    y=overall_quality
+    series=group_label
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt={'0.0"%"'}
+    labelPosition=above
+    legend=false
+    echartsOptions={{backgroundColor: '#f8f8f8'}}
+/>
+</div>
+<div style="background-color: #f8f8f8; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5;">
 <BigValue
     data={scorecard}
     value=ft_employment_rate
@@ -176,6 +147,23 @@ where institution = '${inputs.selected_university.value}'
     comparisonTitle="vs sector"
     comparisonFmt={'"+0.0;-0.0"'}
 />
+<BarChart
+    data={scorecard_comparison}
+    x=group_label
+    y=ft_employment_rate
+    series=group_label
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt={'0.0"%"'}
+    labelPosition=above
+    legend=false
+    echartsOptions={{backgroundColor: '#f8f8f8'}}
+/>
+</div>
+<div style="background-color: #f8f8f8; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5;">
 <BigValue
     data={scorecard}
     value=median_salary
@@ -185,6 +173,23 @@ where institution = '${inputs.selected_university.value}'
     comparisonTitle="vs sector"
     comparisonFmt=usd0
 />
+<BarChart
+    data={scorecard_comparison}
+    x=group_label
+    y=median_salary
+    series=group_label
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt=usd0
+    labelPosition=above
+    legend=false
+    echartsOptions={{backgroundColor: '#f8f8f8'}}
+/>
+</div>
+</Grid>
 
 ### QILT Quality Breakdown
 
