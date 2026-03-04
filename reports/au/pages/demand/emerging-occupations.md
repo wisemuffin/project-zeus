@@ -22,6 +22,11 @@ where vacancy_growth_12m > 0
 select count(*) as total from zeus.emerging_occupations
 ```
 
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
 <BigValue
     data={fastest_growing}
     value=occupation_title
@@ -58,6 +63,7 @@ order by growth_rank
     x=occupation_title
     y=vacancy_growth_12m
     title="12-Month Vacancy Growth by Occupation"
+    subtitle={vintage_ivi[0].subtitle}
     yAxisTitle="Growth Rate"
     yFmt=pct1
     sort=false
@@ -71,6 +77,7 @@ select * from zeus.emerging_occupations order by growth_rank
 
 <DataTable
     data={occupations_table}
+    subtitle={vintage_ivi[0].subtitle}
     rowShading=true
     search=true
 >
@@ -83,6 +90,16 @@ select * from zeus.emerging_occupations order by growth_rank
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
     <Column id=preference_share title="Pref Share" fmt=pct1 />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('emerging_occupations')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

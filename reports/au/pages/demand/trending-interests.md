@@ -18,6 +18,11 @@ select count(*) as total from zeus.trending_interests
 select count(*) as total from zeus.trending_interests where marketing_signal like '%High opportunity%'
 ```
 
+```sql vintage_google_trends
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'google_trends'
+```
+
 <BigValue
     data={total_count}
     value=total
@@ -56,6 +61,7 @@ order by opportunity_rank, trend
 
 <DataTable
     data={classified_trends}
+    subtitle={vintage_google_trends[0].subtitle}
     rowShading=true
     search=true
 >
@@ -87,6 +93,7 @@ order by trend_count desc
     x=marketing_signal
     y=trend_count
     title="Trends by Marketing Signal"
+    subtitle={vintage_google_trends[0].subtitle}
     xAxisTitle="Signal"
     yAxisTitle="Number of Trends"
     sort=false
@@ -111,6 +118,7 @@ order by published desc
 
 <DataTable
     data={all_trends}
+    subtitle={vintage_google_trends[0].subtitle}
     rowShading=true
     search=true
 >
@@ -122,6 +130,16 @@ order by published desc
     <Column id=top_article_source title="Source" />
     <Column id=published title="Published" />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('trending_interests')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

@@ -36,6 +36,11 @@ where interstate_draw_ratio = (select max(interstate_draw_ratio) from zeus.audie
 select count(*) as total from zeus.audience_profile_by_fos
 ```
 
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
 <BigValue
     data={field_count}
     value=total
@@ -78,6 +83,7 @@ order by opportunity_rank
     x=field_of_study
     y={['female_preference_share', 'male_preference_share']}
     title="Preference Share by Gender"
+    subtitle={vintage_uac[0].subtitle}
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=grouped
@@ -103,6 +109,7 @@ order by mature_learner_index desc
     x=field_of_study
     y=mature_learner_index
     title="Mature Learner Index by Field"
+    subtitle={vintage_uac[0].subtitle}
     yAxisTitle="Index (1.0 = average)"
     sort=false
 />
@@ -126,6 +133,7 @@ order by opportunity_rank
     x=field_of_study
     y={['nsw_preference_share', 'act_preference_share', 'interstate_preference_share']}
     title="Preference Share by Geographic Origin"
+    subtitle={vintage_uac[0].subtitle}
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=stacked
@@ -161,6 +169,7 @@ select * from zeus.audience_profile_by_fos order by opportunity_rank
 
 <DataTable
     data={profile_table}
+    subtitle={vintage_uac[0].subtitle}
     rowShading=true
     search=true
 >
@@ -176,6 +185,16 @@ select * from zeus.audience_profile_by_fos order by opportunity_rank
     <Column id=interstate_draw_ratio title="Interstate Draw" fmt=num2 />
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('audience_profile_by_fos')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

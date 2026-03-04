@@ -38,6 +38,11 @@ group by state_name, state
 order by youth_population desc
 ```
 
+```sql vintage_abs
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'abs_population'
+```
+
 {#if inputs.map_level === 'LGA'}
 
 <BigValue
@@ -82,6 +87,7 @@ from zeus.audience_density_by_lga
     startingZoom={4}
     legendType="scalar"
     title="Youth Population (15-19) by LGA"
+    subtitle={vintage_abs[0].subtitle}
     tooltip={[{id: 'lga_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'youth_population', fmt: 'num0'}, {id: 'youth_density_per_sqkm', title: 'Youth/km²', fmt: 'num1'}]}
 />
 
@@ -106,6 +112,7 @@ order by state, density_rank_in_state
 
 <DataTable
     data={density_table}
+    subtitle={vintage_abs[0].subtitle}
     rowShading=true
     search=true
 >
@@ -153,6 +160,7 @@ order by state, density_rank_in_state
     startingZoom={4}
     legendType="scalar"
     title="Youth Population (15-19) by State"
+    subtitle={vintage_abs[0].subtitle}
     tooltip={[{id: 'state_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'youth_population', fmt: 'num0'}, {id: 'youth_density_per_sqkm', title: 'Youth/km²', fmt: 'num1'}, {id: 'lga_count', title: 'LGAs', fmt: 'num0'}]}
 />
 
@@ -172,6 +180,7 @@ order by youth_population desc
 
 <DataTable
     data={state_table}
+    subtitle={vintage_abs[0].subtitle}
     rowShading=true
 >
     <Column id=state_name title="State" />
@@ -183,6 +192,16 @@ order by youth_population desc
 </DataTable>
 
 {/if}
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('audience_density_by_lga')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

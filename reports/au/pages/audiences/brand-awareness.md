@@ -22,6 +22,16 @@ from zeus.university_brand_awareness
 where interest_rank = 1
 ```
 
+```sql vintage_google_trends_brand
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'google_trends_brand'
+```
+
+```sql vintage_qilt_ses
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ses'
+```
+
 <BigValue
     data={uni_count}
     value=total
@@ -66,6 +76,7 @@ where interest_rank is not null and quality_rank is not null
     xAxisTitle="Interest Rank (1 = most searched)"
     yAxisTitle="Quality Rank (1 = highest quality)"
     title="Brand Awareness vs Academic Quality"
+    subtitle="Sources: {vintage_google_trends_brand[0].subtitle}, {vintage_qilt_ses[0].subtitle}"
     pointSize=10
 />
 
@@ -108,6 +119,7 @@ where university = '${inputs.selected_university.value}'
     startingZoom={4}
     legendType="scalar"
     title={`Search Interest by State — ${inputs.selected_university.value}`}
+    subtitle={vintage_google_trends_brand[0].subtitle}
     tooltip={[{id: 'state_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'interest', title: 'Interest', fmt: 'num1'}, {id: 'state_rank_for_uni', title: 'State Rank (for uni)'}, {id: 'uni_rank_in_state', title: 'Uni Rank (in state)'}, {id: 'interest_vs_uni_avg', title: 'vs Uni Avg', fmt: 'num1'}]}
 />
 
@@ -137,6 +149,7 @@ order by interest_rank asc nulls last
     data={awareness_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_google_trends_brand[0].subtitle}, {vintage_qilt_ses[0].subtitle}"
 >
     <Column id=university title="University" />
     <Column id=interest_rank title="Interest Rank" />
@@ -170,11 +183,22 @@ order by query_type, value desc
     data={related_queries}
     rowShading=true
     search=true
+    subtitle={vintage_google_trends_brand[0].subtitle}
 >
     <Column id=related_query title="Related Query" />
     <Column id=query_type title="Type" />
     <Column id=value title="Value" />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('university_brand_awareness', 'university_state_interest')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

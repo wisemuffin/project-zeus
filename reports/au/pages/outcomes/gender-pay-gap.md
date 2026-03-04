@@ -26,6 +26,21 @@ order by abs(salary_gender_gap)
 limit 1
 ```
 
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
 <BigValue
     data={top_gap}
     value=field_of_study
@@ -63,6 +78,7 @@ order by opportunity_rank nulls last
     x=field_of_study
     y={['median_salary_male', 'median_salary_female']}
     title="Median Graduate Salary by Gender"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="Median Annual Salary ($)"
     yFmt=usd0
     type=grouped
@@ -87,6 +103,7 @@ order by salary_gender_gap desc
     x=field_of_study
     y=salary_gender_gap
     title="Salary Gender Gap (Male − Female)"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="Salary Gap ($)"
     yFmt=usd0
     sort=false
@@ -102,6 +119,7 @@ select * from zeus.gender_opportunity_profile order by opportunity_rank nulls la
     data={diversity_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_qilt_gos[0].subtitle}, {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}"
 >
     <Column id=field_of_study title="Field of Study" />
     <Column id=diversity_opportunity title="Classification" />
@@ -113,6 +131,16 @@ select * from zeus.gender_opportunity_profile order by opportunity_rank nulls la
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
     <Column id=ft_employment_rate title="FT Employ %" fmt=num1 />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('gender_opportunity_profile')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

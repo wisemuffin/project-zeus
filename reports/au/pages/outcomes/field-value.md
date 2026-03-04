@@ -33,6 +33,26 @@ order by
     end
 ```
 
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
+```sql vintage_qilt_ess
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ess'
+```
+
 <BigValue
     data={top_field}
     value=field_of_study
@@ -55,6 +75,7 @@ Fields are classified into four tiers based on opportunity gap, full-time employ
     x=value_tier
     y=field_count
     title="Fields by Value Tier"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     yAxisTitle="Number of Fields"
     sort=false
 />
@@ -77,6 +98,7 @@ order by value_rank
     x=field_of_study
     y=value_score
     title="Composite Value Score by Field"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     yAxisTitle="Value Score (0-1)"
     sort=false
 />
@@ -89,6 +111,7 @@ select * from zeus.field_value_proposition order by value_rank
 
 <DataTable
     data={value_table}
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     rowShading=true
     search=true
 >
@@ -125,6 +148,7 @@ from zeus.employer_satisfaction_by_fos
     x=field_of_study
     y=overall_employer_satisfaction
     title="Overall Employer Satisfaction by Field"
+    subtitle={vintage_qilt_ess[0].subtitle}
     yAxisTitle="Satisfaction (%)"
     swapXY=true
     sort=false
@@ -155,6 +179,7 @@ order by v.value_rank
 
 <DataTable
     data={cost_adjusted}
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     rowShading=true
     search=true
 >
@@ -166,6 +191,16 @@ order by v.value_rank
     <Column id=gap_per_cpc_dollar title="Gap / $1 CPC" fmt=num4 contentType=colorscale colorScale=positive />
     <Column id=estimated_cpc_aud title="Est. CPC (AUD)" fmt=usd2 />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('field_value_proposition', 'employer_satisfaction_by_fos', 'field_roi_recommendation')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

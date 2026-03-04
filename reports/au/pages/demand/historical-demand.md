@@ -24,6 +24,21 @@ from zeus.historical_demand_trends
 where latest_yoy_growth = (select max(latest_yoy_growth) from zeus.historical_demand_trends)
 ```
 
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
+```sql vintage_ncver
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ncver_vet'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
 <BigValue
     data={growing}
     value=total
@@ -59,6 +74,7 @@ order by latest_yoy_growth desc
     x=applicant_type
     y=latest_yoy_growth
     title="Year-over-Year Growth by Segment"
+    subtitle={vintage_uac[0].subtitle}
     yAxisTitle="YoY Growth"
     yFmt=pct1
     sort=false
@@ -84,6 +100,7 @@ order by recovery_ratio desc
     x=applicant_type
     y=recovery_ratio
     title="Recovery Ratio (Current vs Peak)"
+    subtitle={vintage_uac[0].subtitle}
     yAxisTitle="Recovery Ratio"
     yFmt=num2
     sort=false
@@ -107,6 +124,7 @@ order by cagr desc
     x=applicant_type
     y=cagr
     title="10-Year Compound Annual Growth Rate"
+    subtitle={vintage_uac[0].subtitle}
     yAxisTitle="CAGR"
     yFmt=pct2
     sort=false
@@ -122,6 +140,7 @@ select * from zeus.historical_demand_trends order by latest_count desc
     data={detail_table}
     rowShading=true
     search=true
+    subtitle={vintage_uac[0].subtitle}
 >
     <Column id=applicant_type title="Segment" />
     <Column id=latest_intake title="Latest Intake" />
@@ -173,6 +192,7 @@ order by vet_students_per_1k_youth desc
     x=state
     y={['vet_students_per_1k_youth', 'graduate_vacancies_per_1k_youth']}
     title="VET Students vs Graduate Vacancies per 1k Youth (by State)"
+    subtitle="Sources: {vintage_ncver[0].subtitle}, {vintage_ivi[0].subtitle}"
     yAxisTitle="Per 1,000 Youth (15-19)"
     type=grouped
     sort=false
@@ -186,7 +206,11 @@ order by vet_students_per_1k_youth desc
 select * from zeus.vet_competition_by_state order by vet_students_per_1k_youth desc
 ```
 
-<DataTable data={vet_detail} rowShading=true>
+<DataTable
+    data={vet_detail}
+    rowShading=true
+    subtitle="Sources: {vintage_ncver[0].subtitle}, {vintage_ivi[0].subtitle}"
+>
     <Column id=state title="State" />
     <Column id=vet_students title="VET Students" fmt=num0 />
     <Column id=vet_students_per_1k_youth title="VET / 1k Youth" fmt=num1 />
@@ -197,6 +221,16 @@ select * from zeus.vet_competition_by_state order by vet_students_per_1k_youth d
     <Column id=vet_female_share title="Female %" fmt=pct1 />
     <Column id=vet_trend_direction title="Trend" />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('historical_demand_trends', 'vet_competition_by_state')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

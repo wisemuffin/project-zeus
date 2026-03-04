@@ -22,6 +22,11 @@ select count(distinct uac_field_of_study) as total from zeus.university_course_l
 select count(*) as total from zeus.university_course_listings where marketing_signal like 'Strong%'
 ```
 
+```sql vintage_cricos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'cricos'
+```
+
 <BigValue
     data={total_courses}
     value=total
@@ -67,6 +72,7 @@ order by course_count desc
     y=course_count
     series=marketing_signal
     title="Courses by Field of Study and Marketing Signal"
+    subtitle={vintage_cricos[0].subtitle}
     xAxisTitle="Field of Study"
     yAxisTitle="Number of Courses"
     type=stacked
@@ -92,6 +98,7 @@ order by course_count desc
     x=location_state
     y=course_count
     title="Course Count by State"
+    subtitle={vintage_cricos[0].subtitle}
     xAxisTitle="State"
     yAxisTitle="Number of Courses"
     sort=false
@@ -117,6 +124,7 @@ limit 20
     x=institution_name
     y=high_opp_courses
     title="Top 20 Institutions — Courses in High-Opportunity Fields"
+    subtitle={vintage_cricos[0].subtitle}
     xAxisTitle="Institution"
     yAxisTitle="Courses with Positive Opp Gap"
     sort=false
@@ -143,6 +151,7 @@ order by total_courses desc
 
 <DataTable
     data={institution_summary}
+    subtitle={vintage_cricos[0].subtitle}
     rowShading=true
     search=true
 >
@@ -179,6 +188,7 @@ order by opportunity_gap desc nulls last
 
 <DataTable
     data={course_detail}
+    subtitle={vintage_cricos[0].subtitle}
     rows=20
     rowShading=true
     search=true
@@ -197,6 +207,16 @@ order by opportunity_gap desc nulls last
     <Column id=estimated_total_cost title="Est. Total Cost" fmt=usd0 />
     <Column id=course_count_in_field title="Inst. Field Depth" />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('university_course_listings')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

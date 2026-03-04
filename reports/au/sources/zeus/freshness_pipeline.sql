@@ -1,0 +1,22 @@
+SELECT 'opportunity_gap' AS table_name, MAX(_loaded_at) AS last_refreshed FROM marts.opportunity_gap
+UNION ALL SELECT 'opportunity_gap_by_gender', MAX(_loaded_at) FROM marts.opportunity_gap_by_gender
+UNION ALL SELECT 'graduate_outcomes_by_fos', MAX(_loaded_at) FROM marts.graduate_outcomes_by_fos
+UNION ALL SELECT 'satisfaction_opportunity', MAX(_loaded_at) FROM marts.satisfaction_opportunity
+UNION ALL SELECT 'employer_satisfaction_by_fos', MAX(_loaded_at) FROM marts.employer_satisfaction_by_fos
+UNION ALL SELECT 'institution_scorecard', MAX(_loaded_at) FROM marts.institution_scorecard
+UNION ALL SELECT 'trending_interests', MAX(_loaded_at) FROM marts.trending_interests
+UNION ALL SELECT 'historical_demand_trends', MAX(_loaded_at) FROM marts.historical_demand_trends
+UNION ALL SELECT 'audience_density_by_lga', MAX(_loaded_at) FROM marts.audience_density_by_lga
+UNION ALL SELECT 'audience_profile_by_fos', MAX(_loaded_at) FROM marts.audience_profile_by_fos
+UNION ALL SELECT 'state_demand_index', MAX(_loaded_at) FROM marts.state_demand_index
+UNION ALL SELECT 'state_fos_demand', MAX(_loaded_at) FROM marts.state_fos_demand
+UNION ALL SELECT 'emerging_occupations', MAX(_loaded_at) FROM marts.emerging_occupations
+UNION ALL SELECT 'university_brand_awareness', MAX(_loaded_at) FROM marts.university_brand_awareness
+UNION ALL SELECT 'university_state_interest', MAX(_loaded_at) FROM marts.university_state_interest
+UNION ALL SELECT 'university_course_listings', MAX(_loaded_at) FROM marts.university_course_listings
+UNION ALL SELECT 'field_value_proposition', MAX(_loaded_at) FROM marts.field_value_proposition
+UNION ALL SELECT 'field_roi_recommendation', MAX(_loaded_at) FROM marts.field_roi_recommendation
+UNION ALL SELECT 'gender_opportunity_profile', MAX(_loaded_at) FROM marts.gender_opportunity_profile
+UNION ALL SELECT 'segment_field_affinity', MAX(_loaded_at) FROM marts.segment_field_affinity
+UNION ALL SELECT 'vet_competition_by_state', MAX(_loaded_at) FROM marts.vet_competition_by_state
+UNION ALL SELECT 'institution_enrolment_profile', MAX(_loaded_at) FROM marts.institution_enrolment_profile

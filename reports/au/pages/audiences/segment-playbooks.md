@@ -24,6 +24,21 @@ where segment_affinity_index = (select max(segment_affinity_index) from zeus.seg
 select count(distinct applicant_type) as total from zeus.segment_field_affinity
 ```
 
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
 <BigValue
     data={segment_count}
     value=total
@@ -60,6 +75,7 @@ order by segment_rank
     x=field_of_study
     y=preference_share
     title="Preference Share: {inputs.segment_filter.value}"
+    subtitle="Sources: {vintage_uac[0].subtitle}, {vintage_ivi[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     yAxisTitle="Preference Share"
     yFmt=pct1
     sort=false
@@ -71,6 +87,7 @@ order by segment_rank
     data={filtered_data}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_uac[0].subtitle}, {vintage_ivi[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
 >
     <Column id=segment_rank title="Rank" />
     <Column id=field_of_study title="Field of Study" />
@@ -92,6 +109,7 @@ select * from zeus.segment_field_affinity order by applicant_type, segment_rank
     data={all_segments}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_uac[0].subtitle}, {vintage_ivi[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
 >
     <Column id=applicant_type title="Segment" />
     <Column id=field_of_study title="Field of Study" />
@@ -102,6 +120,16 @@ select * from zeus.segment_field_affinity order by applicant_type, segment_rank
     <Column id=ft_employment_rate title="FT Employ %" fmt=num1 />
     <Column id=median_salary title="Salary" fmt=usd0 />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('segment_field_affinity')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

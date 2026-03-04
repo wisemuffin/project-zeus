@@ -34,6 +34,21 @@ from zeus.institution_scorecard
 where employer_sat_rank = 1
 ```
 
+```sql vintage_qilt_ses
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ses'
+```
+
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
+```sql vintage_qilt_ess
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ess'
+```
+
 <BigValue
     data={uni_count}
     value=total
@@ -83,6 +98,7 @@ where overall_quality is not null and ft_employment_rate is not null
     xAxisTitle="Full-Time Employment Rate (%)"
     yAxisTitle="Overall Quality (% positive)"
     title="Student Satisfaction vs Graduate Employment"
+    subtitle="Sources: {vintage_qilt_ses[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     pointSize=10
 />
 
@@ -107,6 +123,7 @@ where overall_quality is not null and overall_employer_satisfaction is not null
     xAxisTitle="Student Satisfaction — Overall Quality (%)"
     yAxisTitle="Employer Satisfaction (%)"
     title="Student Satisfaction vs Employer Satisfaction"
+    subtitle="Sources: {vintage_qilt_ses[0].subtitle}, {vintage_qilt_ess[0].subtitle}"
     pointSize=10
 />
 
@@ -135,6 +152,7 @@ limit 20
     x=institution
     y={['overall_quality', 'teaching_quality', 'skills_development']}
     title="Top 20 Universities — Key Satisfaction Indicators"
+    subtitle={vintage_qilt_ses[0].subtitle}
     yAxisTitle="% Positive Rating"
     type=grouped
     sort=false
@@ -150,6 +168,7 @@ select * from zeus.institution_scorecard
     data={scorecard_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_qilt_ses[0].subtitle}, {vintage_qilt_gos[0].subtitle}, {vintage_qilt_ess[0].subtitle}"
 >
     <Column id=institution title="Institution" />
     <Column id=overall_quality title="Overall Quality %" fmt=num1 />
@@ -169,6 +188,16 @@ select * from zeus.institution_scorecard
     <Column id=employment_vs_sector title="Employ vs Sector" fmt=num1 contentType=colorscale />
     <Column id=salary_vs_sector title="Salary vs Sector" fmt=usd0 contentType=colorscale />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('institution_scorecard')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

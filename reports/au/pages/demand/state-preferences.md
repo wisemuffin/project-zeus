@@ -51,6 +51,11 @@ from zeus.national_fos_preferences
 order by field_of_study, state, gender
 ```
 
+```sql vintage_uac_state
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac_state'
+```
+
 ## Preference Share by State
 
 Combined female + male preference share for each field, comparing NSW/ACT (UAC), Victoria (VTAC), and SA/NT (SATAC).
@@ -61,6 +66,7 @@ Combined female + male preference share for each field, comparing NSW/ACT (UAC),
     y=preference_share
     series=state
     title="Field of Study Preference Share by State"
+    subtitle={vintage_uac_state[0].subtitle}
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=grouped
@@ -73,6 +79,7 @@ Fields where preference share varies most across states. A large spread may sign
 
 <DataTable
     data={divergence}
+    subtitle={vintage_uac_state[0].subtitle}
     rowShading=true
 >
     <Column id=field_of_study title="Field of Study" />
@@ -106,6 +113,7 @@ order by field_of_study
     y=preference_share
     series=state
     title="Female Preference Share by State"
+    subtitle={vintage_uac_state[0].subtitle}
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=grouped
@@ -118,11 +126,22 @@ order by field_of_study
     y=preference_share
     series=state
     title="Male Preference Share by State"
+    subtitle={vintage_uac_state[0].subtitle}
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=grouped
     sort=false
 />
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('audience_profile_by_fos')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

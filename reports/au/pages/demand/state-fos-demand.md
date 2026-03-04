@@ -24,6 +24,21 @@ from zeus.state_fos_demand
 where state_vs_national_skew = (select max(state_vs_national_skew) from zeus.state_fos_demand)
 ```
 
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_abs
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'abs_population'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
 <BigValue
     data={state_count}
     value=total
@@ -65,6 +80,7 @@ order by state_vs_national_skew desc
     x=state
     y=state_vs_national_skew
     title="Top Over-Indexed Field per State (Skew vs National)"
+    subtitle={vintage_ivi[0].subtitle}
     yAxisTitle="State vs National Skew"
     yFmt=pct1
     sort=false
@@ -91,6 +107,7 @@ order by state, state_specialisation_rank
     y=state_vs_national_skew
     series=field_of_study
     title="Top 3 Over-Indexed Fields per State"
+    subtitle={vintage_ivi[0].subtitle}
     yAxisTitle="State vs National Skew"
     yFmt=pct1
     type=grouped
@@ -117,6 +134,7 @@ order by state, state_specialisation_rank
     y=vacancies_per_1k_youth
     series=field_of_study
     title="Vacancies per 1,000 Youth — Top 3 Fields per State"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_abs[0].subtitle}"
     yAxisTitle="Vacancies per 1k Youth"
     type=grouped
     sort=false
@@ -149,6 +167,7 @@ where national_opportunity_gap is not null
     xFmt=pct1
     yFmt=pct1
     title="State Skew vs National Opportunity Gap"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}"
     pointSize=8
 />
 
@@ -162,6 +181,7 @@ select * from zeus.state_fos_demand order by state, state_specialisation_rank
     data={detail_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_abs[0].subtitle}, {vintage_uac[0].subtitle}"
 >
     <Column id=state title="State" />
     <Column id=field_of_study title="Field of Study" />
@@ -175,6 +195,16 @@ select * from zeus.state_fos_demand order by state, state_specialisation_rank
     <Column id=national_opportunity_gap title="National Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
     <Column id=national_opportunity_rank title="National Opp Rank" />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('state_fos_demand')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

@@ -66,6 +66,26 @@ select round(avg(estimated_cpc_aud), 2) as avg_cpc
 from zeus.field_roi_recommendation
 ```
 
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
+```sql vintage_abs
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'abs_population'
+```
+
+```sql vintage_wordstream
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'wordstream'
+```
+
 <BigValue
     data={top_opportunity}
     value=field_of_study
@@ -115,6 +135,7 @@ order by opportunity_gap desc
     x=field_of_study
     y={['vacancy_share', 'preference_share']}
     title="Vacancy Share vs Preference Share by Field"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}"
     yAxisTitle="Share"
     yFmt=pct1
     type=grouped
@@ -130,6 +151,7 @@ select * from zeus.opportunity_gap order by opportunity_rank
     data={opp_gap_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}"
 >
     <Column id=opportunity_rank title="Rank" />
     <Column id=field_of_study title="Field of Study" />
@@ -157,6 +179,7 @@ order by gap_per_cpc_dollar desc
     x=field_of_study
     y=gap_per_cpc_dollar
     title="Opportunity Gap per CPC Dollar"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}, {vintage_wordstream[0].subtitle}"
     yAxisTitle="Gap per $1 CPC"
     swapXY=true
     sort=false
@@ -181,6 +204,7 @@ order by roi_rank
     data={roi_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}, {vintage_wordstream[0].subtitle}"
 >
     <Column id=roi_rank title="ROI Rank" />
     <Column id=field_of_study title="Field of Study" />
@@ -213,6 +237,7 @@ order by opportunity_rank
     x=field_of_study
     y={['female_preference_share', 'male_preference_share']}
     title="Student Preferences by Gender"
+    subtitle="Sources: {vintage_uac[0].subtitle}, {vintage_ivi[0].subtitle}"
     yAxisTitle="Preference Share"
     yFmt=pct1
     type=grouped
@@ -227,6 +252,7 @@ select * from zeus.opportunity_gap_by_gender order by opportunity_rank
     data={gender_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_uac[0].subtitle}, {vintage_ivi[0].subtitle}"
 >
     <Column id=opportunity_rank title="Rank" />
     <Column id=field_of_study title="Field of Study" />
@@ -257,6 +283,7 @@ order by demand_rank
     x=state
     y={['graduate_vacancies_per_1k_youth', 'total_vacancies_per_1k_youth']}
     title="Vacancies per 1,000 Youth by State"
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_abs[0].subtitle}"
     yAxisTitle="Vacancies per 1k Youth"
     type=grouped
     sort=false
@@ -270,6 +297,7 @@ select * from zeus.state_demand_index order by demand_rank
     data={state_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_abs[0].subtitle}"
 >
     <Column id=demand_rank title="Rank" />
     <Column id=state title="State" />
@@ -280,6 +308,16 @@ select * from zeus.state_demand_index order by demand_rank
     <Column id=graduate_vacancy_growth_12m title="Grad Vacancy Growth (12m)" fmt=pct1 contentType=colorscale />
     <Column id=total_vacancy_growth_12m title="Total Vacancy Growth (12m)" fmt=pct1 contentType=colorscale />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('opportunity_gap', 'opportunity_gap_by_gender', 'state_demand_index', 'field_roi_recommendation')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

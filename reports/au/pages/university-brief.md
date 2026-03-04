@@ -13,6 +13,46 @@ where university <> 'All universities'
 order by university
 ```
 
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
+```sql vintage_qilt_ses
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ses'
+```
+
+```sql vintage_qilt_ess
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ess'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
+```sql vintage_google_trends_brand
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'google_trends_brand'
+```
+
+```sql vintage_cricos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'cricos'
+```
+
+```sql vintage_det
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'det_enrolments'
+```
+
 <Dropdown
     name=selected_university
     data={uni_list}
@@ -173,6 +213,7 @@ where institution = '${inputs.selected_university.value}'
     x=group_label
     y=overall_quality
     series=group_label
+    subtitle={vintage_qilt_ses[0].subtitle}
     yMin=0
     yGridlines=false
     yAxisLabels=false
@@ -199,6 +240,7 @@ where institution = '${inputs.selected_university.value}'
     x=group_label
     y=ft_employment_rate
     series=group_label
+    subtitle={vintage_qilt_gos[0].subtitle}
     yMin=0
     yGridlines=false
     yAxisLabels=false
@@ -225,6 +267,7 @@ where institution = '${inputs.selected_university.value}'
     x=group_label
     y=median_salary
     series=group_label
+    subtitle={vintage_qilt_gos[0].subtitle}
     yMin=0
     yGridlines=false
     yAxisLabels=false
@@ -251,6 +294,7 @@ where institution = '${inputs.selected_university.value}'
     x=group_label
     y=overall_employer_satisfaction
     series=group_label
+    subtitle={vintage_qilt_ess[0].subtitle}
     yMin=0
     yGridlines=false
     yAxisLabels=false
@@ -311,6 +355,7 @@ order by sort_order, group_label
     labelPosition=above
     colorPalette={['#b0b0b0', '#1e3a5f']}
     title="Where does the student experience stand out?"
+    subtitle={vintage_qilt_ses[0].subtitle}
     yGridlines=false
     yAxisLabels=false
     xAxisTitle=""
@@ -386,7 +431,11 @@ where institution = '${inputs.selected_university.value}'
 order by field_rank_in_institution
 ```
 
-<DataTable data={enrolment_detail} rowShading=true>
+<DataTable
+    data={enrolment_detail}
+    rowShading=true
+    subtitle={vintage_det[0].subtitle}
+>
     <Column id=field_of_study title="Field of Study" />
     <Column id=total_enrolments title="Enrolments" fmt=num0 />
     <Column id=international_share title="Intl %" fmt=pct1 />
@@ -437,10 +486,15 @@ order by interest desc
     startingZoom={4}
     legendType="scalar"
     title={`Search Interest by State — ${inputs.selected_university.value}`}
+    subtitle={vintage_google_trends_brand[0].subtitle}
     tooltip={[{id: 'state_name', showColumnName: false, valueClass: 'font-bold text-sm'}, {id: 'interest', title: 'Interest', fmt: 'num1'}, {id: 'state_rank_for_uni', title: 'State Rank (for uni)'}, {id: 'uni_rank_in_state', title: 'Uni Rank (in state)'}, {id: 'interest_vs_uni_avg', title: 'vs Uni Avg', fmt: 'num1'}]}
 />
 
-<DataTable data={state_interest} rowShading=true>
+<DataTable
+    data={state_interest}
+    rowShading=true
+    subtitle={vintage_google_trends_brand[0].subtitle}
+>
     <Column id=state title="State" />
     <Column id=interest title="Interest" fmt=num1 />
     <Column id=state_rank_for_uni title="State Rank (for Uni)" />
@@ -476,6 +530,7 @@ order by opportunity_gap desc nulls last
     x=field_of_study
     y={['courses', 'strong_signal', 'high_opp_courses']}
     title="Where are the strongest courses?"
+    subtitle={vintage_cricos[0].subtitle}
     yAxisTitle="Number of Courses"
     type=grouped
     sort=false
@@ -485,7 +540,11 @@ order by opportunity_gap desc nulls last
     labelPosition=above
 />
 
-<DataTable data={course_field_summary} rowShading=true>
+<DataTable
+    data={course_field_summary}
+    rowShading=true
+    subtitle={vintage_cricos[0].subtitle}
+>
     <Column id=field_of_study title="Field of Study" />
     <Column id=courses title="Total Courses" fmt=num0 />
     <Column id=strong_signal title="Strong Signal" fmt=num0 />
@@ -540,6 +599,7 @@ order by field
     rows=20
     rowShading=true
     search=true
+    subtitle={vintage_cricos[0].subtitle}
 >
     <Column id=course_name title="Course" />
     <Column id=course_level title="Level" />
@@ -584,7 +644,11 @@ inner join (${uni_fields}) f on a.field_of_study = f.uac_field_of_study
 order by a.opportunity_rank
 ```
 
-<DataTable data={audience} rowShading=true>
+<DataTable
+    data={audience}
+    rowShading=true
+    subtitle={vintage_uac[0].subtitle}
+>
     <Column id=field_of_study title="Field of Study" />
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
     <Column id=female_preference_share title="Female %" fmt=pct1 />
@@ -626,6 +690,7 @@ order by g.ft_employment_rate desc
     y=ft_employment_rate
     yFmt=num1
     title="Which fields lead on employment?"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="FT Employment %"
     yMin=0
     sort=false
@@ -639,6 +704,7 @@ order by g.ft_employment_rate desc
     y=median_salary
     yFmt=usd0
     title="Which fields pay the most?"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="Salary"
     yMin=0
     labels=true
@@ -650,7 +716,11 @@ order by g.ft_employment_rate desc
 
 Salary growth shows the percentage change in median graduate salary between **{outcomes[0].survey_year_prior}** and **{outcomes[0].survey_year}** (QILT Graduate Outcomes Survey). Large values typically reflect small base salaries in the earlier period rather than dramatic market shifts.
 
-<DataTable data={outcomes} rowShading=true>
+<DataTable
+    data={outcomes}
+    rowShading=true
+    subtitle={vintage_qilt_gos[0].subtitle}
+>
     <Column id=field_of_study title="Field of Study" />
     <Column id=ft_employment_rate title="FT Employment %" fmt=num1 />
     <Column id=median_salary title="Median Salary" fmt=usd0 />
@@ -685,6 +755,7 @@ order by s.vacancies desc
     rows=15
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}"
 >
     <Column id=state title="State" />
     <Column id=field_of_study title="Field" />
@@ -696,11 +767,15 @@ order by s.vacancies desc
     <Column id=state_specialisation_rank title="Spec. Rank" />
 </DataTable>
 
-## Roadmap
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('university_brand_awareness', 'institution_scorecard', 'university_course_listings', 'institution_enrolment_profile')
+```
 
-Features planned for future iterations of the university brief:
-
-- **CourseSeeker ATAR Ranges** — ATAR cut-off and median data from CourseSeeker is ingested and staged (`stg_courseseeker_atar`), but not yet joined to the course detail table. The challenge: CourseSeeker uses free-text course names and institution names that don't match CRICOS identifiers cleanly. Reliable integration requires fuzzy matching between CourseSeeker and CRICOS course/institution names — parked until a validated crosswalk is built. When available, this will add ATAR selection rank ranges to the Course Detail table above, enabling "selectivity tier" analysis.
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

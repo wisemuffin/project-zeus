@@ -31,6 +31,26 @@ order by overall_employer_satisfaction desc
 limit 1
 ```
 
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
+```sql vintage_qilt_ess
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ess'
+```
+
 <BigValue
     data={top_salary}
     value=field_of_study
@@ -75,6 +95,7 @@ order by opportunity_rank nulls last
     x=field_of_study
     y={['median_salary_male', 'median_salary_female']}
     title="Median Graduate Salary by Gender"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="Median Annual Salary ($)"
     yFmt=usd0
     type=grouped
@@ -100,6 +121,7 @@ order by opportunity_rank nulls last
     x=field_of_study
     y={['ft_employment_rate', 'ft_employment_rate_prior']}
     title="Full-Time Employment Rate: 2024 vs 2023"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="FT Employment (%)"
     type=grouped
     sort=false
@@ -123,6 +145,7 @@ order by g.opportunity_rank nulls last
     data={signal_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_qilt_gos[0].subtitle}, {vintage_qilt_ess[0].subtitle}"
 >
     <Column id=field_of_study title="Field of Study" />
     <Column id=marketing_signal title="Signal" />
@@ -157,10 +180,21 @@ order by salary_gender_gap desc
     x=field_of_study
     y=salary_gender_gap
     title="Salary Gender Gap (Male − Female)"
+    subtitle={vintage_qilt_gos[0].subtitle}
     yAxisTitle="Salary Gap ($)"
     yFmt=usd0
     sort=false
 />
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('graduate_outcomes_by_fos', 'employer_satisfaction_by_fos')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 

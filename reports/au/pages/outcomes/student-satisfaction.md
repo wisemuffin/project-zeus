@@ -18,6 +18,26 @@ from zeus.satisfaction_opportunity
 where quality_vs_sector > 0
 ```
 
+```sql vintage_qilt_ses
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_ses'
+```
+
+```sql vintage_qilt_gos
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'qilt_gos'
+```
+
+```sql vintage_ivi
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'ivi'
+```
+
+```sql vintage_uac
+select source_label || ' ' || data_period as subtitle
+from zeus.freshness_vintage where source_key = 'uac'
+```
+
 <BigValue
     data={top_satisfaction}
     value=field_of_study
@@ -56,6 +76,7 @@ where ft_employment_rate is not null
     y=ft_employment_rate
     pointLabel=field_of_study
     title="Student Satisfaction vs FT Employment Rate"
+    subtitle="Sources: {vintage_qilt_ses[0].subtitle}, {vintage_qilt_gos[0].subtitle}"
     xAxisTitle="Overall Quality (% Agreement)"
     yAxisTitle="FT Employment Rate (%)"
 />
@@ -83,6 +104,7 @@ order by opportunity_rank nulls last
     x=field_of_study
     y={['teaching_quality', 'skills_development', 'student_support', 'learning_resources', 'peer_engagement']}
     title="Satisfaction Indicators by Field"
+    subtitle={vintage_qilt_ses[0].subtitle}
     yAxisTitle="% Agreement"
     type=grouped
     sort=false
@@ -98,6 +120,7 @@ select * from zeus.satisfaction_opportunity order by opportunity_rank nulls last
     data={satisfaction_table}
     rowShading=true
     search=true
+    subtitle="Sources: {vintage_qilt_ses[0].subtitle}, {vintage_ivi[0].subtitle}, {vintage_uac[0].subtitle}"
 >
     <Column id=field_of_study title="Field of Study" />
     <Column id=overall_quality title="Overall Quality" fmt=num1 contentType=colorscale />
@@ -111,6 +134,16 @@ select * from zeus.satisfaction_opportunity order by opportunity_rank nulls last
     <Column id=median_salary title="Median Salary" fmt=usd0 />
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
 </DataTable>
+
+```sql page_refreshed
+select max(last_refreshed) as refreshed_at
+from zeus.freshness_pipeline
+where table_name in ('satisfaction_opportunity')
+```
+
+<p style="color: #9ca3af; font-size: 0.75rem;">
+Pipeline last refreshed: {fmt(page_refreshed[0].refreshed_at, 'd MMMM yyyy')}
+</p>
 
 <Details title="Data Sources">
 
