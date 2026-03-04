@@ -143,3 +143,25 @@ sources:
           meta:
             dagster:
               asset_key: ["satac_fos_preferences"]
+      - name: det_he_enrolments
+        description: >
+          DET Higher Education Student Enrolments — institution × field of
+          education × citizenship × mode of attendance × gender. Extracted
+          from the Perturbed Student Enrolments Pivot Table 2024 published
+          by the Australian Government Department of Education. Covers
+          2020-2024, all institutions, 13 ASCED broad fields. ~235K records.
+          Counts are perturbed for disclosure control.
+        config:
+          meta:
+            dagster:
+              asset_key: ["det_he_enrolments"]
+      - name: ncver_vet_students
+        description: >
+          NCVER Government-funded VET students by state/territory and gender,
+          1981-2024. Historical time series from the National Centre for
+          Vocational Education Research. Provides competitive context for
+          higher education marketing — VET enrolment trends by state.
+        config:
+          meta:
+            dagster:
+              asset_key: ["ncver_vet_students"]
