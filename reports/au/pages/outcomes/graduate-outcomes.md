@@ -4,7 +4,7 @@ title: Graduate Outcomes by Field of Study
 
 <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
 
-Career outcome proof points for ad creative — employment rates, salaries, and gender pay gaps from the **QILT Graduate Outcomes Survey (GOS)**, joined with opportunity gap and preference data from **Jobs and Skills Australia** and the **University Admissions Centre**.
+Career outcome proof points for ad creative — employment rates, salaries, and gender pay gaps from the **QILT Graduate Outcomes Survey (GOS)**, joined with opportunity gap and preference data from **Jobs and Skills Australia** and the **University Admissions Centre**. Employer satisfaction from the **QILT Employer Satisfaction Survey (ESS)** adds the demand-side voice.
 
 ```sql top_salary
 select field_of_study, median_salary
@@ -24,6 +24,13 @@ from zeus.graduate_outcomes_by_fos
 where marketing_signal like 'Strong%'
 ```
 
+```sql top_employer_sat
+select field_of_study, overall_employer_satisfaction
+from zeus.employer_satisfaction_by_fos
+order by overall_employer_satisfaction desc
+limit 1
+```
+
 <BigValue
     data={top_salary}
     value=field_of_study
@@ -40,6 +47,12 @@ where marketing_signal like 'Strong%'
     value=total
     title="Strong Signal Fields"
     description="High demand + strong outcomes"
+/>
+<BigValue
+    data={top_employer_sat}
+    value=field_of_study
+    title="Highest Employer Satisfaction"
+    description={top_employer_sat[0].overall_employer_satisfaction + '%'}
 />
 
 ## Median Salary by Field
@@ -97,7 +110,13 @@ order by opportunity_rank nulls last
 Each field is classified by combining opportunity gap (employer demand vs student interest) with graduate employment outcomes. **Strong** fields have both high demand and strong outcomes — the best candidates for career-outcome messaging.
 
 ```sql signal_table
-select * from zeus.graduate_outcomes_by_fos order by opportunity_rank nulls last
+select
+    g.*,
+    e.overall_employer_satisfaction,
+    e.employer_sat_vs_sector
+from zeus.graduate_outcomes_by_fos g
+left join zeus.employer_satisfaction_by_fos e on g.field_of_study = e.field_of_study
+order by g.opportunity_rank nulls last
 ```
 
 <DataTable
@@ -108,6 +127,8 @@ select * from zeus.graduate_outcomes_by_fos order by opportunity_rank nulls last
     <Column id=field_of_study title="Field of Study" />
     <Column id=marketing_signal title="Signal" />
     <Column id=ft_employment_rate title="FT Employ %" fmt=num1 />
+    <Column id=overall_employer_satisfaction title="Employer Sat %" fmt=num1 />
+    <Column id=employer_sat_vs_sector title="Emp Sat vs Sector" fmt={'+0.0;-0.0'} contentType=colorscale />
     <Column id=median_salary title="Median Salary" fmt=usd0 />
     <Column id=salary_growth_pct title="Salary Growth" fmt=pct1 contentType=colorscale />
     <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
@@ -147,5 +168,6 @@ order by salary_gender_gap desc
 - **Internet Vacancy Index (IVI)** — Jobs and Skills Australia. Monthly online job vacancy counts by occupation and state. Used for opportunity gap calculation.
 - **UAC Early Bird Applicant Preferences** — University Admissions Centre. Annual first-preference counts by field of study and gender. NSW/ACT applicants only. Used for preference share and gender preference data.
 - **QILT study areas mapped to UAC fields** — Multiple QILT study areas (e.g. Dentistry, Medicine, Nursing, Pharmacy, Rehabilitation, Health services) are averaged into single UAC broad fields (e.g. Health). This is an unweighted average as QILT does not publish respondent counts per study area in the report tables.
+- **Employer Satisfaction Survey (ESS) 2024** — Quality Indicators for Learning and Teaching (QILT), Australian Government. National survey of 4,000+ employers rating graduates across five skill domains. 3-year pooled data (2022-2024). Mapped to UAC broad fields via a manual crosswalk.
 
 </Details>

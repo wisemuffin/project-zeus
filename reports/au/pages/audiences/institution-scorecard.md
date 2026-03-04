@@ -4,7 +4,7 @@ title: Institution Scorecard
 
 <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">National</span>
 
-Per-university benchmarks combining **student satisfaction** (QILT Student Experience Survey) with **graduate employment outcomes** (QILT Graduate Outcomes Survey). Use this to identify a university's strengths and weaknesses relative to the sector and its competitors.
+Per-university benchmarks combining **student satisfaction** (QILT Student Experience Survey), **graduate employment outcomes** (QILT Graduate Outcomes Survey), and **employer satisfaction** (QILT Employer Satisfaction Survey). Use this to identify a university's strengths and weaknesses relative to the sector and its competitors.
 
 ```sql top_quality
 select institution, overall_quality
@@ -28,6 +28,12 @@ where salary_rank = 1
 select count(*) as total from zeus.institution_scorecard
 ```
 
+```sql top_employer_sat_inst
+select institution, overall_employer_satisfaction
+from zeus.institution_scorecard
+where employer_sat_rank = 1
+```
+
 <BigValue
     data={uni_count}
     value=total
@@ -47,6 +53,12 @@ select count(*) as total from zeus.institution_scorecard
     data={top_salary}
     value=institution
     title="Highest Median Salary"
+/>
+<BigValue
+    data={top_employer_sat_inst}
+    value=institution
+    title="Highest Employer Satisfaction"
+    description={top_employer_sat_inst[0].overall_employer_satisfaction + '%'}
 />
 
 ## Overall Quality vs Employment
@@ -71,6 +83,30 @@ where overall_quality is not null and ft_employment_rate is not null
     xAxisTitle="Full-Time Employment Rate (%)"
     yAxisTitle="Overall Quality (% positive)"
     title="Student Satisfaction vs Graduate Employment"
+    pointSize=10
+/>
+
+## Student vs Employer Satisfaction
+
+Do universities that students rate highly also produce graduates that employers value? This scatter plot reveals alignment — or gaps — between the two perspectives.
+
+```sql student_vs_employer
+select
+    institution,
+    overall_quality,
+    overall_employer_satisfaction
+from zeus.institution_scorecard
+where overall_quality is not null and overall_employer_satisfaction is not null
+```
+
+<ScatterPlot
+    data={student_vs_employer}
+    x=overall_quality
+    y=overall_employer_satisfaction
+    tooltipTitle=institution
+    xAxisTitle="Student Satisfaction — Overall Quality (%)"
+    yAxisTitle="Employer Satisfaction (%)"
+    title="Student Satisfaction vs Employer Satisfaction"
     pointSize=10
 />
 
@@ -126,6 +162,9 @@ select * from zeus.institution_scorecard
     <Column id=employment_rank title="Employ Rank" />
     <Column id=median_salary title="Median Salary" fmt=usd0 />
     <Column id=salary_rank title="Salary Rank" />
+    <Column id=overall_employer_satisfaction title="Employer Sat %" fmt=num1 />
+    <Column id=employer_sat_vs_sector title="Emp Sat vs Sector" fmt={'+0.0;-0.0'} contentType=colorscale />
+    <Column id=employer_sat_rank title="Emp Sat Rank" />
     <Column id=quality_vs_sector title="Quality vs Sector" fmt=num1 contentType=colorscale />
     <Column id=employment_vs_sector title="Employ vs Sector" fmt=num1 contentType=colorscale />
     <Column id=salary_vs_sector title="Salary vs Sector" fmt=usd0 contentType=colorscale />
@@ -135,6 +174,7 @@ select * from zeus.institution_scorecard
 
 - **Student Experience Survey (SES) 2024** — Quality Indicators for Learning and Teaching (QILT), Australian Government. Annual survey of 258,000+ students. Six satisfaction indicators (% positive rating) covering skills development, peer engagement, teaching quality, student support, learning resources, and overall educational experience. Undergraduate data from universities only.
 - **Graduate Outcomes Survey (GOS) 2024** — QILT. Annual survey of 117,000+ graduates 4-6 months after completion. Full-time employment rate and median annual salary by institution. Undergraduate data from universities only.
+- **Employer Satisfaction Survey (ESS) 2024** — QILT. National survey of 4,000+ employers rating graduates on five skill domains. 3-year pooled data (2022-2024). Institution-level scores are overall employer satisfaction (% rating graduates as well or very well prepared).
 - **Sector averages** are simple means across all universities. Individual cells with fewer than 5 respondents are suppressed (null). University of Divinity typically has too few GOS respondents for employment/salary metrics.
 - **Confidence intervals** from the original QILT data have been removed — only point estimates are shown. Original CIs are 90% Agresti-Coull intervals.
 

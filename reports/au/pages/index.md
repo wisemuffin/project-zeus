@@ -8,7 +8,7 @@ Market research insights to help universities optimise digital marketing campaig
 
 ## How it works
 
-We combine **8 government and public data sources** to answer three questions for every field of study, state, and institution:
+We combine **9 government and public data sources** to answer three questions for every field of study, state, and institution:
 
 1. **What's the opportunity?** — We compare what students *want* to study (admissions preferences from UAC, VTAC, SATAC) against where employers *need* graduates (job vacancies from Jobs and Skills Australia). Fields where employer demand outstrips student interest are your strongest recruitment messaging opportunities.
 
@@ -55,6 +55,17 @@ from zeus.opportunity_gap
 where vacancy_growth_12m = (select max(vacancy_growth_12m) from zeus.opportunity_gap)
 ```
 
+```sql best_roi
+select field_of_study, gap_per_cpc_dollar, roi_tier
+from zeus.field_roi_recommendation
+where roi_rank = 1
+```
+
+```sql avg_cpc
+select round(avg(estimated_cpc_aud), 2) as avg_cpc
+from zeus.field_roi_recommendation
+```
+
 <BigValue
     data={top_opportunity}
     value=field_of_study
@@ -70,6 +81,19 @@ where vacancy_growth_12m = (select max(vacancy_growth_12m) from zeus.opportunity
     value=field_of_study
     title="Fastest Growing Field"
     description="Highest 12-month vacancy growth"
+/>
+<BigValue
+    data={best_roi}
+    value=field_of_study
+    title="Best ROI Field"
+    description="Highest opportunity gap per CPC dollar"
+/>
+<BigValue
+    data={avg_cpc}
+    value=avg_cpc
+    title="Avg CPC (Education)"
+    fmt=usd2
+    description="Australian education sector average"
 />
 
 ## Opportunity Gap by Field of Study
@@ -114,6 +138,59 @@ select * from zeus.opportunity_gap order by opportunity_rank
     <Column id=preference_share title="Preference Share" fmt=pct1 />
     <Column id=opportunity_gap title="Opportunity Gap" fmt=pct1 contentType=colorscale colorScale=positive />
     <Column id=vacancy_growth_12m title="12m Vacancy Growth" fmt=pct1 contentType=colorscale />
+</DataTable>
+
+## ROI-Adjusted Recommendations
+
+The opportunity gap tells you *what* to market — this section tells you *what it will cost*. By combining opportunity gaps with estimated Google Ads cost-per-click (CPC) benchmarks, we rank fields by **gap per CPC dollar** — the most opportunity for the least ad spend.
+
+```sql roi_chart
+select
+    field_of_study,
+    gap_per_cpc_dollar
+from zeus.field_roi_recommendation
+order by gap_per_cpc_dollar desc
+```
+
+<BarChart
+    data={roi_chart}
+    x=field_of_study
+    y=gap_per_cpc_dollar
+    title="Opportunity Gap per CPC Dollar"
+    yAxisTitle="Gap per $1 CPC"
+    swapXY=true
+    sort=false
+/>
+
+```sql roi_table
+select
+    roi_rank,
+    field_of_study,
+    roi_tier,
+    opportunity_gap,
+    estimated_cpc_aud,
+    estimated_cpl_aud,
+    gap_per_cpc_dollar,
+    ft_employment_rate,
+    median_salary
+from zeus.field_roi_recommendation
+order by roi_rank
+```
+
+<DataTable
+    data={roi_table}
+    rowShading=true
+    search=true
+>
+    <Column id=roi_rank title="ROI Rank" />
+    <Column id=field_of_study title="Field of Study" />
+    <Column id=roi_tier title="ROI Tier" />
+    <Column id=opportunity_gap title="Opp Gap" fmt=pct1 contentType=colorscale colorScale=positive />
+    <Column id=estimated_cpc_aud title="Est. CPC (AUD)" fmt=usd2 />
+    <Column id=estimated_cpl_aud title="Est. CPL (AUD)" fmt=usd0 />
+    <Column id=gap_per_cpc_dollar title="Gap / $1 CPC" fmt=num4 contentType=colorscale colorScale=positive />
+    <Column id=ft_employment_rate title="FT Employ %" fmt=num1 />
+    <Column id=median_salary title="Median Salary" fmt=usd0 />
 </DataTable>
 
 ## Gender Targeting Insights
@@ -210,5 +287,6 @@ select * from zeus.state_demand_index order by demand_rank
 - **UAC Early Bird Applicant Preferences** — University Admissions Centre. Annual first-preference counts by field of study, gender, applicant type, and geographic origin. NSW/ACT applicants only.
 - **Estimated Resident Population** — Australian Bureau of Statistics (ABS). Annual population estimates by age and state. All states and territories.
 - **Occupation-to-Field-of-Study mapping** — manually curated crosswalk linking ANZSCO occupation groups to broad fields of education. Coverage is approximate and may not capture all relevant occupations for each field.
+- **WordStream Google Ads Benchmarks 2025** — WordStream (Localiq). Industry-level CPC, CPL, and CTR benchmarks for Google Search ads. US data adjusted with a 1.3× multiplier for Australian market. Education sector averages applied to all fields as field-level benchmarks are not published.
 
 </Details>

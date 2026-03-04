@@ -51,6 +51,10 @@ select
     peer_engagement,
     ft_employment_rate,
     median_salary,
+    overall_employer_satisfaction,
+    employer_sat_vs_sector,
+    employer_sat_rank,
+    avg_employer_satisfaction,
     quality_rank,
     employment_rank,
     salary_rank,
@@ -136,7 +140,8 @@ select
     'Selected' as group_label,
     overall_quality,
     ft_employment_rate,
-    median_salary
+    median_salary,
+    overall_employer_satisfaction
 from zeus.institution_scorecard
 where institution = '${inputs.selected_university.value}'
 union all
@@ -144,14 +149,15 @@ select
     'Sector Avg' as group_label,
     avg_overall_quality as overall_quality,
     avg_ft_employment_rate as ft_employment_rate,
-    avg_median_salary as median_salary
+    avg_median_salary as median_salary,
+    avg_employer_satisfaction as overall_employer_satisfaction
 from zeus.institution_scorecard
 where institution = '${inputs.selected_university.value}'
 ```
 
 ### Selected University vs Sector Average
 
-<Grid cols=3>
+<Grid cols=4>
 <div style="background-color: #f8f8f8; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5;">
 <BigValue
     data={scorecard}
@@ -230,6 +236,32 @@ where institution = '${inputs.selected_university.value}'
     echartsOptions={{backgroundColor: '#f8f8f8'}}
 />
 </div>
+<div style="background-color: #f8f8f8; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5;">
+<BigValue
+    data={scorecard}
+    value=overall_employer_satisfaction
+    title="Employer Satisfaction"
+    fmt={'0.0"%"'}
+    comparison=employer_sat_vs_sector
+    comparisonTitle="vs sector"
+    comparisonFmt={'"+0.0;-0.0"'}
+/>
+<BarChart
+    data={scorecard_comparison}
+    x=group_label
+    y=overall_employer_satisfaction
+    series=group_label
+    yMin=0
+    yGridlines=false
+    yAxisLabels=false
+    colorPalette={['#b0b0b0', '#1e3a5f']}
+    labels=true
+    labelFmt={'0.0"%"'}
+    labelPosition=above
+    legend=false
+    echartsOptions={{backgroundColor: '#f8f8f8'}}
+/>
+</div>
 </Grid>
 
 ### QILT Quality Breakdown
@@ -286,7 +318,7 @@ order by sort_order, group_label
 
 ## Enrolment Profile
 
-DET Higher Education enrolment data showing the selected university's student composition by field of study — international share, online/external delivery, gender mix, and pipeline health. Use this to tailor messaging to each field's actual student profile.
+DET Higher Education enrolment data showing the selected university's student composition by field of study — international share, delivery mode (internal/external/multimodal), gender mix, and pipeline health. Use this to tailor messaging to each field's actual student profile.
 
 ```sql enrolment_summary
 select
@@ -294,6 +326,7 @@ select
     sum(total_enrolments) as total_enrolments,
     round(sum(international_enrolments) * 1.0 / nullif(sum(total_enrolments), 0), 3) as intl_share,
     round(sum(external_enrolments) * 1.0 / nullif(sum(total_enrolments), 0), 3) as ext_share,
+    round(sum(multimodal_enrolments) * 1.0 / nullif(sum(total_enrolments), 0), 3) as multimodal_share,
     count(distinct uac_field_of_study) as fields_count
 from zeus.institution_enrolment_profile
 where institution = '${inputs.selected_university.value}'
@@ -320,6 +353,13 @@ group by institution
 />
 <BigValue
     data={enrolment_summary}
+    value=multimodal_share
+    title="Multimodal Share"
+    fmt=pct1
+    description="Mixed on-campus + online delivery"
+/>
+<BigValue
+    data={enrolment_summary}
     value=fields_count
     title="Fields with Enrolments"
 />
@@ -332,8 +372,9 @@ select
     international_share,
     sector_international_share,
     international_index,
-    external_enrolments,
     external_share,
+    multimodal_share,
+    internal_share,
     female_share,
     sector_female_share,
     commencing_share,
@@ -352,6 +393,8 @@ order by field_rank_in_institution
     <Column id=sector_international_share title="Sector Intl %" fmt=pct1 />
     <Column id=international_index title="Intl Index" fmt=num2 contentType=colorscale />
     <Column id=external_share title="External %" fmt=pct1 />
+    <Column id=multimodal_share title="Multimodal %" fmt=pct1 />
+    <Column id=internal_share title="Internal %" fmt=pct1 />
     <Column id=female_share title="Female %" fmt=pct1 />
     <Column id=sector_female_share title="Sector Female %" fmt=pct1 />
     <Column id=commencing_share title="Commencing %" fmt=pct1 />
@@ -360,7 +403,9 @@ order by field_rank_in_institution
 
 **Reading the enrolment data:**
 - **International index** above 1.0 means this institution has a higher-than-sector share of international students in that field — a signal for international recruitment messaging or to diversify toward domestic
-- **External share** shows online/distance penetration — high values indicate established distance programs suitable for "study from anywhere" campaigns
+- **External share** shows fully online/distance penetration — high values indicate established distance programs suitable for "study from anywhere" campaigns
+- **Multimodal share** shows students in mixed on-campus + online delivery — a growing mode that signals flexible study options. High multimodal share supports "study your way" messaging
+- **Internal share** shows traditional on-campus delivery — high values mean the program relies on in-person attendance
 - **Commencing share** above ~0.3 suggests healthy pipeline; below ~0.2 may indicate mature programs with limited new student inflow
 
 ## Geographic Brand Strength
@@ -651,6 +696,12 @@ order by s.vacancies desc
     <Column id=state_specialisation_rank title="Spec. Rank" />
 </DataTable>
 
+## Roadmap
+
+Features planned for future iterations of the university brief:
+
+- **CourseSeeker ATAR Ranges** — ATAR cut-off and median data from CourseSeeker is ingested and staged (`stg_courseseeker_atar`), but not yet joined to the course detail table. The challenge: CourseSeeker uses free-text course names and institution names that don't match CRICOS identifiers cleanly. Reliable integration requires fuzzy matching between CourseSeeker and CRICOS course/institution names — parked until a validated crosswalk is built. When available, this will add ATAR selection rank ranges to the Course Detail table above, enabling "selectivity tier" analysis.
+
 <Details title="Data Sources">
 
 - **QILT Student Experience Survey (SES) 2024** — Quality Indicators for Learning and Teaching, Australian Government. Six satisfaction indicators (% positive rating) covering skills development, peer engagement, teaching quality, student support, learning resources, and overall educational experience. Undergraduate data from universities only.
@@ -660,7 +711,8 @@ order by s.vacancies desc
 - **Internet Vacancy Index (IVI)** — Jobs and Skills Australia. Monthly online job vacancy counts by occupation and state. Used for opportunity gap, vacancy growth, and state demand calculations.
 - **UAC Early Bird Applicant Preferences** — University Admissions Centre. Annual first-preference counts by field of study, gender, and applicant type. NSW/ACT applicants only.
 - **ABS Estimated Resident Population** — Australian Bureau of Statistics. Youth population (15-19) by state for demand density calculations.
-- **DET Higher Education Student Enrolments** — Department of Education, Australian Government. Institution × field × citizenship × mode enrolments from 2016-2020 pivot table. National coverage (~47 institutions).
+- **DET Higher Education Student Enrolments** — Department of Education, Australian Government. Institution × field × citizenship × mode enrolments from 2016-2020 pivot table. National coverage (~47 institutions). Includes delivery mode breakdown (internal, external, multimodal).
+- **Employer Satisfaction Survey (ESS) 2024** — QILT. National survey of 4,000+ employers rating graduates on five skill domains. 3-year pooled data (2022-2024). Institution-level scores show overall employer satisfaction (% rating graduates as well or very well prepared).
 - **Occupation-to-Field-of-Study mapping** — manually curated crosswalk linking ANZSCO occupation groups to broad fields of education.
 
 </Details>
